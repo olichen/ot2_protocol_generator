@@ -3,6 +3,7 @@ import re
 import logging
 log = logging.getLogger(__name__)
 
+
 class CSVReader:
     def __init__(self, csv_file):
         self.csv_file = csv_file
@@ -25,7 +26,7 @@ class CSVReader:
                 volume = int(row[1].strip())
                 wellX = int(well[1:])-1
                 # 32 is the difference between the unicode value of 'a' and 'A'
-                wellY = (ord(well[0])-ord('A'))%32
+                wellY = (ord(well[0])-ord('A')) % 32
                 self.volumes[wellX][wellY] = volume
 
     def isValidWell(self, well_text):
