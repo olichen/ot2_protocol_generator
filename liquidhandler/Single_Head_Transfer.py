@@ -24,18 +24,21 @@ def run(protocol: protocol_api.ProtocolContext):
     volumes = readCSV(CSV_FILE)
 
     loadPlate()
-    tiprack_1 = labware.load('geb_96_tiprack_10ul', 1)
-    plate1 = labware.load(CUSTOM_PLATE, 2)
-    plate2 = labware.load(CUSTOM_PLATE, 3)
+    tiprack = labware.load('geb_96_tiprack_10ul', 1)
+    plate1 = labware.load('nest_96_wellplate_100ul_pcr_full_skirt', 2)
+    plate2 = labware.load('nest_96_wellplate_100ul_pcr_full_skirt', 3)
 
-    p10 = instruments.P10_Single(mount='right', tip_racks=[tiprack_1])
+    p10 = instruments.P10_Single(mount='right', tip_racks=[tiprack])
 
+    print(protocol.api_version)
     for x in range(12):
         for y in range(8):
             well = chr(ord('A')+y) + str(x+1)
-            p10.transfer(volumes[x][y], plate1.wells(well), plate2.wells(well))
+            print(well)
+            p10.transfer(volumes[x][y], plate1[well], plate2[well])
 
 # load custom plate
+# deprecated
 def loadPlate():
     if CUSTOM_PLATE not in labware.list():
         labware.create(
