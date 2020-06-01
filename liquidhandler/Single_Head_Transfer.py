@@ -25,8 +25,8 @@ def run(protocol: protocol_api.ProtocolContext):
 
     loadPlate()
     tiprack = labware.load('geb_96_tiprack_10ul', 1)
-    plate1 = labware.load('nest_96_wellplate_100ul_pcr_full_skirt', 2)
-    plate2 = labware.load('nest_96_wellplate_100ul_pcr_full_skirt', 3)
+    plate1 = labware.load(CUSTOM_PLATE, 2)
+    plate2 = labware.load(CUSTOM_PLATE, 3)
 
     p10 = instruments.P10_Single(mount='right', tip_racks=[tiprack])
 
