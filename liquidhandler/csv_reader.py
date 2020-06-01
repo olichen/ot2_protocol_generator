@@ -30,8 +30,8 @@ class CSVReader:
                 self.volumes[wellX][wellY] = volume
 
     def isValidWell(self, well_text):
-        well_format = re.compile('[a-zA-Z][0-9]')
-        return well_format.match(well_text)
+        well_format = re.compile('[a-hA-H]([1-9]|(1[0-2]))')
+        return well_format.fullmatch(well_text)
 
     def getVolumes(self):
         return self.volumes
