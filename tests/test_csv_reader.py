@@ -4,35 +4,25 @@ from liquidhandler import csv_reader
 import unittest
 
 class TestCSVReader(unittest.TestCase):
-    def test_list_int(self):
-        """
-        Test that it can sum a list of integers
-        """
-        data = [1, 2, 3]
-        result = sum(data)
-        self.assertEqual(result, 6)
+    def setUp(self):
+        self.CSV_FILE = 'SingleHeadTransfer.csv'
+        self.csvr = csv_reader.CSVReader(self.CSV_FILE)
+
+    def test_init(self):
+        self.assertEqual(self.csvr.volumes, [[0 for y in range(8)] for x in range(12)])
+        self.assertEqual(self.csvr.csv_file, self.CSV_FILE)
     
     def test_isValidWell(self):
-        csvr = csv_reader.CSVReader('placeholder')
-        self.assertFalse(csvr.isValidWell('AA1'))
-        self.assertFalse(csvr.isValidWell('A111'))
-        self.assertFalse(csvr.isValidWell('A0'))
-        self.assertFalse(csvr.isValidWell('A13'))
-        self.assertFalse(csvr.isValidWell('i1'))
-        self.assertFalse(csvr.isValidWell('I1'))
-        self.assertTrue(csvr.isValidWell('A1'))
-        self.assertTrue(csvr.isValidWell('A9'))
-        self.assertTrue(csvr.isValidWell('A10'))
-        self.assertTrue(csvr.isValidWell('A12'))
-        self.assertTrue(csvr.isValidWell('a1'))
-        self.assertTrue(csvr.isValidWell('a1'))
-        self.assertTrue(csvr.isValidWell('h12'))
-        self.assertTrue(csvr.isValidWell('h12'))
-        self.assertTrue(csvr.isValidWell('A1'))
-        self.assertTrue(csvr.isValidWell('A12'))
-        self.assertTrue(csvr.isValidWell('H1'))
-        self.assertTrue(csvr.isValidWell('H12'))
-
+        for i in range(ord('A'), ord('H')):
+            for j in range(1, 12):
+                self.assertTrue(self.csvr.isValidWell(chr(i)+str(j)))
+        self.assertFalse(self.csvr.isValidWell('AA1'))
+        self.assertFalse(self.csvr.isValidWell('A111'))
+        self.assertFalse(self.csvr.isValidWell('A0'))
+        self.assertFalse(self.csvr.isValidWell('A13'))
+        self.assertFalse(self.csvr.isValidWell('I1'))
+        self.assertFalse(self.csvr.isValidWell('a1'))
+        self.assertFalse(self.csvr.isValidWell('a12'))
 
 if __name__ == '__main__':
     unittest.main()
