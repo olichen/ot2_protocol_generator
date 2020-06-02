@@ -1,11 +1,4 @@
-import os
-
-if os.path.exists('protocol.py'):
-    os.remove('protocol.py')
-
 from opentrons import protocol_api
-from opentrons import labware
-from opentrons import instruments
 import csv
 import re
 
@@ -23,17 +16,15 @@ def run(protocol: protocol_api.ProtocolContext):
 
     volumes = readCSV(CSV_FILE)
 
-    tiprack = labware.load('geb_96_tiprack_10ul', 1)
-    plate1 = labware.load(CUSTOM_PLATE, 2)
-    plate2 = labware.load(CUSTOM_PLATE, 3)
+    tiprack = protocol.load_labware('geb_96_tiprack_10ul', 1)
+    plate1 = protocol.load_labware(CUSTOM_PLATE, 2)
+    plate2 = protocol.load_labware(CUSTOM_PLATE, 3)
 
-    p10 = instruments.P10_Single(mount='right', tip_racks=[tiprack])
+    p10 = protocol.load_instrument('p10_single', mount='right', tip_racks=[tiprack])
 
-    print(protocol.api_version)
     for x in range(12):
         for y in range(8):
             well = chr(ord('A')+y) + str(x+1)
-            print(well)
             p10.transfer(volumes[x][y], plate1[well], plate2[well])
 
 # read in CSV file and output as a 12 by 8 array of volumes
