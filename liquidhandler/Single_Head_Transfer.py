@@ -23,7 +23,6 @@ def run(protocol: protocol_api.ProtocolContext):
 
     volumes = readCSV(CSV_FILE)
 
-    loadPlate()
     tiprack = labware.load('geb_96_tiprack_10ul', 1)
     plate1 = labware.load(CUSTOM_PLATE, 2)
     plate2 = labware.load(CUSTOM_PLATE, 3)
@@ -36,18 +35,6 @@ def run(protocol: protocol_api.ProtocolContext):
             well = chr(ord('A')+y) + str(x+1)
             print(well)
             p10.transfer(volumes[x][y], plate1[well], plate2[well])
-
-# load custom plate
-# deprecated
-def loadPlate():
-    if CUSTOM_PLATE not in labware.list():
-        labware.create(
-            CUSTOM_PLATE,       # name of labware
-            grid=(12, 8),       # number of (columns, rows)
-            spacing=(9, 9),     # distances (mm) between each (column, row)
-            diameter=5.49,      # diameter (mm) of each well
-            depth=16.4,         # depth (mm) of each well
-            volume=100)         # volume (µL) of each well
 
 # read in CSV file and output as a 12 by 8 array of volumes
 def readCSV(csvname):
