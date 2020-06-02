@@ -9,8 +9,10 @@ class TestCSVReader(unittest.TestCase):
         self.csvr = csv_reader.CSVReader(self.CSV_FILE)
 
     def test_init(self):
-        self.assertEqual(self.csvr.volumes, {})
+        with self.assertRaises(FileNotFoundError):
+            csv_reader.CSVReader('garbage.csv')
         self.assertEqual(self.csvr.csv_file, self.CSV_FILE)
+        self.assertEqual(self.csvr.volumes, {})
     
     def test_isValidWell(self):
         for i in range(ord('A'), ord('H')):
