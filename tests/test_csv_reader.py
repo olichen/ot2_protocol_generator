@@ -9,7 +9,7 @@ class TestCSVReader(unittest.TestCase):
         self.csvr = csv_reader.CSVReader(self.CSV_FILE)
 
     def test_init(self):
-        self.assertEqual(self.csvr.volumes, [[0 for y in range(8)] for x in range(12)])
+        self.assertEqual(self.csvr.volumes, {})
         self.assertEqual(self.csvr.csv_file, self.CSV_FILE)
     
     def test_isValidWell(self):
