@@ -3,16 +3,28 @@ from liquidhandler import csv_reader
 
 import unittest
 
+
 class TestCSVReader(unittest.TestCase):
     def setUp(self):
-        self.CSV_FILE = 'SingleHeadTransfer.csv'
+        self.CSV_FILE = 'empty_csv.csv'
         self.csvr = csv_reader.CSVReader(self.CSV_FILE)
 
     def test_init(self):
         with self.assertRaises(FileNotFoundError):
-            csv_reader.CSVReader('garbage.csv')
-        self.assertEqual(self.csvr.csv_file, self.CSV_FILE)
-        self.assertEqual(self.csvr.volumes, {})
+            csv_reader.CSVReader('no_file.csv')
+        # self.assertEqual(self.csvr.volumes, {})
+
+    def test_readRow(self):
+        test_csv_rows = {'A1': ' 12',
+                         'C2': '13 ',
+                         'H1': '4',
+                         'G12': '623',
+                         'D11': '19',
+                         }
+        self.assertFalse(self.csvr.readRow(['A1', 'garbage']))
+        self.assertFalse(self.csvr.readRow(['garbage', '1']))
+        self.assertFalse(self.csvr.readRow(['C2', '']))
+        self.assertEqual(self.csvr.readRow(['H1', ' 4 ']), ('H1', 4))
     
     def test_isValidWell(self):
         for i in range(ord('A'), ord('H')):
@@ -25,6 +37,15 @@ class TestCSVReader(unittest.TestCase):
         self.assertFalse(self.csvr.isValidWell('I1'))
         self.assertFalse(self.csvr.isValidWell('a1'))
         self.assertFalse(self.csvr.isValidWell('a12'))
+
+    def test_isValidVolume(self):
+        self.assertFalse(self.csvr.isValidVolume(''))
+        self.assertFalse(self.csvr.isValidVolume(' '))
+        self.assertFalse(self.csvr.isValidVolume('text'))
+        self.assertFalse(self.csvr.isValidVolume('a2'))
+        self.assertTrue(self.csvr.isValidVolume(' 1'))
+        self.assertTrue(self.csvr.isValidVolume('1'))
+        self.assertTrue(self.csvr.isValidVolume('1 '))
 
 if __name__ == '__main__':
     unittest.main()
