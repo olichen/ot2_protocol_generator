@@ -7,7 +7,8 @@ log = logging.getLogger(__name__)
 class CSVReader:
     def __init__(self, csv_file):
         self.csv_file = csv_file
-        self.volumes = [[0 for y in range(8)] for x in range(12)]
+        self.volumes = {}
+        self.readCSV()
 
     # read in CSV file and output as a 12 by 8 array of volumes
     def readCSV(self):
@@ -19,18 +20,24 @@ class CSVReader:
             for row in reader:
                 well = row[0].strip()
 
+                # Check to make sure the well position is valid
                 if not self.isValidWell(well):
-                    log.info('Skipping cell "' + well + '"')
+                    log.warning("Skipping cell '" + well + "'.")
                     continue
 
-                volume = int(row[1].strip())
-                wellX = int(well[1:])-1
-                # 32 is the difference between the unicode value of 'a' and 'A'
-                wellY = (ord(well[0])-ord('A')) % 32
-                self.volumes[wellX][wellY] = volume
+                # Check to make sure volumes are valid
+                if well in self.volumes:
+                    log.warning("Overwriting well '" + well + "'.")
+
+                # Try to write the volume to the volumes dict
+                try:
+                    volume = int(row[1].strip())
+                    self.volumes[well] = volume
+                except:
+                    log.error("Encountered invalid volume '" + volume + "'.")
 
     def isValidWell(self, well_text):
-        well_format = re.compile('[a-hA-H]([1-9]|(1[0-2]))')
+        well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
         return well_format.fullmatch(well_text)
 
     def getVolumes(self):
