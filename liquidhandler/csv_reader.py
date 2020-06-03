@@ -42,7 +42,7 @@ class CSVReader:
 
         return
 
-    # Check to make sure each row is valid 
+    # Check to make sure each row is valid
     def isValidWell(self, well_text):
         well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
         return well_format.fullmatch(well_text)

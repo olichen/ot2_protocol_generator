@@ -15,17 +15,11 @@ class TestCSVReader(unittest.TestCase):
         # self.assertEqual(self.csvr.volumes, {})
 
     def test_readRow(self):
-        test_csv_rows = {'A1': ' 12',
-                         'C2': '13 ',
-                         'H1': '4',
-                         'G12': '623',
-                         'D11': '19',
-                         }
         self.assertFalse(self.csvr.readRow(['A1', 'garbage']))
         self.assertFalse(self.csvr.readRow(['garbage', '1']))
         self.assertFalse(self.csvr.readRow(['C2', '']))
         self.assertEqual(self.csvr.readRow(['H1', ' 4 ']), ('H1', 4))
-    
+
     def test_isValidWell(self):
         for i in range(ord('A'), ord('H')):
             for j in range(1, 12):
@@ -46,6 +40,7 @@ class TestCSVReader(unittest.TestCase):
         self.assertTrue(self.csvr.isValidVolume(' 1'))
         self.assertTrue(self.csvr.isValidVolume('1'))
         self.assertTrue(self.csvr.isValidVolume('1 '))
+
 
 if __name__ == '__main__':
     unittest.main()
