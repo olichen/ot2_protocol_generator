@@ -15,6 +15,8 @@ class TestCSVReader(unittest.TestCase):
         # self.assertEqual(self.csvr.volumes, {})
 
     def test_readRow(self):
+        self.assertFalse(self.csvr.readRow(['a','1']))
+        self.assertFalse(self.csvr.readRow(['H2']))
         self.assertFalse(self.csvr.readRow(['A1', 'garbage']))
         self.assertFalse(self.csvr.readRow(['garbage', '1']))
         self.assertFalse(self.csvr.readRow(['C2', '']))

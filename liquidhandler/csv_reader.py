@@ -21,26 +21,30 @@ class CSVReader:
                 if well and volume:
                     self.volumes[well] = volume
 
-    # output each row to the hash map self.volumes
     def readRow(self, row):
-        well = row[0].strip()
-        volume = row[1].strip()
+        try:
+            well = row[0].strip()
+            volume = row[1].strip()
+        except IndexError:
+            log.warning('Invalid cells ' + str(row) + '.')
+            return None, None
 
-        # Check to make sure the well position is valid
+        # Check to make sure we have a valid well position.
         if not self.isValidWell(well):
-            log.warning("Skipping cell " + str(row) + ".")
-            return
+            log.warning("Invalid well '" + well + "'.")
+            return None, None
 
-        # Check if the well is already defined
+        # Check if the well is already defined.
         if well in self.volumes:
             log.error("Well '" + well + "' is already defined.")
-            return
+            return None, None
 
-        # Try to write the volume to the volumes dict
-        if self.isValidVolume(volume):
-            return well, int(volume)
+        # Check to make sure we have a valid volume.
+        if not self.isValidVolume(volume):
+            log.error("Encountered invalid volume '" + volume_text + "'.") 
+            return None, None
 
-        return
+        return well, int(volume)
 
     # Check to make sure each row is valid
     def isValidWell(self, well_text):
@@ -53,5 +57,4 @@ class CSVReader:
             int(volume_text)
             return True
         except ValueError:
-            log.error("Encountered invalid volume '" + volume_text + "'.")
             return False
