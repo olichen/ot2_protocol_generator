@@ -4,7 +4,7 @@ import re
 
 metadata = {
     'protocolName': 'Single head transfer',
-    'author': 'Oliver Chen <olichen@ucdavis.edu',
+    'author': 'Oliver Chen <olichen@ucdavis.edu>',
     'description': 'Read in volumes from a CSV file and transfer volumes',
     'apiLevel': '2.2'
 }

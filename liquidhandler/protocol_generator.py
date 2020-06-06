@@ -17,7 +17,9 @@ import csv_reader
 root = tk.Tk()
 root.withdraw()
 
-file_path = filedialog.askopenfilename(title = 'Select a file', filetypes = [('csv files','*.csv')])
+file_path = filedialog.askopenfilename(
+        title = 'Select a file', filetypes = [('csv files','*.csv')])
 print(file_path)
 
-
+csvr = csv_reader.CSVReader(file_path)
+print(csvr.volumes)
