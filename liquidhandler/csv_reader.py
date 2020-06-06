@@ -41,7 +41,7 @@ class CSVReader:
 
         # Check to make sure we have a valid volume.
         if not self.isValidVolume(volume):
-            log.error("Encountered invalid volume '" + volume  + "'.") 
+            log.error("Encountered invalid volume '" + volume + "'.")
             return None, None
 
         return well, int(volume)
