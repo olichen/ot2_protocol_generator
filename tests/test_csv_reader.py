@@ -5,11 +5,12 @@ import unittest
 import os
 import csv
 
+
 class TestCSVReader(unittest.TestCase):
     def setUp(self):
         self.temp_csv = os.path.join(os.path.dirname(__file__), 'temp.csv')
         with open(self.temp_csv, 'w') as file:
-            writer = csv.writer(file)
+            csv.writer(file)
 
     def writeRowToTempCSV(self):
         with open(self.temp_csv, 'w') as file:
@@ -27,7 +28,7 @@ class TestCSVReader(unittest.TestCase):
 
     def test_readRow(self):
         csvr = csv_reader.CSVReader(self.temp_csv)
-        self.assertEqual(csvr.readRow(['a','1']), (None, None))
+        self.assertEqual(csvr.readRow(['a', '1']), (None, None))
         self.assertEqual(csvr.readRow(['H2']), (None, None))
         self.assertEqual(csvr.readRow(['A1', 'garbage']), (None, None))
         self.assertEqual(csvr.readRow(['garbage', '1']), (None, None))
