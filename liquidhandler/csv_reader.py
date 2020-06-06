@@ -44,7 +44,7 @@ class CSVReader:
             log.error("Encountered invalid volume '" + volume + "'.")
             return None, None
 
-        return well, int(volume)
+        return well, volume
 
     # Check to make sure each row is valid
     def isValidWell(self, well_text):
