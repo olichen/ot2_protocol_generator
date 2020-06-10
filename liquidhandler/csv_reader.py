@@ -21,7 +21,10 @@ class CSVReader:
                 if well and volume:
                     self.volumes[well] = volume
 
+    # Reads row; returns the tuple (well, volume) on a valid row.
+    # Returns (None, None) on an invalid row.
     def readRow(self, row):
+        # Try to access both cells. Fails on empty cell.
         try:
             well = row[0].strip()
             volume = row[1].strip()
