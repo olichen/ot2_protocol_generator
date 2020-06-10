@@ -7,7 +7,6 @@ import output_writer
 
 class ProtocolGenerator:
     def __init__(self):
-        self.csv_file = 'placeholder'
         self.tip_rack_loc = 1
         self.tip_rack_type = 'geb_96_tiprack_10ul'
         self.src_plate_loc = 2
@@ -36,8 +35,7 @@ class ProtocolGenerator:
             f1.write(ow.getPipette(self.pipette_type, self.pipette_loc))
 
             for well, volume in csv_volumes:
-                f1.write('    pipette.transfer(' + volume + ", src_plate['" + well + "'], dest_plate['" + well + "'])\n")
-        
+                f1.write(ow.getSingleTransfer(volume, well))
 
     def getCSVFile(self):
         root = tk.Tk()

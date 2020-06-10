@@ -4,9 +4,8 @@ class OutputWriter:
             "from opentrons import protocol_api\n"
             "\n"
             "metadata = {\n"
-            "    'protocolName': 'Single head transfer',\n"
+            "    'protocolName': 'OT Transfer',\n"
             "    'author': 'Oliver Chen <olichen@ucdavis.edu>',\n"
-            "    'description': 'Read in volumes from a CSV file and transfer volumes',\n"
             "    'apiLevel': '2.2'\n"
             "}\n\n"
             "def run(protocol: protocol_api.ProtocolContext):\n"
@@ -29,3 +28,14 @@ class OutputWriter:
         return "    pipette = protocol.load_instrument(" \
             "'{0}', mount = '{1}', tip_racks = [{2}])\n\n" \
             .format(pipette_type, pipette_location, 'tip_rack')
+
+    def getSingleTransfer(self, volume, well):
+        return "    pipette.transfer(" \
+            "'{0}', src_plate['{1}'], dest_plate['{1}'])\n" \
+            .format(volume, well)
+
+    def getMultiTransfer(self, volume, column):
+        return "    pipette.transfer('{0}', " \
+            "src_plate.columns_by_name()['{1}'], " \
+            "dest_plate.columns_by_name()['{1}'])\n" \
+            .format(volume, well)
