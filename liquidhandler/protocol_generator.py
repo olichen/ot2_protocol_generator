@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 import csv_reader
+import output_writer
 
 
 class ProtocolGenerator:
@@ -13,8 +14,8 @@ class ProtocolGenerator:
         self.src_plate_type = 'appliedbiosystems_96_wellplate_100ul'
         self.dest_plate_loc = 3
         self.dest_plate_type = 'appliedbiosystems_96_wellplate_100ul'
-        self.pipette = 'p10_single'
-        self.pipette_location = 'right'
+        self.pipette_type = 'p10_single'
+        self.pipette_loc = 'right'
 
     def main(self):
         file_path = self.getCSVFile()
@@ -25,13 +26,18 @@ class ProtocolGenerator:
 
 
     def saveOutput(self, output_file, csv_volumes):
-        with open(output_file, 'w') as f1:
-            with open('single_head_transfer.py') as f:
-                for line in f:
-                    f1.write(line)
-            for well, volume in csv_volumes:
-                f1.write('    p10.transfer(' + volume + ", plate1['" + well + "'], plate2['" + well + "'])\n")
+        ow = output_writer.OutputWriter()
 
+        with open(output_file, 'w') as f1:
+            f1.write(ow.getHeader())
+            f1.write(ow.getTipRack(self.tip_rack_type, self.tip_rack_loc))
+            f1.write(ow.getSrcPlate(self.src_plate_type, self.src_plate_loc))
+            f1.write(ow.getDestPlate(self.dest_plate_type, self.dest_plate_loc))
+            f1.write(ow.getPipette(self.pipette_type, self.pipette_loc))
+
+            for well, volume in csv_volumes:
+                f1.write('    pipette.transfer(' + volume + ", src_plate['" + well + "'], dest_plate['" + well + "'])\n")
+        
 
     def getCSVFile(self):
         root = tk.Tk()
