@@ -16,7 +16,7 @@ class OutputWriter:
 
     def getSrcPlate(self, plate_type, plate_location):
         return self.getLabware('src_plate', plate_type, plate_location)
-            
+
     def getDestPlate(self, plate_type, plate_location):
         return self.getLabware('dest_plate', plate_type, plate_location)
 
@@ -38,4 +38,4 @@ class OutputWriter:
         return "    pipette.transfer('{0}', " \
             "src_plate.columns_by_name()['{1}'], " \
             "dest_plate.columns_by_name()['{1}'])\n" \
-            .format(volume, well)
+            .format(volume, column)
