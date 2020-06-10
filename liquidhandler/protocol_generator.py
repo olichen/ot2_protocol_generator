@@ -3,34 +3,50 @@ import tkinter as tk
 from tkinter import filedialog
 import csv_reader
 
-# class ProtocolGenerator:
-#     def __init__(self, transfer_type, csv_file, protocol_file):
-#         self.transfer_type = transfer_type
 
-root = tk.Tk()
-root.withdraw()
+class ProtocolGenerator:
+    def __init__(self):
+        self.csv_file = 'placeholder'
+        self.tip_rack_loc = 1
+        self.tip_rack_type = 'geb_96_tiprack_10ul'
+        self.src_plate_loc = 2
+        self.src_plate_type = 'appliedbiosystems_96_wellplate_100ul'
+        self.dest_plate_loc = 3
+        self.dest_plate_type = 'appliedbiosystems_96_wellplate_100ul'
+        self.pipette = 'p10_single'
+        self.pipette_location = 'right'
 
-file_path = filedialog.askopenfilename(
-        title = 'Select a file', filetypes = [('csv files','*.csv')])
-print(file_path)
+    def main(self):
+        file_path = self.getCSVFile()
+        csvr = csv_reader.CSVReader(file_path)
+        print(csvr.volumes)
+        file_path = self.getOutputFile()
+        self.saveOutput(file_path, csvr.volumes.items())
 
-csvr = csv_reader.CSVReader(file_path)
-print(csvr.volumes)
 
-csv_file = file_path
-tip_rack_loc = 1
-tip_rack_type = 'geb_96_tiprack_10ul'
-src_plate_loc = 2
-src_plate_type = 'appliedbiosystems_96_wellplate_100ul'
-dest_plate_loc = 3
-dest_plate_type = 'appliedbiosystems_96_wellplate_100ul'
-pipette = 'p10_single'
-pipette_location = 'right'
+    def saveOutput(self, output_file, csv_volumes):
+        with open(output_file, 'w') as f1:
+            with open('single_head_transfer.py') as f:
+                for line in f:
+                    f1.write(line)
+            for well, volume in csv_volumes:
+                f1.write('    p10.transfer(' + volume + ", plate1['" + well + "'], plate2['" + well + "'])\n")
 
-with open("out.py", "w") as f1:
-    with open("single_head_transfer.py") as f:
-        for line in f:
-            f1.write(line)
-    for well, volume in csvr.volumes.items():
-        f1.write('    p10.transfer(' + volume + ", plate1['" + well + "'], plate2['" + well + "'])\n")
 
+    def getCSVFile(self):
+        root = tk.Tk()
+        root.withdraw()
+        return filedialog.askopenfilename(
+                title = 'Select a file',
+                filetypes = [('CSV Files','*.csv')])
+
+    def getOutputFile(self):
+        root = tk.Tk()
+        root.withdraw()
+        files = [('Python Files', '*.py')]
+        return filedialog.asksaveasfilename(
+                title = 'Save output file',
+                filetypes = files)
+
+if __name__ == "__main__":
+    ProtocolGenerator().main()
