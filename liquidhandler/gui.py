@@ -23,46 +23,44 @@ class GUI:
         self.dest_plate_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
-        self.createGUI(self.window)
+        self.createGUI()
 
         self.window.mainloop()
 
-    def createGUI(self, window):
-        frame = ttk.LabelFrame(self.window, text="Pipette")
-        frame.grid(row=1, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
-        self.addSelectors(frame, 'Pipette Type', 1, self.pipette_type, PIPETTE_TYPES)
-        self.addSelectors(frame, 'Pipette Location', 2, self.pipette_loc, PIPETTE_LOCS)
+    def createGUI(self):
+        self.addSelectors('Pipette Type', 1, self.pipette_type, PIPETTE_TYPES)
+        self.addSelectors('Pipette Location', 2, self.pipette_loc, PIPETTE_LOCS)
 
-        frame = ttk.LabelFrame(self.window, text="Tip Rack")
-        frame.grid(row=2, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
-        self.addSelectors(frame, 'Tip Rack Type', 1, self.tip_rack_type, TIP_RACK_TYPES)
-        self.addSelectors(frame, 'Tip Rack Location', 2, self.tip_rack_loc, TIP_RACK_LOCS)
+        self.addSelectors('Tip Rack Type', 3, self.tip_rack_type, TIP_RACK_TYPES)
+        self.addSelectors('Tip Rack Location', 4, self.tip_rack_loc, TIP_RACK_LOCS)
 
-        frame = ttk.LabelFrame(self.window, text="Source Plate")
-        frame.grid(row=3, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
-        self.addSelectors(frame, 'Source Plate Type', 1, self.src_plate_type, PLATE_TYPES)
-        self.addSelectors(frame, 'Source Plate Location', 2, self.src_plate_loc, PLATE_LOCS)
+        self.addSelectors('Source Plate Type', 5, self.src_plate_type, PLATE_TYPES)
+        self.addSelectors('Source Plate Location', 6, self.src_plate_loc, PLATE_LOCS)
 
-        frame = ttk.LabelFrame(self.window, text="Destination Plate")
-        frame.grid(row=4, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
-        self.addSelectors(frame, 'Destination Plate Type', 1, self.dest_plate_type, PLATE_TYPES)
-        self.addSelectors(frame, 'Destination Plate Location', 2, self.dest_plate_loc, PLATE_LOCS)
+        self.addSelectors('Destination Plate Type', 7, self.dest_plate_type, PLATE_TYPES)
+        self.addSelectors('Destination Plate Location', 8, self.dest_plate_loc, PLATE_LOCS)
 
         frame = ttk.Frame(self.window)
-        frame.grid(row=5, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
+        frame.grid(row=9, column=1, columnspan=2, sticky=tk.N + tk.E + tk.S + tk.W)
+        # self.addCSVSelector(frame)
+
+        frame = ttk.Frame(self.window)
+        frame.grid(row=10, column=1, columnspan=2, sticky=tk.N + tk.E + tk.S + tk.W)
         self.addSaveCancel(frame)
 
-    def addSelectors(self, parent, label, row, variable, option_list):
-        pipette_type_label = ttk.Label(parent, text=label)
-        pipette_type_label.grid(row=row, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
+    def addSelectors(self, label, row, var, option_list):
+        label = ttk.Label(self.window, text=label)
+        label.grid(row=row, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
 
-        pipette_type_menu = ttk.OptionMenu(parent, variable, option_list[0], *option_list)
-        pipette_type_menu.grid(row=row, column=2, sticky=tk.N + tk.E + tk.S + tk.W)
+        menu = ttk.OptionMenu(self.window, var, option_list[0], *option_list)
+        menu.grid(row=row, column=2, sticky=tk.N + tk.E + tk.S + tk.W)
+
+    # def addCSVSelector(self, parent):
 
     def addSaveCancel(self, parent):
         save = ttk.Button(parent, text='Save')
         save.grid(row=1, column=1)
-        cancel = ttk.Button(parent, text='Quit')
+        cancel = ttk.Button(parent, text='Quit', command=self.window.destroy)
         cancel.grid(row=1, column=2)
         print('savecancel')
 
