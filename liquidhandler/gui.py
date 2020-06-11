@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 
 PIPETTE_TYPES = ('p10_single', 'p10_multi')
 PIPETTE_LOCS = ('right', 'left')
@@ -61,12 +62,11 @@ class GUI:
 
         frame = ttk.Frame(self.window)
         frame.grid(row=5, column=2, columnspan=3, sticky='nesw')
-        menu = ttk.Entry(frame, textvariable=self.csv_file_loc, width=20)
-        menu.grid(row=1, column=1, sticky='nesw')
-        save = ttk.Button(frame, text='..', width=1)
-        save.grid(row=1, column=2)
-        save = ttk.Button(frame, text='..', width=0)
-        save.grid(row=1, column=3)
+
+        entry = ttk.Entry(frame, textvariable=self.csv_file_loc)
+        entry.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
+        csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSVFile)
+        csvbutton.pack(side=tk.RIGHT)
 
     def addSaveCancel(self, parent):
         save = ttk.Button(parent, text='Save')
@@ -74,7 +74,12 @@ class GUI:
         cancel = ttk.Button(parent, text='Quit', command=self.quit)
         cancel.grid(row=1, column=2)
         self.window.bind('<Escape>', self.quit)
-        print('savecancel')
+
+    def getCSVFile(self):
+        self.csv_file_loc.set(filedialog.askopenfilename(
+            title='Select a file',
+            filetypes=[('CSV Files', '*.csv')]))
+        self.window.focus()
 
     def quit(self, event = None):
         self.window.destroy()
