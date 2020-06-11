@@ -37,34 +37,47 @@ class GUI:
         self.addSelectors('Source Plate Type', 3, 1, self.src_plate_type, PLATE_TYPES)
         self.addSelectors('Source Plate Location', 3, 3, self.src_plate_loc, PLATE_LOCS)
 
-        self.addSelectors('Destination Plate Type', 4, 1, self.dest_plate_type, PLATE_TYPES)
-        self.addSelectors('Destination Plate Location', 4, 3, self.dest_plate_loc, PLATE_LOCS)
+        self.addSelectors('Dest Plate Type', 4, 1, self.dest_plate_type, PLATE_TYPES)
+        self.addSelectors('Dest Plate Location', 4, 3, self.dest_plate_loc, PLATE_LOCS)
+
+        self.addCSVSelector()
 
         frame = ttk.Frame(self.window)
-        frame.grid(row=9, column=1, columnspan=4, sticky=tk.N + tk.E + tk.S + tk.W)
-        self.addCSVSelector(frame)
-
-        frame = ttk.Frame(self.window)
-        frame.grid(row=10, column=1, columnspan=4, sticky=tk.N + tk.E + tk.S + tk.W)
+        frame.grid(row=10, column=1, columnspan=4, sticky='nesw')
         self.addSaveCancel(frame)
 
     def addSelectors(self, label, row, col, var, option_list):
         label = ttk.Label(self.window, text=label)
-        label.grid(row=row, column=col, sticky=tk.N + tk.E + tk.S + tk.W)
+        label.config(width=16)
+        label.grid(row=row, column=col, sticky='nesw')
 
-        menu = ttk.OptionMenu(self.window, var, option_list[0], *option_list)
-        menu.grid(row=row, column=col+1, sticky=tk.N + tk.E + tk.S + tk.W)
+        menu = ttk.OptionMenu(self.window, var, '', *option_list)
+        menu.config(width=12)
+        menu.grid(row=row, column=col+1, sticky='nesw')
 
-    def addCSVSelector(self, parent):
-        label = ttk.Label(parent, text='CSV File')
-        label.grid(row=1, column=1, sticky=tk.N + tk.E + tk.S + tk.W)
+    def addCSVSelector(self):
+        label = ttk.Label(self.window, text='CSV File')
+        label.grid(row=5, column=1, sticky='nesw')
+
+        frame = ttk.Frame(self.window)
+        frame.grid(row=5, column=2, columnspan=3, sticky='nesw')
+        menu = ttk.Entry(frame, textvariable=self.csv_file_loc, width=20)
+        menu.grid(row=1, column=1, sticky='nesw')
+        save = ttk.Button(frame, text='..', width=1)
+        save.grid(row=1, column=2)
+        save = ttk.Button(frame, text='..', width=0)
+        save.grid(row=1, column=3)
 
     def addSaveCancel(self, parent):
         save = ttk.Button(parent, text='Save')
         save.grid(row=1, column=1)
-        cancel = ttk.Button(parent, text='Quit', command=self.window.destroy)
+        cancel = ttk.Button(parent, text='Quit', command=self.quit)
         cancel.grid(row=1, column=2)
+        self.window.bind('<Escape>', self.quit)
         print('savecancel')
+
+    def quit(self, event = None):
+        self.window.destroy()
 
     def main(self):
         print('placeholder')
