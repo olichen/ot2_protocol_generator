@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 import protocol_data
+import protocol_generator
 
 PIPETTE_TYPES = ('p10_single', 'p10_multi')
 PIPETTE_LOCS = ('right', 'left')
@@ -93,7 +94,12 @@ class GUI:
             pipette_type=self.pipette_type.get(),
             pipette_loc=self.pipette_loc.get(),
             csv_file_loc=self.csv_file_loc.get())
-        print('placeholder')
+        files = [('Python Files', '*.py')]
+        output_file = filedialog.asksaveasfilename(
+            title='Save protocol',
+            filetypes=files)
+        protocol_generator.ProtocolGenerator(output_file, data)
+        self.quit()
 
     def quit(self, event = None):
         self.window.destroy()
