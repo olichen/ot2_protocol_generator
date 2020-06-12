@@ -70,7 +70,7 @@ class GUI:
         csvbutton.pack(side=tk.RIGHT)
 
     def addSaveCancel(self, parent):
-        save = ttk.Button(parent, text='Generate Protocol', command=self.save)
+        save = ttk.Button(parent, text='Generate Protocol', command=self.saveProtocol)
         save.grid(row=1, column=1)
         cancel = ttk.Button(parent, text='Quit', command=self.quit)
         cancel.grid(row=1, column=2)
@@ -82,7 +82,7 @@ class GUI:
             filetypes=[('CSV Files', '*.csv')]))
         self.window.focus()
 
-    def save(self):
+    def saveProtocol(self):
         data = protocol_data.ProtocolData(
             tip_rack_type=self.tip_rack_type.get(),
             tip_rack_loc=self.tip_rack_loc.get(),
