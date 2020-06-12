@@ -31,11 +31,11 @@ class OutputWriter:
 
     def getSingleTransfer(self, volume, well):
         return "    pipette.transfer(" \
-            "'{0}', src_plate['{1}'], dest_plate['{1}'])\n" \
+            "{0}, src_plate['{1}'], dest_plate['{1}'])\n" \
             .format(volume, well)
 
     def getMultiTransfer(self, volume, column):
-        return "    pipette.transfer('{0}', " \
+        return "    pipette.transfer({0}, " \
             "src_plate.columns_by_name()['{1}'], " \
             "dest_plate.columns_by_name()['{1}'])\n" \
             .format(volume, column)
