@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+import protocol_data
 
 PIPETTE_TYPES = ('p10_single', 'p10_multi')
 PIPETTE_LOCS = ('right', 'left')
@@ -69,7 +70,7 @@ class GUI:
         csvbutton.pack(side=tk.RIGHT)
 
     def addSaveCancel(self, parent):
-        save = ttk.Button(parent, text='Save')
+        save = ttk.Button(parent, text='Generate Protocol', command=self.save)
         save.grid(row=1, column=1)
         cancel = ttk.Button(parent, text='Quit', command=self.quit)
         cancel.grid(row=1, column=2)
@@ -80,6 +81,19 @@ class GUI:
             title='Select a file',
             filetypes=[('CSV Files', '*.csv')]))
         self.window.focus()
+
+    def save(self):
+        data = protocol_data.ProtocolData(
+            tip_rack_type=self.tip_rack_type.get(),
+            tip_rack_loc=self.tip_rack_loc.get(),
+            src_plate_type=self.src_plate_type.get(),
+            src_plate_loc=self.src_plate_loc.get(),
+            dest_plate_type=self.dest_plate_type.get(),
+            dest_plate_loc=self.dest_plate_loc.get(),
+            pipette_type=self.pipette_type.get(),
+            pipette_loc=self.pipette_loc.get(),
+            csv_file_loc=self.csv_file_loc.get())
+        print('placeholder')
 
     def quit(self, event = None):
         self.window.destroy()
