@@ -1,4 +1,4 @@
-class OutputWriter:
+class ProtocolFormatter:
     def getHeader(self):
         return (
             "from opentrons import protocol_api\n"
