@@ -28,8 +28,6 @@ class GUI:
 
         self.createGUI()
 
-        self.window.mainloop()
-
     def createGUI(self):
         self.addSelectors('Pipette Type', 1, 1, self.pipette_type, PIPETTE_TYPES)
         self.addSelectors('Pipette Location', 1, 3, self.pipette_loc, PIPETTE_LOCS)
@@ -105,7 +103,7 @@ class GUI:
         self.window.destroy()
 
     def main(self):
-        print('placeholder')
+        self.window.mainloop()
 
 
 if __name__ == "__main__":
