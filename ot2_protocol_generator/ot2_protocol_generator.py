@@ -49,14 +49,14 @@ class OT2ProtocolGenerator:
             data.isValid()
             pw = protocol_writer.ProtocolWriter(data)
 
-            output_file = getOutputFile()
+            output_file = self.outputFileDialog()
             pw.saveOutput(output_file)
             self.quit()
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
 
-    def getOutputFile(self):
+    def outputFileDialog(self):
         return filedialog.asksaveasfilename(
             title='Save protocol',
             filetypes=[('Python Files', '*.py')])
