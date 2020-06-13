@@ -95,14 +95,17 @@ class OT2ProtocolGenerator:
             csv_file_loc=self.csv_file_loc.get())
         try:
             data.isValid()
+            pw = protocol_writer.ProtocolWriter(data)
+
             files = [('Python Files', '*.py')]
             output_file = filedialog.asksaveasfilename(
                 title='Save protocol',
                 filetypes=files)
-            protocol_writer.ProtocolWriter(output_file, data)
+            pw.saveOutput(output_file)
             self.quit()
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
+            self.window.focus()
 
     def quit(self, event = None):
         self.window.destroy()
