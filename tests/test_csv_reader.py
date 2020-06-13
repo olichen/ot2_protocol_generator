@@ -1,5 +1,5 @@
-from context import liquidhandler
-from liquidhandler import csv_reader
+from context import ot2_protocol_generator
+from ot2_protocol_generator import csv_reader
 
 import unittest
 import os

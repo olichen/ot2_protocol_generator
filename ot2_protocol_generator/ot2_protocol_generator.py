@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 import protocol_data
-import protocol_generator
+import protocol_writer
 
 PIPETTE_TYPES = ('p10_single', 'p10_multi')
 PIPETTE_LOCS = ('right', 'left')
@@ -11,7 +11,7 @@ TIP_RACK_LOCS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11')
 PLATE_TYPES = ('appliedbiosystems_96_wellplate_100ul', 'b')
 PLATE_LOCS = TIP_RACK_LOCS
 
-class GUI:
+class OT2ProtocolGenerator:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
@@ -96,7 +96,7 @@ class GUI:
         output_file = filedialog.asksaveasfilename(
             title='Save protocol',
             filetypes=files)
-        protocol_generator.ProtocolGenerator(output_file, data)
+        protocol_writer.ProtocolWriter(output_file, data)
         self.quit()
 
     def quit(self, event = None):
@@ -107,4 +107,4 @@ class GUI:
 
 
 if __name__ == "__main__":
-    GUI().main()
+    OT2ProtocolGenerator().main()

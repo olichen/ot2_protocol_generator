@@ -5,7 +5,7 @@ import protocol_formatter
 import protocol_data
 
 
-class ProtocolGenerator:
+class ProtocolWriter:
     def __init__(self, output_file, data):
         csvr = csv_reader.CSVReader(data.csv_file_loc)
         self.saveOutput(output_file, data, csvr.volumes.items())

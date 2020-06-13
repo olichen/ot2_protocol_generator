@@ -1,5 +1,5 @@
-from context import liquidhandler
-from liquidhandler import protocol_data
+from context import ot2_protocol_generator
+from ot2_protocol_generator import protocol_data
 
 import unittest
 
