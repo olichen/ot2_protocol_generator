@@ -4,12 +4,13 @@ import logging
 log = logging.getLogger(__name__)
 
 
+# Reads a CSV file and returns a dict of 'well': 'volume'
 class CSVReader:
     def __init__(self, csv_file):
         self.volumes = {}
         self.readCSV(csv_file)
 
-    # read in the CSV file
+    # Read in the CSV file
     def readCSV(self, csv_file):
 
         # read in the CSV file
@@ -21,7 +22,7 @@ class CSVReader:
                 if well and volume:
                     self.volumes[well] = volume
 
-    # Reads row; returns the tuple (well, volume) on a valid row.
+    # Reads in a row; returns the tuple (well, volume) on a valid row.
     # Returns (None, None) on an invalid row.
     def readRow(self, row):
         # Try to access both cells. Fails on empty cell.
