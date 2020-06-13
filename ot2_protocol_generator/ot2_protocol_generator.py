@@ -44,7 +44,25 @@ class OT2ProtocolGenerator:
         self.window.bind('<Escape>', self.quit)
 
     def saveProtocol(self):
-        data = protocol_data.ProtocolData(
+        data = getProtocolData()
+        try:
+            data.isValid()
+            pw = protocol_writer.ProtocolWriter(data)
+
+            output_file = getOutputFile()
+            pw.saveOutput(output_file)
+            self.quit()
+        except Exception as e:
+            messagebox.showerror(title='Error', message=e)
+            self.window.focus()
+
+    def getOutputFile(self):
+        return filedialog.asksaveasfilename(
+            title='Save protocol',
+            filetypes=[('Python Files', '*.py')])
+
+    def getProtocolData(self):
+        return protocol_data.ProtocolData(
             tip_rack_type=self.tip_rack_type.get(),
             tip_rack_loc=self.tip_rack_loc.get(),
             src_plate_type=self.src_plate_type.get(),
@@ -54,19 +72,6 @@ class OT2ProtocolGenerator:
             pipette_type=self.pipette_type.get(),
             pipette_loc=self.pipette_loc.get(),
             csv_file_loc=self.csv_file_loc.get())
-        try:
-            data.isValid()
-            pw = protocol_writer.ProtocolWriter(data)
-
-            files = [('Python Files', '*.py')]
-            output_file = filedialog.asksaveasfilename(
-                title='Save protocol',
-                filetypes=files)
-            pw.saveOutput(output_file)
-            self.quit()
-        except Exception as e:
-            messagebox.showerror(title='Error', message=e)
-            self.window.focus()
 
     def quit(self, event = None):
         self.window.destroy()
