@@ -24,7 +24,8 @@ class TestCSVReader(unittest.TestCase):
     def test_init(self):
         with self.assertRaises(FileNotFoundError):
             csv_reader.CSVReader('no_file.csv')
-        # self.assertEqual(self.csvr.volumes, {})
+        with self.assertRaises(IsADirectoryError):
+            csv_reader.CSVReader('/')
 
     def test_readRow(self):
         csvr = csv_reader.CSVReader(self.temp_csv)
@@ -33,7 +34,7 @@ class TestCSVReader(unittest.TestCase):
         self.assertEqual(csvr.readRow(['A1', 'garbage']), (None, None))
         self.assertEqual(csvr.readRow(['garbage', '1']), (None, None))
         self.assertEqual(csvr.readRow(['C2', '']), (None, None))
-        self.assertEqual(csvr.readRow(['H1', ' 4 ']), ('H1', 4))
+        self.assertEqual(csvr.readRow(['H1', ' 4 ']), ('H1', '4'))
 
     def test_isValidWell(self):
         csvr = csv_reader.CSVReader(self.temp_csv)
