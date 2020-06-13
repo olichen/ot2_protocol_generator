@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 import protocol_data
 import protocol_writer
 
@@ -92,12 +93,16 @@ class OT2ProtocolGenerator:
             pipette_type=self.pipette_type.get(),
             pipette_loc=self.pipette_loc.get(),
             csv_file_loc=self.csv_file_loc.get())
-        files = [('Python Files', '*.py')]
-        output_file = filedialog.asksaveasfilename(
-            title='Save protocol',
-            filetypes=files)
-        protocol_writer.ProtocolWriter(output_file, data)
-        self.quit()
+        try:
+            data.isValid()
+            files = [('Python Files', '*.py')]
+            output_file = filedialog.asksaveasfilename(
+                title='Save protocol',
+                filetypes=files)
+            protocol_writer.ProtocolWriter(output_file, data)
+            self.quit()
+        except Exception as e:
+            messagebox.showerror(title='Error', message=e)
 
     def quit(self, event = None):
         self.window.destroy()
