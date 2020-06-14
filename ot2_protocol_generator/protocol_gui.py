@@ -10,6 +10,7 @@ TIP_RACK_LOCS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11')
 PLATE_TYPES = ('appliedbiosystems_96_wellplate_100ul', 'b')
 PLATE_LOCS = TIP_RACK_LOCS
 
+
 class ProtocolGUI:
     def __init__(self, parent):
         self.parent = parent
@@ -43,7 +44,7 @@ class ProtocolGUI:
         menu.grid(row=self.row, column=self.col+1, sticky='nesw')
 
         self.incrementGrid()
-        
+
     def incrementGrid(self):
         if self.col == 3:
             self.row += 1
@@ -61,10 +62,10 @@ class ProtocolGUI:
 
         entry = ttk.Entry(frame, textvariable=csv_file_loc)
         entry.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
-        csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSVFile)
+        csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSV)
         csvbutton.pack(side=tk.RIGHT)
 
-    def getCSVFile(self):
+    def getCSV(self):
         self.csv_file_loc.set(filedialog.askopenfilename(
             title='Select a file',
             filetypes=[('CSV Files', '*.csv')]))

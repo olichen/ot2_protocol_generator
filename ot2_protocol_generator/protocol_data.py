@@ -1,4 +1,3 @@
-import dataclasses
 from dataclasses import dataclass
 
 
@@ -30,4 +29,3 @@ class ProtocolData:
             raise ValueError(error_message)
 
         return True
-

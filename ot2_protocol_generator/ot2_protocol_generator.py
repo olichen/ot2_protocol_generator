@@ -6,6 +6,7 @@ import protocol_data
 import protocol_writer
 import protocol_gui
 
+
 class OT2ProtocolGenerator:
     def __init__(self):
         self.window = tk.Tk()
@@ -37,14 +38,14 @@ class OT2ProtocolGenerator:
         self.addSaveCancel(frame)
 
     def addSaveCancel(self, parent):
-        save = ttk.Button(parent, text='Generate Protocol', command=self.saveProtocol)
+        save = ttk.Button(parent, text='Generate Protocol', command=self.save)
         save.grid(row=1, column=1)
         cancel = ttk.Button(parent, text='Quit', command=self.quit)
         cancel.grid(row=1, column=2)
         self.window.bind('<Escape>', self.quit)
 
-    def saveProtocol(self):
-        data = getProtocolData()
+    def save(self):
+        data = self.getProtocolData()
         try:
             data.isValid()
             pw = protocol_writer.ProtocolWriter(data)
@@ -73,7 +74,7 @@ class OT2ProtocolGenerator:
             pipette_loc=self.pipette_loc.get(),
             csv_file_loc=self.csv_file_loc.get())
 
-    def quit(self, event = None):
+    def quit(self, event=None):
         self.window.destroy()
 
     def main(self):
