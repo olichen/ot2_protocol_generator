@@ -17,7 +17,7 @@ class ProtocolWriter:
             if self.data.pipette_type == 'single':
                 self.writeSingleTransfer(f)
             elif self.data.pipette_type == 'multi':
-                self.writeMultiTransfer(f)
+                self.writeEightTransfer(f)
             else:
                 raise ValueError('Invalid pipette type: ' + self.data.pipette_type)
 
@@ -32,6 +32,6 @@ class ProtocolWriter:
         for well, volume in self.csv_data.volumes.items():
             f.write(self.pf.getSingleTransfer(volume, well))
 
-    def writeMultiTransfer(self, f):
+    def writeEightTransfer(self, f):
         for well, volume in self.csv_data.volumes.items():
             f.write(self.pf.getSingleTransfer(volume, well))
