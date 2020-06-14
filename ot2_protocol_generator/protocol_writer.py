@@ -6,20 +6,32 @@ class ProtocolWriter:
     def __init__(self, data):
         self.data = data
         self.csv_data = csv_reader.CSVReader(data.csv_file_loc)
+        self.pf = protocol_formatter.ProtocolFormatter()
 
     def saveOutput(self, output_file):
-        pf = protocol_formatter.ProtocolFormatter()
 
         with open(output_file, 'w') as f:
+            pf = protocol_formatter.ProtocolFormatter
             self.writeHeader(f)
 
-            for well, volume in self.csv_data.volumes.items():
-                f.write(pf.getSingleTransfer(volume, well))
+            if self.data.pipette_type == 'single':
+                self.writeSingleTransfer(f)
+            elif self.data.pipette_type == 'multi':
+                self.writeMultiTransfer(f)
+            else:
+                raise ValueError('Invalid pipette type: ' + self.data.pipette_type)
 
     def writeHeader(self, f):
-        pf = protocol_formatter.ProtocolFormatter()
-        f.write(pf.getHeader())
-        f.write(pf.getTipRack(self.data.tip_rack_name, self.data.tip_rack_loc))
-        f.write(pf.getSrcPlate(self.data.src_plate_name, self.data.src_plate_loc))
-        f.write(pf.getDestPlate(self.data.dest_plate_name, self.data.dest_plate_loc))
-        f.write(pf.getPipette(self.data.pipette_name, self.data.pipette_loc))
+        f.write(self.pf.getHeader())
+        f.write(self.pf.getTipRack(self.data.tip_rack_name, self.data.tip_rack_loc))
+        f.write(self.pf.getSrcPlate(self.data.src_plate_name, self.data.src_plate_loc))
+        f.write(self.pf.getDestPlate(self.data.dest_plate_name, self.data.dest_plate_loc))
+        f.write(self.pf.getPipette(self.data.pipette_name, self.data.pipette_loc))
+
+    def writeSingleTransfer(self, f):
+        for well, volume in self.csv_data.volumes.items():
+            f.write(self.pf.getSingleTransfer(volume, well))
+
+    def writeMultiTransfer(self, f):
+        for well, volume in self.csv_data.volumes.items():
+            f.write(self.pf.getSingleTransfer(volume, well))
