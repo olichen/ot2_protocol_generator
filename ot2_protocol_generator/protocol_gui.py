@@ -18,20 +18,20 @@ class ProtocolGUI:
         self.col = 1
         self.csv_file_loc = None
 
-    def addPipetteSelectors(self, ptype, ploc):
-        self.addSelectors('Pipette Type', ptype, PIPETTE_TYPES)
+    def addPipetteSelectors(self, pname, ploc):
+        self.addSelectors('Pipette Type', pname, PIPETTE_TYPES)
         self.addSelectors('Pipette Location', ploc, PIPETTE_LOCS)
 
-    def addTipRackSelectors(self, trtype, trloc):
-        self.addSelectors('Tip Rack Type', trtype, TIP_RACK_TYPES)
+    def addTipRackSelectors(self, trname, trloc):
+        self.addSelectors('Tip Rack Type', trname, TIP_RACK_TYPES)
         self.addSelectors('Tip Rack Location', trloc, TIP_RACK_LOCS)
 
-    def addSourcePlateSelectors(self, sptype, sploc):
-        self.addSelectors('Source Plate Type', sptype, PLATE_TYPES)
+    def addSourcePlateSelectors(self, spname, sploc):
+        self.addSelectors('Source Plate Type', spname, PLATE_TYPES)
         self.addSelectors('Source Plate Location', sploc, PLATE_LOCS)
 
-    def addDestPlateSelectors(self, dptype, dploc):
-        self.addSelectors('Dest Plate Type', dptype, PLATE_TYPES)
+    def addDestPlateSelectors(self, dpname, dploc):
+        self.addSelectors('Dest Plate Type', dpname, PLATE_TYPES)
         self.addSelectors('Dest Plate Location', dploc, PLATE_LOCS)
 
     def addSelectors(self, label, var, option_list):
