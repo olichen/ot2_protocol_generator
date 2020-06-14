@@ -1,10 +1,10 @@
 from context import ot2_protocol_generator
-from ot2_protocol_generator import protocol_data
+from ot2_protocol_generator import eight_transfer
 
 import unittest
 
 
-class TestProtocolData(unittest.TestCase):
+class TestEightTransfer(unittest.TestCase):
     def setUp(self):
         self.data = protocol_data.ProtocolData(
             tip_rack_type='',
