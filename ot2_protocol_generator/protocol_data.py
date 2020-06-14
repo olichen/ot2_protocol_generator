@@ -4,15 +4,16 @@ from dataclasses import dataclass
 # Dataclass to hold the data that defines the protocol
 @dataclass
 class ProtocolData:
-    tip_rack_type: str
+    tip_rack_name: str
     tip_rack_loc: str
-    src_plate_type: str
+    src_plate_name: str
     src_plate_loc: str
-    dest_plate_type: str
+    dest_plate_name: str
     dest_plate_loc: str
-    pipette_type: str
+    pipette_name: str
     pipette_loc: str
     csv_file_loc: str
+    pipette_type: str='single'
 
     # Check to make sure there is input data for every variable
     def isValid(self):
