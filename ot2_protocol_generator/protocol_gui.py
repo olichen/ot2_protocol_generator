@@ -1,14 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-
-
-PIPETTE_TYPES = ('p10_single', 'p10_multi')
-PIPETTE_LOCS = ('right', 'left')
-TIP_RACK_TYPES = ('geb_96_tiprack_10ul', 'placeholder')
-TIP_RACK_LOCS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11')
-PLATE_TYPES = ('appliedbiosystems_96_wellplate_100ul', 'placeholder')
-PLATE_LOCS = TIP_RACK_LOCS
+import config
 
 
 class ProtocolGUI:
@@ -19,20 +12,20 @@ class ProtocolGUI:
         self.csv_file_loc = None
 
     def addPipetteSelectors(self, pname, ploc):
-        self.addSelectors('Pipette Type', pname, PIPETTE_TYPES)
-        self.addSelectors('Pipette Location', ploc, PIPETTE_LOCS)
+        self.addSelectors('Pipette Type', pname, config.PIPETTE_TYPES)
+        self.addSelectors('Pipette Location', ploc, config.PIPETTE_LOCS)
 
     def addTipRackSelectors(self, trname, trloc):
-        self.addSelectors('Tip Rack Type', trname, TIP_RACK_TYPES)
-        self.addSelectors('Tip Rack Location', trloc, TIP_RACK_LOCS)
+        self.addSelectors('Tip Rack Type', trname, config.TIP_RACK_TYPES)
+        self.addSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS)
 
     def addSourcePlateSelectors(self, spname, sploc):
-        self.addSelectors('Source Plate Type', spname, PLATE_TYPES)
-        self.addSelectors('Source Plate Location', sploc, PLATE_LOCS)
+        self.addSelectors('Source Plate Type', spname, config.PLATE_TYPES)
+        self.addSelectors('Source Plate Location', sploc, config.PLATE_LOCS)
 
     def addDestPlateSelectors(self, dpname, dploc):
-        self.addSelectors('Dest Plate Type', dpname, PLATE_TYPES)
-        self.addSelectors('Dest Plate Location', dploc, PLATE_LOCS)
+        self.addSelectors('Dest Plate Type', dpname, config.PLATE_TYPES)
+        self.addSelectors('Dest Plate Location', dploc, config.PLATE_LOCS)
 
     def addSelectors(self, label, var, option_list):
         label = ttk.Label(self.parent, text=label)
