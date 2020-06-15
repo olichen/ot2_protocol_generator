@@ -15,14 +15,17 @@ class ProtocolData:
     pipette_loc: str
     csv_file_loc: str
 
-    # Check to make sure there is input data for every variable
+    # Check to make sure the inputted data is valid
+    # Raises an exception if the data is invalid
     def isValid(self):
         self.checkForMissingInput()
         self.checkForDifferentPlateLocations()
 
         return True
 
-    def checkForMissingInput(self):
+    # Check to make sure there is are no missing fields
+    # Raises an exception on missing fields
+    def checkMissingInput(self):
         missing_input = []
         for key, value in self.__dict__.items():
             if not value:
@@ -35,7 +38,9 @@ class ProtocolData:
                 err_str += value
             raise ValueError(err_str)
 
-    def checkForDifferentPlateLocations(self):
+    # Check to make sure that plate locations are not shared
+    # Raises an exception if plate locations are shared
+    def checkPlateLocations(self):
         if self.tip_rack_loc == self.src_plate_loc:
             err_str = 'Tip rack and source plate are in the same location'
             raise ValueError(err_str)
