@@ -33,14 +33,30 @@ class TestEightTransfer(unittest.TestCase):
             'E12': '12', 'F12': '12', 'G12': '12', 'H12': '12',
             }
 
-    def test(self):
-        test = eight_transfer.EightTransfer(self.volumedict)
+    def testEightTransfer(self):
+        try:
+            eight_transfer.EightTransfer(self.volumedict)
+        except Exception:
+            self.fail('Unexpected exception')
+
         self.volumedict['A1']='11'
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             eight_transfer.EightTransfer(self.volumedict)
         del self.volumedict['A1']
         with self.assertRaises(IndexError):
             eight_transfer.EightTransfer(self.volumedict)
+
+    def testCharToInt(self):
+        et = eight_transfer.EightTransfer(self.volumedict)
+        self.assertEqual(et.charToInt('A'), 0)
+        self.assertEqual(et.charToInt('B'), 1)
+        self.assertEqual(et.charToInt('C'), 2)
+        self.assertEqual(et.charToInt('D'), 3)
+        self.assertEqual(et.charToInt('E'), 4)
+        self.assertEqual(et.charToInt('F'), 5)
+        self.assertEqual(et.charToInt('G'), 6)
+        self.assertEqual(et.charToInt('H'), 7)
+
 
 if __name__ == '__main__':
     unittest.main()
