@@ -10,8 +10,12 @@ class EightTransfer:
     # Read the values from volumedict into col_volumes
     def readVolumeDict(self, volumedict):
         for well, vol in volumedict.items():
-            y = self.charToInt(well[0])
+            # Convert well values from 'A1' 'B2' etc to integer values
+            # 'A1' = (0, 0), 'A2' = (1, 0), ...,
+            # 'G12' = (11, 6), 'H12' = (11, 7)
             x = int(well[1:])-1
+            y = self.charToInt(well[0])
+
             # If the well is empty, fill it with a volume, otherwise raise
             # an exception
             if not self.col_volumes[x]:
@@ -32,9 +36,9 @@ class EightTransfer:
                     if not self.well_volumes[i][j]:
                         err_str = "Missing volume for well '{0}'" \
                                 .format(chr(ord('A') + j) + str(i + 1))
-                        raise IndexError
+                        raise IndexError(err_str)
 
     # Converts the alphabetic component of the well to an integer
-    # A = 0, B = 2, .., H = 8
+    # A = 0, B = 1, .., G = 6, H = 7
     def charToInt(self, c):
         return ord(c)-ord('A')

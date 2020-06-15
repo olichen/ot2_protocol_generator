@@ -13,7 +13,7 @@ class ProtocolData:
     pipette_name: str
     pipette_loc: str
     csv_file_loc: str
-    pipette_type: str='single'
+    pipette_type: str = 'single' # PLACEHOLDER
 
     # Check to make sure there is input data for every variable
     def isValid(self):
