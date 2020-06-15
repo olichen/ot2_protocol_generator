@@ -19,7 +19,8 @@ class ProtocolWriter:
             elif self.data.pipette_type == 'multi':
                 self.writeEightTransfer(f)
             else:
-                raise ValueError('Invalid pipette type: ' + self.data.pipette_type)
+                err_str = 'Invalid pipette type: ' + self.data.pipette_type
+                raise ValueError(err_str)
 
     def writeHeader(self, f):
         f.write(self.pf.getHeader())
