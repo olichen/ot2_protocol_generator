@@ -19,11 +19,8 @@ class OT2ProtocolGenerator:
         self.dest_plate_name = tk.StringVar()
         self.dest_plate_loc = tk.StringVar()
         self.pipette_name = tk.StringVar()
-        self.pipette_type = tk.StringVar()
         self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
-
-        self.pipette_type.set('multi')
 
         self.createGUI()
 
@@ -66,6 +63,8 @@ class OT2ProtocolGenerator:
             filetypes=[('Python Files', '*.py')])
 
     def getProtocolData(self):
+        ptype = self.getPipetteType(self.pipette_name.get())
+
         return protocol_data.ProtocolData(
                 tip_rack_name=self.tip_rack_name.get(),
                 tip_rack_loc=self.tip_rack_loc.get(),
@@ -75,8 +74,16 @@ class OT2ProtocolGenerator:
                 dest_plate_loc=self.dest_plate_loc.get(),
                 pipette_name=self.pipette_name.get(),
                 pipette_loc=self.pipette_loc.get(),
-                pipette_type=self.pipette_type.get(),
+                pipette_type=ptype,
                 csv_file_loc=self.csv_file_loc.get())
+
+    def getPipetteType(self, pname):
+        if 'single' in pname:
+            return 'single'
+        elif 'multi' in pname:
+            return 'multi'
+        else:
+            raise ValueError("Invalid pipette: '" + pname + "'")
 
     def quit(self, event=None):
         self.window.destroy()
