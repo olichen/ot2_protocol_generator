@@ -12,19 +12,19 @@ class ProtocolGUI:
         self.csv_file_loc = None
 
     def addPipetteSelectors(self, pname, ploc):
-        self.addSelectors('Pipette Type', pname, config.PIPETTE_TYPES)
+        self.addSelectors('Pipette Type', pname, config.PIPETTE_NAMES)
         self.addSelectors('Pipette Location', ploc, config.PIPETTE_LOCS)
 
     def addTipRackSelectors(self, trname, trloc):
-        self.addSelectors('Tip Rack Type', trname, config.TIP_RACK_TYPES)
+        self.addSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES)
         self.addSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS)
 
     def addSourcePlateSelectors(self, spname, sploc):
-        self.addSelectors('Source Plate Type', spname, config.PLATE_TYPES)
+        self.addSelectors('Source Plate Type', spname, config.PLATE_NAMES)
         self.addSelectors('Source Plate Location', sploc, config.PLATE_LOCS)
 
     def addDestPlateSelectors(self, dpname, dploc):
-        self.addSelectors('Dest Plate Type', dpname, config.PLATE_TYPES)
+        self.addSelectors('Dest Plate Type', dpname, config.PLATE_NAMES)
         self.addSelectors('Dest Plate Location', dploc, config.PLATE_LOCS)
 
     def addSelectors(self, label, var, option_list):
