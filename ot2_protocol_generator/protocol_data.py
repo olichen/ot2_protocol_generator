@@ -11,9 +11,9 @@ class ProtocolData:
     dest_plate_name: str
     dest_plate_loc: str
     pipette_name: str
+    pipette_type: str
     pipette_loc: str
     csv_file_loc: str
-    pipette_type: str = 'multi' # PLACEHOLDER
 
     # Check to make sure there is input data for every variable
     def isValid(self):

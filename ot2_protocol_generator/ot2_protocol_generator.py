@@ -12,15 +12,18 @@ class OT2ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.pipette_name = tk.StringVar()
-        self.pipette_loc = tk.StringVar()
         self.tip_rack_name = tk.StringVar()
         self.tip_rack_loc = tk.StringVar()
         self.src_plate_name = tk.StringVar()
         self.src_plate_loc = tk.StringVar()
         self.dest_plate_name = tk.StringVar()
         self.dest_plate_loc = tk.StringVar()
+        self.pipette_name = tk.StringVar()
+        self.pipette_type = tk.StringVar()
+        self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
+
+        self.pipette_type.set('multi')
 
         self.createGUI()
 
@@ -64,15 +67,16 @@ class OT2ProtocolGenerator:
 
     def getProtocolData(self):
         return protocol_data.ProtocolData(
-            tip_rack_name=self.tip_rack_name.get(),
-            tip_rack_loc=self.tip_rack_loc.get(),
-            src_plate_name=self.src_plate_name.get(),
-            src_plate_loc=self.src_plate_loc.get(),
-            dest_plate_name=self.dest_plate_name.get(),
-            dest_plate_loc=self.dest_plate_loc.get(),
-            pipette_name=self.pipette_name.get(),
-            pipette_loc=self.pipette_loc.get(),
-            csv_file_loc=self.csv_file_loc.get())
+                tip_rack_name=self.tip_rack_name.get(),
+                tip_rack_loc=self.tip_rack_loc.get(),
+                src_plate_name=self.src_plate_name.get(),
+                src_plate_loc=self.src_plate_loc.get(),
+                dest_plate_name=self.dest_plate_name.get(),
+                dest_plate_loc=self.dest_plate_loc.get(),
+                pipette_name=self.pipette_name.get(),
+                pipette_loc=self.pipette_loc.get(),
+                pipette_type=self.pipette_type.get(),
+                csv_file_loc=self.csv_file_loc.get())
 
     def quit(self, event=None):
         self.window.destroy()
