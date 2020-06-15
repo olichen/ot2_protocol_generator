@@ -18,8 +18,8 @@ class ProtocolData:
     # Check to make sure the inputted data is valid
     # Raises an exception if the data is invalid
     def isValid(self):
-        self.checkForMissingInput()
-        self.checkForDifferentPlateLocations()
+        self.checkMissingInput()
+        self.checkPlateLocations()
 
         return True
 
