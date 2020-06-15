@@ -5,42 +5,42 @@ import unittest
 
 
 class TestEightTransfer(unittest.TestCase):
-    def test_placeholder(self):
-        print('placeholder')
+    def setUp(self):
+        self.volumedict = {
+            'A1': '1', 'B1': '1', 'C1': '1', 'D1': '1',
+            'E1': '1', 'F1': '1', 'G1': '1', 'H1': '1',
+            'A2': '2', 'B2': '2', 'C2': '2', 'D2': '2',
+            'E2': '2', 'F2': '2', 'G2': '2', 'H2': '2',
+            'A3': '3', 'B3': '3', 'C3': '3', 'D3': '3',
+            'E3': '3', 'F3': '3', 'G3': '3', 'H3': '3',
+            'A4': '4', 'B4': '4', 'C4': '4', 'D4': '4',
+            'E4': '4', 'F4': '4', 'G4': '4', 'H4': '4',
+            'A5': '5', 'B5': '5', 'C5': '5', 'D5': '5',
+            'E5': '5', 'F5': '5', 'G5': '5', 'H5': '5',
+            'A6': '6', 'B6': '6', 'C6': '6', 'D6': '6',
+            'E6': '6', 'F6': '6', 'G6': '6', 'H6': '6',
+            'A7': '7', 'B7': '7', 'C7': '7', 'D7': '7',
+            'E7': '7', 'F7': '7', 'G7': '7', 'H7': '7',
+            'A8': '8', 'B8': '8', 'C8': '8', 'D8': '8',
+            'E8': '8', 'F8': '8', 'G8': '8', 'H8': '8',
+            'A9': '9', 'B9': '9', 'C9': '9', 'D9': '9',
+            'E9': '9', 'F9': '9', 'G9': '9', 'H9': '9',
+            'A10': '10', 'B10': '10', 'C10': '10', 'D10': '10',
+            'E10': '10', 'F10': '10', 'G10': '10', 'H10': '10',
+            'A11': '11', 'B11': '11', 'C11': '11', 'D11': '11',
+            'E11': '11', 'F11': '11', 'G11': '11', 'H11': '11',
+            'A12': '12', 'B12': '12', 'C12': '12', 'D12': '12',
+            'E12': '12', 'F12': '12', 'G12': '12', 'H12': '12',
+            }
 
-    # def setUp(self):
-    #     self.data = protocol_data.ProtocolData(
-    #         tip_rack_type='',
-    #         tip_rack_loc='',
-    #         src_plate_type='',
-    #         src_plate_loc='',
-    #         dest_plate_type='',
-    #         dest_plate_loc='',
-    #         pipette_type='',
-    #         pipette_loc='',
-    #         csv_file_loc='')
-
-    # def test_isValid(self):
-    #     with self.assertRaises(ValueError):
-    #         self.data.isValid()
-    #     self.data.tip_rack_type = 'a'
-    #     self.data.tip_rack_loc = '1'
-    #     with self.assertRaises(ValueError):
-    #         self.data.isValid()
-    #     self.data.src_plate_type = 'b'
-    #     self.data.src_plate_loc = '2'
-    #     with self.assertRaises(ValueError):
-    #         self.data.isValid()
-    #     self.data.dest_plate_type = 'c'
-    #     self.data.dest_plate_loc = '3'
-    #     with self.assertRaises(ValueError):
-    #         self.data.isValid()
-    #     self.data.pipette_type = 'd'
-    #     self.data.pipette_loc = 'r'
-    #     with self.assertRaises(ValueError):
-    #         self.data.isValid()
-    #     self.data.csv_file_loc = 'f'
-    #     self.assertTrue(self.data.isValid())
+    def test(self):
+        test = eight_transfer.EightTransfer(self.volumedict)
+        self.volumedict['A1']='11'
+        with self.assertRaises(Exception):
+            eight_transfer.EightTransfer(self.volumedict)
+        del self.volumedict['A1']
+        with self.assertRaises(IndexError):
+            eight_transfer.EightTransfer(self.volumedict)
 
 if __name__ == '__main__':
     unittest.main()
