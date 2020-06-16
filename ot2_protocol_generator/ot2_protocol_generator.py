@@ -32,17 +32,18 @@ class OT2ProtocolGenerator:
         pg.addSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
         pg.addDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
         pg.addCSVSelector(self.csv_file_loc)
+        self.addSaveCancel()
 
+    def addSaveCancel(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=101, column=1, columnspan=4, sticky='nesw')
-        self.addSaveCancel(frame)
 
-    def addSaveCancel(self, parent):
-        save = ttk.Button(parent, text='Generate Protocol', command=self.save)
-        save.grid(row=1, column=1)
-        cancel = ttk.Button(parent, text='Quit', command=self.quit)
-        cancel.grid(row=1, column=2)
+        cancel = ttk.Button(frame, text='Cancel', command=self.quit)
+        cancel.pack(side=tk.RIGHT)
         self.window.bind('<Escape>', self.quit)
+
+        save = ttk.Button(frame, text='Generate Protocol', command=self.save)
+        save.pack(side=tk.RIGHT)
 
     def save(self):
         data = self.getProtocolData()
