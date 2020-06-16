@@ -84,7 +84,8 @@ class OT2ProtocolGenerator:
         elif 'multi' in pname:
             return 'multi'
         else:
-            raise ValueError("Invalid pipette: '" + pname + "'")
+            err_str = "Invalid pipette: '{0}'".format(pname)
+            raise ValueError(err_str)
 
     def quit(self, event=None):
         self.window.destroy()

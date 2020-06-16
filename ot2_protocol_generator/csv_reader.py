@@ -12,8 +12,6 @@ class CSVReader:
 
     # Read in the CSV file
     def readCSV(self, csv_file):
-
-        # read in the CSV file
         with open(csv_file) as csvfile:
             reader = csv.reader(csvfile)
 
@@ -38,15 +36,17 @@ class CSVReader:
             log.warning("Invalid well '" + well + "'.")
             return None, None
 
-        # Check if the well is already defined.
+        # Check if the well is already defined
+        # Raises an exception if wells overlap
         if well in self.volumes:
-            log.error("Well '" + well + "' is already defined.")
-            return None, None
+            err_str = "Well '{0}' is already defined.".format(well)
+            raise ValueError(err_str)
 
-        # Check to make sure we have a valid volume.
+        # Check to make sure we have a valid voume
+        # Raises an exception if we don't
         if not self.isValidVolume(volume):
-            log.error("Encountered invalid volume '" + volume + "'.")
-            return None, None
+            err_str = "Encountered invalid volume '{0}'.".format(volume)
+            raise ValueError(err_str)
 
         return well, volume
 
