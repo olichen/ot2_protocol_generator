@@ -24,10 +24,10 @@ class OT2ProtocolGenerator:
         self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
-        self.log_text = ['l']
-        self.log_handler = log_handler.LogHandler(self.log_text)
-        self.logger = logging.getLogger()
-        self.logger.addHandler(self.log_handler)
+        self.log_text = ['']
+        lh = log_handler.LogHandler(self.log_text)
+        logger = logging.getLogger()
+        logger.addHandler(lh)
 
         self.createGUI()
 
@@ -60,11 +60,12 @@ class OT2ProtocolGenerator:
 
             output_file = self.outputFileDialog()
             pw.saveOutput(output_file)
+            if self.log_text[0]:
+                messagebox.showwarning(title='Warning', message=self.log_text[0])
             self.quit()
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
-        print(self.log_text[0])
 
     def outputFileDialog(self):
         return filedialog.asksaveasfilename(

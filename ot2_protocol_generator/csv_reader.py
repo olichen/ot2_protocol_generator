@@ -1,7 +1,6 @@
 import csv
 import re
 import logging
-log = logging.getLogger()
 
 
 # Reads a CSV file and returns a dict of 'well': 'volume'
@@ -9,6 +8,7 @@ class CSVReader:
     def __init__(self, csv_file):
         self.volumes = {}
         self.readCSV(csv_file)
+        self.logger = logging.getLogger()
 
     # Read in the CSV file
     def readCSV(self, csv_file):
@@ -28,12 +28,14 @@ class CSVReader:
             well = row[0].strip()
             volume = row[1].strip()
         except IndexError:
-            log.warning('Invalid cells ' + str(row) + '.')
+            err_str = "Invalid cells '{0}'".format(str(row))
+            self.logger.warning(err_str)
             return None, None
 
         # Check to make sure we have a valid well position.
         if not self.isValidWell(well):
-            log.warning("Invalid well '" + well + "'.")
+            err_str = "Invalid well '{0}'.".format(well)
+            self.logger.warning(err_str)
             return None, None
 
         # Check if the well is already defined

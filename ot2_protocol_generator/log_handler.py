@@ -11,4 +11,3 @@ class LogHandler(logging.Handler):
         msg = self.format(record)
         self.text[0] += msg
         self.text[0] += '\n'
-        print('here: ' +msg)
