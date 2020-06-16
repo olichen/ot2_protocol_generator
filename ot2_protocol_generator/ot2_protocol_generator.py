@@ -27,14 +27,14 @@ class OT2ProtocolGenerator:
     def createGUI(self):
         pg = protocol_gui.ProtocolGUI(self.window)
 
-        pg.addPipetteSelectors(self.pipette_name, self.pipette_loc)
-        pg.addTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
-        pg.addSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
-        pg.addDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
-        pg.addCSVSelector(self.csv_file_loc)
-        self.addSaveCancel()
+        pg.createPipetteSelectors(self.pipette_name, self.pipette_loc)
+        pg.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
+        pg.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
+        pg.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
+        pg.createCSVSelector(self.csv_file_loc)
+        self.createSaveCancelButtons()
 
-    def addSaveCancel(self):
+    def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=101, column=1, columnspan=4, sticky='nesw')
 

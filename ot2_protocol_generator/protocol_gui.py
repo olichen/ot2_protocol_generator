@@ -4,6 +4,7 @@ from tkinter import filedialog
 import config
 
 
+# Helps create the GUI
 class ProtocolGUI:
     def __init__(self, parent):
         self.parent = parent
@@ -11,23 +12,29 @@ class ProtocolGUI:
         self.col = 1
         self.csv_file_loc = None
 
-    def addPipetteSelectors(self, pname, ploc):
-        self.addSelectors('Pipette Type', pname, config.PIPETTE_NAMES)
-        self.addSelectors('Pipette Location', ploc, config.PIPETTE_LOCS)
+    # Creates the selectors for the pipette
+    def createPipetteSelectors(self, pname, ploc):
+        self.createSelectors('Pipette Type', pname, config.PIPETTE_NAMES)
+        self.createSelectors('Pipette Location', ploc, config.PIPETTE_LOCS)
 
-    def addTipRackSelectors(self, trname, trloc):
-        self.addSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES)
-        self.addSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS)
+    # Creates the selectors for the tip rack
+    def createTipRackSelectors(self, trname, trloc):
+        self.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES)
+        self.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS)
 
-    def addSourcePlateSelectors(self, spname, sploc):
-        self.addSelectors('Source Plate Type', spname, config.PLATE_NAMES)
-        self.addSelectors('Source Plate Location', sploc, config.PLATE_LOCS)
+    # Creates the selectors for the source plate
+    def createSourcePlateSelectors(self, spname, sploc):
+        self.createSelectors('Source Plate Type', spname, config.PLATE_NAMES)
+        self.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS)
 
-    def addDestPlateSelectors(self, dpname, dploc):
-        self.addSelectors('Dest Plate Type', dpname, config.PLATE_NAMES)
-        self.addSelectors('Dest Plate Location', dploc, config.PLATE_LOCS)
+    # Creates the selectors for the destination plate
+    def createDestPlateSelectors(self, dpname, dploc):
+        self.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES)
+        self.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS)
 
-    def addSelectors(self, label, var, option_list):
+    # Creates a label and a dropdown menu for the given label, variable, and
+    # list of options
+    def createSelectors(self, label, var, option_list):
         label = ttk.Label(self.parent, text=label)
         label.config(width=16)
         label.grid(row=self.row, column=self.col, sticky='nesw')
@@ -38,6 +45,8 @@ class ProtocolGUI:
 
         self.incrementGrid()
 
+    # Helper function that increments the grid for the GUI elements so that
+    # they are aligned properly
     def incrementGrid(self):
         if self.col == 3:
             self.row += 1
@@ -45,7 +54,8 @@ class ProtocolGUI:
         else:
             self.col += 2
 
-    def addCSVSelector(self, csv_file_loc):
+    # Creates a label, text box, and button for selecting the CSV file
+    def createCSVSelector(self, csv_file_loc):
         self.csv_file_loc = csv_file_loc
         label = ttk.Label(self.parent, text='CSV File')
         label.grid(row=100, column=1, sticky='nesw')
@@ -58,6 +68,7 @@ class ProtocolGUI:
         csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSV)
         csvbutton.pack(side=tk.RIGHT)
 
+    # Pops out a file dialog for the user to select a CSV input file
     def getCSV(self):
         self.csv_file_loc.set(filedialog.askopenfilename(
             title='Select a file',
