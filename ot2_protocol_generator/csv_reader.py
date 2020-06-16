@@ -1,7 +1,7 @@
 import csv
 import re
 import logging
-log = logging.getLogger(__name__)
+log = logging.getLogger()
 
 
 # Reads a CSV file and returns a dict of 'well': 'volume'

@@ -5,6 +5,8 @@ from tkinter import messagebox
 import protocol_data
 import protocol_writer
 import protocol_gui
+import logging
+import log_handler
 
 
 class OT2ProtocolGenerator:
@@ -21,6 +23,11 @@ class OT2ProtocolGenerator:
         self.pipette_name = tk.StringVar()
         self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
+
+        self.log_text = ['l']
+        self.log_handler = log_handler.LogHandler(self.log_text)
+        self.logger = logging.getLogger()
+        self.logger.addHandler(self.log_handler)
 
         self.createGUI()
 
@@ -57,6 +64,7 @@ class OT2ProtocolGenerator:
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
+        print(self.log_text[0])
 
     def outputFileDialog(self):
         return filedialog.asksaveasfilename(
