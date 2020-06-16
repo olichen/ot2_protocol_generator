@@ -23,7 +23,7 @@ class TestProtocolData(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.data.isValid()
 
-        self.data.pipette_type = 'right'
+        self.data.pipette_type = 'single'
         with self.assertRaises(ValueError):
             self.data.isValid()
 
@@ -32,18 +32,39 @@ class TestProtocolData(unittest.TestCase):
             self.data.isValid()
 
         self.data.src_plate_loc = config.PLATE_LOCS[1]
-        self.data.dest_plate_loc = config.PLATE_LOCS[1]
+        with self.assertRaises(ValueError):
+            self.data.isValid()
+
+        self.data.dest_plate_loc = config.PLATE_LOCS[2]
         self.assertTrue(self.data.isValid())
 
     def test_checkMissingInput(self):
         with self.assertRaises(ValueError):
             self.data.checkMissingInput()
-        #try:
-        #    eight_transfer.EightTransfer(self.volumedict)
-        #except Exception:
-        #    self.fail('Unexpected exception')
 
+        self.data.pipette_type = 'single'
+        with self.assertRaises(ValueError):
+            self.data.checkMissingInput()
 
+        self.data.csv_file_loc = '/placeholder.py'
+        try:
+            self.data.checkMissingInput()
+        except Exception:
+            self.fail('Unexpected exception')
+
+    def test_checkPlateLocations(self):
+        with self.assertRaises(ValueError):
+            self.data.checkPlateLocations()
+
+        self.data.src_plate_loc = config.PLATE_LOCS[1]
+        with self.assertRaises(ValueError):
+            self.data.checkPlateLocations()
+
+        self.data.dest_plate_loc = config.PLATE_LOCS[2]
+        try:
+            self.data.checkPlateLocations()
+        except Exception:
+            self.fail('Unexpected exception')
 
 
 if __name__ == '__main__':
