@@ -7,8 +7,8 @@ import logging
 class CSVReader:
     def __init__(self, csv_file):
         self.volumes = {}
-        self.readCSV(csv_file)
         self.logger = logging.getLogger()
+        self.readCSV(csv_file)
 
     # Read in the CSV file
     def readCSV(self, csv_file):
