@@ -24,12 +24,12 @@ class OT2ProtocolGenerator:
         self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
+        self.createGUI()
+
         self.log_text = ['']
         lh = log_handler.LogHandler(self.log_text)
         logger = logging.getLogger()
         logger.addHandler(lh)
-
-        self.createGUI()
 
     def createGUI(self):
         pg = protocol_gui.ProtocolGUI(self.window)
@@ -98,10 +98,3 @@ class OT2ProtocolGenerator:
 
     def quit(self, event=None):
         self.window.destroy()
-
-    def main(self):
-        self.window.mainloop()
-
-
-if __name__ == "__main__":
-    OT2ProtocolGenerator().main()
