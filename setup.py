@@ -16,5 +16,4 @@ setup(
     long_description_content_type='text/markdown',
     license = 'MIT',
     packages = ['ot2_protocol_generator'],
-    install_requires = ['opentrons']
 )
