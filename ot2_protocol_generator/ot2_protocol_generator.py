@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-import protocol_data
-import protocol_writer
-import protocol_gui
+from . import protocol_data
+from . import protocol_writer
+from . import protocol_gui
 import logging
-import log_handler
+from . import log_handler
 
 
 class OT2ProtocolGenerator:

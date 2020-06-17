@@ -1,6 +1,6 @@
-import csv_reader
-import protocol_formatter
-import eight_transfer
+from .import csv_reader
+from .import protocol_formatter
+from .import eight_transfer
 
 
 # Class that handles receiving/validating data and outputting the protocol
