@@ -60,7 +60,7 @@ class OT2ProtocolGenerator:
             csv_data = csv_reader.CSVReader(data.csv_file_loc)
             pw = protocol_writer.ProtocolWriter(data, csv_data)
 
-            output_file = self.outputFileDialog()
+            output_file = filedialog.asksaveasfilename(title='Save protocol')
             pw.saveOutput(output_file)
             if self.log_text[0]:
                 messagebox.showwarning(title='Warning', message=self.log_text[0])
@@ -68,11 +68,6 @@ class OT2ProtocolGenerator:
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
-
-    def outputFileDialog(self):
-        return filedialog.asksaveasfilename(
-            title='Save protocol',
-            filetypes=[('Python Files', '*.py')])
 
     def getProtocolData(self):
         ptype = self.getPipetteType(self.pipette_name.get())
