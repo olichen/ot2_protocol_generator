@@ -29,9 +29,8 @@ class CSVReader:
             volume = row[1].strip()
         except IndexError:
             err_str = str.format(
-                    "Warning: " +
-                    "Invalid cells '{0}' in row {1}",
-                    row, rownum)
+                "Warning: Invalid cells '{0}' in row {1}",
+                row, rownum)
             self.logger.warning(err_str)
             return None, None
 
@@ -39,9 +38,8 @@ class CSVReader:
         if not self.isValidWell(well):
             if not rownum == 1:
                 err_str = str.format(
-                        "Warning: " +
-                        "Invalid well '{0}' in row {1}",
-                        well, rownum)
+                    "Warning: Invalid well '{0}' in row {1}",
+                    well, rownum)
                 self.logger.warning(err_str)
             return None, None
 
@@ -49,32 +47,29 @@ class CSVReader:
         # Raises an exception if wells overlap
         if well in self.volumes:
             err_str = str.format(
-                    "Error: " +
-                    "Well '{0}' in row {1} is already defined elsewhere",
-                    well, rownum)
+                "Error: Well '{0}' in row {1} is already defined elsewhere",
+                well, rownum)
             raise ValueError(err_str)
 
         # Check to make sure we have a valid volume
         # Raises an exception if we don't
         if not self.isValidVolume(volume):
             err_str = str.format(
-                    "Error: " +
-                    "Encountered invalid volume '{0}' in row {1}",
-                    volume, rownum)
+                "Error: Encountered invalid volume '{0}' in row {1}",
+                volume, rownum)
             raise ValueError(err_str)
 
         if volume[::-1].find('.') > 1:
             err_str = str.format(
-                    "Warning: " +
-                    "Volume '{0}' in row {1} has more than one decimal place",
-                    volume, rownum)
+                "Warning: Volume '{0}' in row {1}" +
+                "is longer than one decimal place",
+                volume, rownum)
             self.logger.warning(err_str)
 
         if float(volume) > 10:
             err_str = str.format(
-                    "Warning: " +
-                    "Volume '{0}' in row {1} is greater than 10 μL",
-                    volume, rownum)
+                "Warning: Volume '{0}' in row {1} is greater than 10 μL",
+                volume, rownum)
             self.logger.warning(err_str)
 
         return well, volume
