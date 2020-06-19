@@ -29,14 +29,14 @@ class TestCSVReader(unittest.TestCase):
 
     def test_readRow(self):
         csvr = csv_reader.CSVReader(self.temp_csv)
-        self.assertEqual(csvr.readRow(['a', '1']), (None, None))
-        self.assertEqual(csvr.readRow(['garbage', '1']), (None, None))
-        self.assertEqual(csvr.readRow(['H2']), (None, None))
+        self.assertEqual(csvr.readRow(2, ['a', '1']), (None, None))
+        self.assertEqual(csvr.readRow(2, ['garbage', '1']), (None, None))
+        self.assertEqual(csvr.readRow(2, ['H2']), (None, None))
         with self.assertRaises(ValueError):
-            csvr.readRow(['A1', 'garbage'])
+            csvr.readRow(2, ['A1', 'garbage'])
         with self.assertRaises(ValueError):
-            csvr.readRow(['C2', ''])
-        self.assertEqual(csvr.readRow(['H1', ' 4 ']), ('H1', '4'))
+            csvr.readRow(2, ['C2', ''])
+        self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
     def test_isValidWell(self):
         csvr = csv_reader.CSVReader(self.temp_csv)
