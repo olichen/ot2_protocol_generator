@@ -28,30 +28,47 @@ class CSVReader:
             well = row[0].strip()
             volume = row[1].strip()
         except IndexError:
-            err_str = "Invalid cells '{0}' in row {1}".format(row, rownum)
+            err_str = str.format("Warning: " +
+                    "Invalid cells '{0}' in row {1}",
+                    row, rownum)
             self.logger.warning(err_str)
             return None, None
 
         # Check to make sure we have a valid well position.
         if not self.isValidWell(well):
             if not rownum == 1:
-                err_str = "Invalid well '{0}' in row {1}".format(well, rownum)
+                err_str = str.format("Warning: " +
+                        "Invalid well '{0}' in row {1}",
+                        well, rownum)
                 self.logger.warning(err_str)
             return None, None
 
         # Check if the well is already defined
         # Raises an exception if wells overlap
         if well in self.volumes:
-            err_str = "Well '{0}' in row {1} is already defined elsewhere" \
-                    .format(well, rownum)
+            err_str = str.format("Error: " +
+                    "Well '{0}' in row {1} is already defined elsewhere",
+                    well, rownum)
             raise ValueError(err_str)
 
-        # Check to make sure we have a valid voume
+        # Check to make sure we have a valid volume
         # Raises an exception if we don't
         if not self.isValidVolume(volume):
-            err_str = "Encountered invalid volume '{0}' in row {1}" \
-                    .format(volume, rownum)
+            err_str = str.format("Error: " +
+                    "Encountered invalid volume '{0}' in row {1}",
+                    volume, rownum)
             raise ValueError(err_str)
+
+        if volume[::-1].find('.') > 1:
+            err_str = str.format("Warning: " +
+                    "Volume '{0}' in row {1} has more than one decimal place",
+                    volume, rownum)
+            self.logger.warning(err_str)
+
+        if float(volume) > 10:
+            err_string = str.format("Warning: " +
+                    "Volume '{0}' in row {1} is greater than 10 μL",
+                    volume, rownum)
 
         return well, volume
 
@@ -63,7 +80,7 @@ class CSVReader:
     # Check to make sure the volume is valid
     def isValidVolume(self, volume_text):
         try:
-            int(volume_text)
+            float(volume_text)
             return True
         except ValueError:
             return False
