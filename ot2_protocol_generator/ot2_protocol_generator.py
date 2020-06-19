@@ -5,6 +5,7 @@ from tkinter import messagebox
 from . import protocol_data
 from . import protocol_writer
 from . import protocol_gui
+from . import csv_reader
 import logging
 from . import log_handler
 
@@ -56,7 +57,8 @@ class OT2ProtocolGenerator:
         data = self.getProtocolData()
         try:
             data.isValid()
-            pw = protocol_writer.ProtocolWriter(data)
+            csv_data = csv_reader.CSVReader(data.csv_file_loc)
+            pw = protocol_writer.ProtocolWriter(data, csv_data)
 
             output_file = self.outputFileDialog()
             pw.saveOutput(output_file)

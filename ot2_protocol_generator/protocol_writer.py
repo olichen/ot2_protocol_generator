@@ -1,16 +1,13 @@
-from .import csv_reader
-from .import protocol_formatter
-from .import eight_transfer
+from . import protocol_formatter
+from . import eight_transfer
 
 
 # Class that handles receiving/validating data and outputting the protocol
 class ProtocolWriter:
-    def __init__(self, data):
+    def __init__(self, data, csv_data):
         self.data = data
         self.pf = protocol_formatter.ProtocolFormatter()
-
-        # Reads the CSV file and returns a dict of 'well': 'volume'
-        self.csv_data = csv_reader.CSVReader(data.csv_file_loc)
+        self.csv_data = csv_data
 
     # Checks whether we are trying to do a single transfer or a multi transfer
     def saveOutput(self, output_file):
