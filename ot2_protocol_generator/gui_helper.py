@@ -5,7 +5,7 @@ from . import config
 
 
 # Helps create the GUI
-class ProtocolGUI:
+class GUIHelper:
     def __init__(self, parent):
         self.parent = parent
         self.row = 1

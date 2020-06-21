@@ -4,7 +4,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from . import protocol_data
 from . import protocol_writer
-from . import protocol_gui
+from . import gui_helper
 from . import csv_reader
 import logging
 from . import log_handler
@@ -33,7 +33,7 @@ class ProtocolGenerator:
         logger.addHandler(lh)
 
     def createGUI(self):
-        pg = protocol_gui.ProtocolGUI(self.window)
+        pg = gui_helper.GUIHelper(self.window)
 
         pg.createPipetteSelectors(self.pipette_name, self.pipette_loc)
         pg.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
