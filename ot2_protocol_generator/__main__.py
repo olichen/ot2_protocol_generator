@@ -1,7 +1,7 @@
 from . import protocol_generator
 
 def main():
-    pg = ot2_protocol_generator.OT2ProtocolGenerator()
+    pg = protocol_generator.ProtocolGenerator()
     pg.window.mainloop()
 
 if __name__ == '__main__':
