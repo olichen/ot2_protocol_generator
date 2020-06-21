@@ -2,15 +2,54 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from . import config
+from . import protocol_data
 
 
-# Helps create the GUI
-class GUIHelper:
+# Creates an input panel for a transfer
+class InputPanel:
     def __init__(self, parent):
         self.parent = parent
         self.row = 1
         self.col = 1
-        self.csv_file_loc = None
+
+        self.tip_rack_name = tk.StringVar()
+        self.tip_rack_loc = tk.StringVar()
+        self.src_plate_name = tk.StringVar()
+        self.src_plate_loc = tk.StringVar()
+        self.dest_plate_name = tk.StringVar()
+        self.dest_plate_loc = tk.StringVar()
+        self.pipette_name = tk.StringVar()
+        self.pipette_loc = tk.StringVar()
+        self.csv_file_loc = tk.StringVar()
+
+        self.createPipetteSelectors(self.pipette_name, self.pipette_loc)
+        self.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
+        self.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
+        self.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
+        self.createCSVSelector(self.csv_file_loc)
+
+    def getProtocolData(self):
+        ptype = self.getPipetteType(self.pipette_name.get())
+        return protocol_data.ProtocolData(
+                tip_rack_name=self.tip_rack_name.get(),
+                tip_rack_loc=self.tip_rack_loc.get(),
+                src_plate_name=self.src_plate_name.get(),
+                src_plate_loc=self.src_plate_loc.get(),
+                dest_plate_name=self.dest_plate_name.get(),
+                dest_plate_loc=self.dest_plate_loc.get(),
+                pipette_name=self.pipette_name.get(),
+                pipette_loc=self.pipette_loc.get(),
+                pipette_type=ptype,
+                csv_file_loc=self.csv_file_loc.get())
+
+    def getPipetteType(self, pname):
+        if 'single' in pname:
+            return 'single'
+        elif 'multi' in pname:
+            return 'multi'
+        else:
+            err_str = "Invalid pipette: '{0}'".format(pname)
+            raise ValueError(err_str)
 
     # Creates the selectors for the pipette
     def createPipetteSelectors(self, pname, ploc):

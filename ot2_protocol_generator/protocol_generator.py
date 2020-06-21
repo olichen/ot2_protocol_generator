@@ -15,31 +15,13 @@ class ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.tip_rack_name = tk.StringVar()
-        self.tip_rack_loc = tk.StringVar()
-        self.src_plate_name = tk.StringVar()
-        self.src_plate_loc = tk.StringVar()
-        self.dest_plate_name = tk.StringVar()
-        self.dest_plate_loc = tk.StringVar()
-        self.pipette_name = tk.StringVar()
-        self.pipette_loc = tk.StringVar()
-        self.csv_file_loc = tk.StringVar()
-
-        self.gui = gui_helper.GUIHelper(self.window)
-        self.createGUI()
+        self.gui = gui_helper.InputPanel(self.window)
         self.createSaveCancelButtons()
 
         self.log_text = ['']
         lh = log_handler.LogHandler(self.log_text)
         logger = logging.getLogger()
         logger.addHandler(lh)
-
-    def createGUI(self):
-        self.gui.createPipetteSelectors(self.pipette_name, self.pipette_loc)
-        self.gui.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
-        self.gui.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
-        self.gui.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
-        self.gui.createCSVSelector(self.csv_file_loc)
 
     def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
@@ -53,7 +35,7 @@ class ProtocolGenerator:
         save.pack(side=tk.RIGHT)
 
     def save(self):
-        data = self.getProtocolData()
+        data = self.gui.getProtocolData()
         try:
             data.isValid()
             csv_data = csv_reader.CSVReader(data.csv_file_loc)
@@ -67,30 +49,6 @@ class ProtocolGenerator:
         except Exception as e:
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
-
-    def getProtocolData(self):
-        ptype = self.getPipetteType(self.pipette_name.get())
-
-        return protocol_data.ProtocolData(
-                tip_rack_name=self.tip_rack_name.get(),
-                tip_rack_loc=self.tip_rack_loc.get(),
-                src_plate_name=self.src_plate_name.get(),
-                src_plate_loc=self.src_plate_loc.get(),
-                dest_plate_name=self.dest_plate_name.get(),
-                dest_plate_loc=self.dest_plate_loc.get(),
-                pipette_name=self.pipette_name.get(),
-                pipette_loc=self.pipette_loc.get(),
-                pipette_type=ptype,
-                csv_file_loc=self.csv_file_loc.get())
-
-    def getPipetteType(self, pname):
-        if 'single' in pname:
-            return 'single'
-        elif 'multi' in pname:
-            return 'multi'
-        else:
-            err_str = "Invalid pipette: '{0}'".format(pname)
-            raise ValueError(err_str)
 
     def quit(self, event=None):
         self.window.destroy()
