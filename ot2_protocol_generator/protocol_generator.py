@@ -10,7 +10,7 @@ import logging
 from . import log_handler
 
 
-class OT2ProtocolGenerator:
+class ProtocolGenerator:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title('Protocol Generator')

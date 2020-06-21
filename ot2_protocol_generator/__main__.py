@@ -1,4 +1,4 @@
-from . import ot2_protocol_generator
+from . import protocol_generator
 
 def main():
     pg = ot2_protocol_generator.OT2ProtocolGenerator()
