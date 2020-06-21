@@ -9,6 +9,10 @@ class ProtocolWriter:
         self.pf = protocol_formatter.ProtocolFormatter()
         self.csv_data = csv_data
 
+        # Tries to process the data; raises an exception with invalid data
+        if self.data.pipette_type == 'multi':
+            self.csv_data = eight_transfer.EightTransfer(self.csv_data.volumes)
+
     # Checks whether we are trying to do a single transfer or a multi transfer
     def saveOutput(self, output_file):
         if self.data.pipette_type == 'single':
@@ -30,15 +34,13 @@ class ProtocolWriter:
 
     # Writes all the transfer by column to the output protocol file
     def writeEightTransfer(self, output_file):
-        # Tries to process the data; raises an exception with invalid data
-        et = eight_transfer.EightTransfer(self.csv_data.volumes)
 
         with open(output_file, 'w') as f:
             self.writeHeader(f)
             # Iterates and writes the transfers by column to the output protocol
             # file if it receives a non-empty column
             for i in range(12):
-                vol = et.col_volumes[i]
+                vol = self.csv_data.col_volumes[i]
                 if vol:
                     col = i + 1
                     f.write(self.pf.getMultiTransfer(vol, col))
