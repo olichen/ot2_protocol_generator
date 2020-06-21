@@ -25,7 +25,9 @@ class ProtocolGenerator:
         self.pipette_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
+        self.gui = gui_helper.GUIHelper(self.window)
         self.createGUI()
+        self.createSaveCancelButtons()
 
         self.log_text = ['']
         lh = log_handler.LogHandler(self.log_text)
@@ -33,14 +35,11 @@ class ProtocolGenerator:
         logger.addHandler(lh)
 
     def createGUI(self):
-        pg = gui_helper.GUIHelper(self.window)
-
-        pg.createPipetteSelectors(self.pipette_name, self.pipette_loc)
-        pg.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
-        pg.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
-        pg.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
-        pg.createCSVSelector(self.csv_file_loc)
-        self.createSaveCancelButtons()
+        self.gui.createPipetteSelectors(self.pipette_name, self.pipette_loc)
+        self.gui.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
+        self.gui.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
+        self.gui.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
+        self.gui.createCSVSelector(self.csv_file_loc)
 
     def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
