@@ -39,7 +39,8 @@ class ProtocolGenerator:
         try:
             data.isValid()
             csv_data = csv_reader.CSVReader(data.csv_file_loc)
-            pw = protocol_writer.ProtocolWriter(data, csv_data)
+            pw = protocol_writer.ProtocolWriter()
+            pw.addInput(data, csv_data)
 
             output_file = filedialog.asksaveasfilename(title='Save protocol')
             pw.saveOutput(output_file)
