@@ -9,7 +9,6 @@ class ProtocolWriter:
         self.csv_data = []
         self.fh = format_helper.FormatHelper()
 
-
     def addInput(self, protocol_data, csv_data):
         self.protocol_data.append(protocol_data)
 
@@ -17,7 +16,6 @@ class ProtocolWriter:
         if protocol_data.isMulti():
             csv_data = eight_transfer.EightTransfer(csv_data.volumes)
         self.csv_data.append(csv_data)
-
 
     # Checks whether we are trying to do a single transfer or a multi transfer
     def saveOutput(self, output_file):
@@ -42,7 +40,8 @@ class ProtocolWriter:
     def writeEightTransfer(self, f, csv_data):
         # Iterates and writes the transfers by column to the output protocol
         # file if it receives a non-empty column
-        for vol in csv_data.col_volumes:
+        for i in range(12):
+            vol = csv_data.col_volumes[i]
             if vol:
                 col = i + 1
                 f.write(self.fh.getMultiTransfer(vol, col))
