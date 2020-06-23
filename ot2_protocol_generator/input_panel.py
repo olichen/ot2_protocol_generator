@@ -7,9 +7,8 @@ from . import protocol_data
 
 # Creates an input panel for a transfer
 class InputPanel:
-    def __init__(self, parent, pos):
+    def __init__(self, parent):
         self.parent = parent
-        self.pos = pos * 5
 
         self.tip_rack_name = tk.StringVar()
         self.tip_rack_loc = tk.StringVar()
@@ -44,23 +43,23 @@ class InputPanel:
 
     # Creates the selectors for the pipette
     def createPipetteSelectors(self, pname, ploc):
-        self.createSelectors('Pipette Type', pname, config.PIPETTE_NAMES, self.pos + 1, 1)
-        self.createSelectors('Pipette Location', ploc, config.PIPETTE_LOCS, self.pos + 1, 3)
+        self.createSelectors('Pipette Type', pname, config.PIPETTE_NAMES, 1, 1)
+        self.createSelectors('Pipette Location', ploc, config.PIPETTE_LOCS, 1, 3)
 
     # Creates the selectors for the tip rack
     def createTipRackSelectors(self, trname, trloc):
-        self.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES, self.pos + 2, 1)
-        self.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS, self.pos + 2, 3)
+        self.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES, 2, 1)
+        self.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 2, 3)
 
     # Creates the selectors for the source plate
     def createSourcePlateSelectors(self, spname, sploc):
-        self.createSelectors('Source Plate Type', spname, config.PLATE_NAMES, self.pos + 3, 1)
-        self.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS, self.pos + 3, 3)
+        self.createSelectors('Source Plate Type', spname, config.PLATE_NAMES, 3, 1)
+        self.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS, 3, 3)
 
     # Creates the selectors for the destination plate
     def createDestPlateSelectors(self, dpname, dploc):
-        self.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES, self.pos + 4, 1)
-        self.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS, self.pos + 4, 3)
+        self.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES, 4, 1)
+        self.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS, 4, 3)
 
     # Creates a label and a dropdown menu for the given label, variable, and
     # list of options
@@ -77,10 +76,10 @@ class InputPanel:
     def createCSVSelector(self, csv_file_loc):
         self.csv_file_loc = csv_file_loc
         label = ttk.Label(self.parent, text='CSV File')
-        label.grid(row=self.pos + 5, column=1, sticky='nesw')
+        label.grid(row=5, column=1, sticky='nesw')
 
         frame = ttk.Frame(self.parent)
-        frame.grid(row=self.pos + 5, column=2, columnspan=3, sticky='nesw')
+        frame.grid(row=5, column=2, columnspan=3, sticky='nesw')
 
         entry = ttk.Entry(frame, textvariable=csv_file_loc)
         entry.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)

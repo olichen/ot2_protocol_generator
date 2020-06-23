@@ -12,20 +12,44 @@ import traceback
 
 class ProtocolGenerator:
     def __init__(self):
+        # Initialize window
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.input_panels = [input_panel.InputPanel(self.window, 0)]
+        # Initialize the first input panel
+        self.input_panels = []
+        self.addInputPanel()
+        self.createAddRemoveButtons()
         self.createSaveCancelButtons()
 
+        # Initialize log handler (outputs to self.log_text)
         self.log_text = ['']
         lh = log_handler.LogHandler(self.log_text)
         logger = logging.getLogger()
         logger.addHandler(lh)
 
+    # Add a set of input panels
+    def addInputPanel(self):
+        frame=ttk.Frame(self.window)
+        frame.grid(row=len(self.input_panels), sticky='nesw')
+        ip = input_panel.InputPanel(frame)
+        self.input_panels.append(ip)
+
+    # Create the save and cancel buttons
+    def createAddRemoveButtons(self):
+        frame = ttk.Frame(self.window)
+        frame.grid(row=100, sticky='nesw')
+
+        addInput = ttk.Button(frame, text='+', command=self.addInputPanel)
+        addInput.pack(side=tk.RIGHT)
+
+        # save = ttk.Button(frame, text='Generate Protocol', command=self.save)
+        # save.pack(side=tk.RIGHT)
+
+    # Create the save and cancel buttons
     def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
-        frame.grid(row=100, column=1, columnspan=4, sticky='nesw')
+        frame.grid(row=101, sticky='nesw')
 
         cancel = ttk.Button(frame, text='Cancel', command=self.quit)
         cancel.pack(side=tk.RIGHT)
