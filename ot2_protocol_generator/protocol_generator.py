@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 from . import protocol_writer
-from . import gui_helper
+from . import input_panel
 from . import csv_reader
 import logging
 from . import log_handler
@@ -15,7 +15,7 @@ class ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.gui = [gui_helper.InputPanel(self.window)]
+        self.input_panels = [input_panel.InputPanel(self.window)]
         self.createSaveCancelButtons()
 
         self.log_text = ['']
@@ -37,8 +37,8 @@ class ProtocolGenerator:
     def save(self):
         pw = protocol_writer.ProtocolWriter()
 
-        for gui in self.gui:
-            data = gui.getProtocolData()
+        for ip in self.input_panels:
+            data = ip.getProtocolData()
             try:
                 data.isValid()
                 csv_data = csv_reader.CSVReader(data.csv_file_loc)
