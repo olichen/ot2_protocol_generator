@@ -29,7 +29,6 @@ class InputPanel:
         self.createCSVSelector(self.csv_file_loc)
 
     def getProtocolData(self):
-        ptype = self.getPipetteType(self.pipette_name.get())
         return protocol_data.ProtocolData(
                 tip_rack_name=self.tip_rack_name.get(),
                 tip_rack_loc=self.tip_rack_loc.get(),
@@ -39,17 +38,7 @@ class InputPanel:
                 dest_plate_loc=self.dest_plate_loc.get(),
                 pipette_name=self.pipette_name.get(),
                 pipette_loc=self.pipette_loc.get(),
-                pipette_type=ptype,
                 csv_file_loc=self.csv_file_loc.get())
-
-    def getPipetteType(self, pname):
-        if 'single' in pname:
-            return 'single'
-        elif 'multi' in pname:
-            return 'multi'
-        else:
-            err_str = "Invalid pipette: '{0}'".format(pname)
-            raise ValueError(err_str)
 
     # Creates the selectors for the pipette
     def createPipetteSelectors(self, pname, ploc):

@@ -14,7 +14,7 @@ class ProtocolWriter:
         self.protocol_data.append(protocol_data)
 
         # Tries to process the data; raises an exception with invalid data
-        if protocol_data.pipette_type == 'multi':
+        if protocol_data.isMulti():
             csv_data = eight_transfer.EightTransfer(csv_data.volumes)
         self.csv_data.append(csv_data)
 
@@ -28,14 +28,10 @@ class ProtocolWriter:
             for i in range(len(self.protocol_data)):
                 self.writeProtocolData(f, self.protocol_data[i])
 
-                if self.protocol_data[i].pipette_type == 'single':
-                    self.writeSingleTransfer(f, self.csv_data[i])
-                elif self.protocol_data[i].pipette_type == 'multi':
+                if self.protocol_data[i].isMulti():
                     self.writeEightTransfer(f, self.csv_data[i])
                 else:
-                    # We shouldn't ever reach here
-                    err_str = 'Invalid pipette type: ' + self.protocol_data[i].pipette_type
-                    raise ValueError(err_str)
+                    self.writeSingleTransfer(f, self.csv_data[i])
 
     # Writes all the transfers by well to the output protocol file
     def writeSingleTransfer(self, f, csv_data):

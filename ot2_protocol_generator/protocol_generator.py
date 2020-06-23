@@ -2,12 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-from . import protocol_data
 from . import protocol_writer
 from . import gui_helper
 from . import csv_reader
 import logging
 from . import log_handler
+import traceback
 
 
 class ProtocolGenerator:
@@ -48,6 +48,7 @@ class ProtocolGenerator:
                 messagebox.showwarning(title='Warning', message=self.log_text[0])
             self.quit()
         except Exception as e:
+            traceback.print_exc()
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
 
