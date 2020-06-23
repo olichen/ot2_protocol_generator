@@ -15,7 +15,7 @@ class ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.input_panels = [input_panel.InputPanel(self.window)]
+        self.input_panels = [input_panel.InputPanel(self.window, 0)]
         self.createSaveCancelButtons()
 
         self.log_text = ['']
