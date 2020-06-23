@@ -15,7 +15,7 @@ class ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
 
-        self.gui = gui_helper.InputPanel(self.window)
+        self.gui = [gui_helper.InputPanel(self.window)]
         self.createSaveCancelButtons()
 
         self.log_text = ['']
@@ -35,22 +35,31 @@ class ProtocolGenerator:
         save.pack(side=tk.RIGHT)
 
     def save(self):
-        data = self.gui.getProtocolData()
-        try:
-            data.isValid()
-            csv_data = csv_reader.CSVReader(data.csv_file_loc)
-            pw = protocol_writer.ProtocolWriter()
-            pw.addInput(data, csv_data)
+        pw = protocol_writer.ProtocolWriter()
 
-            output_file = filedialog.asksaveasfilename(title='Save protocol')
+        for gui in self.gui:
+            data = gui.getProtocolData()
+            try:
+                data.isValid()
+                csv_data = csv_reader.CSVReader(data.csv_file_loc)
+                pw.addInput(data, csv_data)
+            except Exception as e:
+                self.handleException(e)
+
+        output_file = filedialog.asksaveasfilename(title='Save protocol')
+        try:
             pw.saveOutput(output_file)
-            if self.log_text[0]:
-                messagebox.showwarning(title='Warning', message=self.log_text[0])
-            self.quit()
         except Exception as e:
-            traceback.print_exc()
-            messagebox.showerror(title='Error', message=e)
-            self.window.focus()
+            self.handleException(e)
+
+        if self.log_text[0]:
+            messagebox.showwarning(title='Warning', message=self.log_text[0])
+        self.quit()
+
+    def handleException(self, e):
+        traceback.print_exc()
+        messagebox.showerror(title='Error', message=e)
+        self.window.focus()
 
     def quit(self, event=None):
         self.window.destroy()
