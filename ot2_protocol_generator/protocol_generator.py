@@ -25,7 +25,7 @@ class ProtocolGenerator:
 
     def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
-        frame.grid(row=101, column=1, columnspan=4, sticky='nesw')
+        frame.grid(row=100, column=1, columnspan=4, sticky='nesw')
 
         cancel = ttk.Button(frame, text='Cancel', command=self.quit)
         cancel.pack(side=tk.RIGHT)
