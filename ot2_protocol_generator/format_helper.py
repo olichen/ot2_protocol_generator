@@ -1,5 +1,5 @@
 # Formats the output code for the protocol
-class ProtocolFormatter:
+class FormatHelper:
     # Returns the code for the header
     def getHeader(self):
         return (
