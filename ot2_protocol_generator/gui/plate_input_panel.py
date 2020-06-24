@@ -1,15 +1,13 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
-from . import gui_helper
 from . import config
+from .input_panel import InputPanel
 from . import plate_data
 
 
 # Creates an input panel for a transfer
-class PlateInputPanel:
+class PlateInputPanel(InputPanel):
     def __init__(self, parent):
-        self.gh = gui_helper.GUIHelper(parent)
+        super(PlateInputPanel, self).__init__(parent)
 
         self.tip_rack_name = tk.StringVar()
         self.tip_rack_loc = tk.StringVar()
@@ -19,7 +17,7 @@ class PlateInputPanel:
         self.dest_plate_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
-        self.createInputPanel()
+        self.createInputPanels()
 
     def getProtocolData(self):
         return plate_data.PlateData(
@@ -31,23 +29,23 @@ class PlateInputPanel:
                 dest_plate_loc=self.dest_plate_loc.get(),
                 csv_file_loc=self.csv_file_loc.get())
 
-    def createInputPanel(self):
+    def createInputPanels(self):
         self.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
         self.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
         self.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
-        self.gh.createCSVSelector(self.csv_file_loc)
+        self.createCSVSelector(self.csv_file_loc)
 
     # Creates the selectors for the tip rack
     def createTipRackSelectors(self, trname, trloc):
-        self.gh.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES, 1, 1)
-        self.gh.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 1, 3)
+        self.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES, 1, 1)
+        self.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 1, 3)
 
     # Creates the selectors for the source plate
     def createSourcePlateSelectors(self, spname, sploc):
-        self.gh.createSelectors('Source Plate Type', spname, config.PLATE_NAMES, 2, 1)
-        self.gh.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS, 2, 3)
+        self.createSelectors('Source Plate Type', spname, config.PLATE_NAMES, 2, 1)
+        self.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS, 2, 3)
 
     # Creates the selectors for the destination plate
     def createDestPlateSelectors(self, dpname, dploc):
-        self.gh.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES, 3, 1)
-        self.gh.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS, 3, 3)
+        self.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES, 3, 1)
+        self.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS, 3, 3)

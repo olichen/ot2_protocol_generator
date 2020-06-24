@@ -4,7 +4,7 @@ from tkinter import filedialog
 
 
 # Creates an input panel for a transfer
-class GUIHelper:
+class InputPanel:
     def __init__(self, parent):
         self.parent = parent
 

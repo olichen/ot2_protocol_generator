@@ -3,8 +3,8 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 from . import protocol_writer
-from .gui import plate_input_panel
 from .gui import pipette_input_panel
+from .gui import plate_input_panel
 from . import csv_reader
 import logging
 from . import log_handler
@@ -20,7 +20,7 @@ class ProtocolGenerator:
         # Initialize the first input panel
         self.input_panels = []
         self.addPipettePanel()
-        self.addInputPanel()
+        self.addPlatePanel()
         self.createAddRemoveButtons()
         self.createSaveCancelButtons()
 
@@ -37,7 +37,7 @@ class ProtocolGenerator:
         self.input_panels.append(ip)
 
     # Add a set of input panels
-    def addInputPanel(self):
+    def addPlatePanel(self):
         frame=ttk.Frame(self.window)
         frame.grid(row=len(self.input_panels), sticky='nesw')
         ip = plate_input_panel.PlateInputPanel(frame)
@@ -48,7 +48,7 @@ class ProtocolGenerator:
         frame = ttk.Frame(self.window)
         frame.grid(row=100, sticky='nesw')
 
-        addInput = ttk.Button(frame, text='+', command=self.addInputPanel)
+        addInput = ttk.Button(frame, text='+', command=self.addPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
         # save = ttk.Button(frame, text='Generate Protocol', command=self.save)
