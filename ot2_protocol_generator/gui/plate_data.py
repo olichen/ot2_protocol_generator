@@ -4,7 +4,7 @@ from dataclasses import dataclass
 # Dataclass to hold the data that defines the protocol and check for input
 # validity
 @dataclass
-class ProtocolData:
+class PlateData:
     tip_rack_name: str
     tip_rack_loc: str
     src_plate_name: str
@@ -14,16 +14,7 @@ class ProtocolData:
     pipette_name: str
     pipette_loc: str
     csv_file_loc: str
-
-    # Returns true if we have a multi channel pipette
-    def isMulti(self):
-        if 'multi' in self.pipette_name:
-            return True
-        elif 'single' in self.pipette_name:
-            return False
-        else:
-            err_str = "Invalid pipette: '{0}'".format(self.pipette_name)
-            raise ValueError(err_str)
+    data_type: str = 'plate'
 
     # Check to make sure the inputted data is valid
     # Raises an exception if the data is invalid

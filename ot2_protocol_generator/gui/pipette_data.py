@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class PipetteData:
     pipette_name: str
     pipette_loc: str
+    data_type: str = 'pipette'
 
     # Returns true if we have a multi channel pipette
     def isMulti(self):

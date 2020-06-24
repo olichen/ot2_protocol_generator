@@ -19,7 +19,7 @@ class PlateInputPanel(InputPanel):
 
         self.createInputPanels()
 
-    def getProtocolData(self):
+    def getData(self):
         return plate_data.PlateData(
                 tip_rack_name=self.tip_rack_name.get(),
                 tip_rack_loc=self.tip_rack_loc.get(),
