@@ -11,8 +11,6 @@ class PlateData:
     src_plate_loc: str
     dest_plate_name: str
     dest_plate_loc: str
-    pipette_name: str
-    pipette_loc: str
     csv_file_loc: str
     data_type: str = 'plate'
 

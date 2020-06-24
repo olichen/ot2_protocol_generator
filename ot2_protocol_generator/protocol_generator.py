@@ -5,7 +5,6 @@ from tkinter import messagebox
 from . import protocol_writer
 from .gui import pipette_input_panel
 from .gui import plate_input_panel
-from . import csv_reader
 import logging
 from . import log_handler
 import traceback
@@ -70,11 +69,9 @@ class ProtocolGenerator:
         pw = protocol_writer.ProtocolWriter()
 
         for ip in self.input_panels:
-            data = ip.getProtocolData()
+            data = ip.getData()
             try:
-                data.isValid()
-                csv_data = csv_reader.CSVReader(data.csv_file_loc)
-                pw.addInput(data, csv_data)
+                pw.addData(data)
             except Exception as e:
                 self.handleException(e)
 

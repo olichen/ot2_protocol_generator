@@ -1,21 +1,34 @@
 from . import format_helper
 from . import eight_transfer
+from . import csv_reader
 
 
 # Class that handles receiving/validating data and outputting the protocol
 class ProtocolWriter:
     def __init__(self):
-        self.protocol_data = []
+        self.data = []
         self.csv_data = []
+        self.pipette_type = ''
         self.fh = format_helper.FormatHelper()
 
-    def addInput(self, protocol_data, csv_data):
-        self.protocol_data.append(protocol_data)
+    def addData(self, data):
+        self.data.append(data)
 
         # Tries to process the data; raises an exception with invalid data
-        if protocol_data.isMulti():
-            csv_data = eight_transfer.EightTransfer(csv_data.volumes)
-        self.csv_data.append(csv_data)
+        if data.data_type == 'pipette':
+            if data.isMulti():
+                self.pipette_type = 'multi'
+            else:
+                self.pipette_type = 'single'
+            self.csv_data.append('')
+        elif data.data_type == 'plate':
+            csv_data = csv_reader.CSVReader(data.csv_file_loc)
+
+            if self.pipette_type == 'multi':
+                csv_data = eight_transfer.EightTransfer(csv_data.volumes)
+            self.csv_data.append(csv_data)
+        else:
+            raise Exception()
 
     # Checks whether we are trying to do a single transfer or a multi transfer
     def saveOutput(self, output_file):
@@ -23,13 +36,15 @@ class ProtocolWriter:
             f.write(self.fh.getHeader())
 
             # Iterate through all the received data
-            for i in range(len(self.protocol_data)):
-                self.writeProtocolData(f, self.protocol_data[i])
-
-                if self.protocol_data[i].isMulti():
-                    self.writeEightTransfer(f, self.csv_data[i])
-                else:
-                    self.writeSingleTransfer(f, self.csv_data[i])
+            for i, data in enumerate(self.data):
+                if data.data_type == 'pipette':
+                    self.writePipetteData(f, data)
+                elif data.data_type == 'plate':
+                    self.writePlateData(f, data)
+                    if self.pipette_type == 'multi':
+                        self.writeEightTransfer(f, self.csv_data[i])
+                    else:
+                        self.writeSingleTransfer(f, self.csv_data[i])
 
     # Writes all the transfers by well to the output protocol file
     def writeSingleTransfer(self, f, csv_data):
@@ -47,8 +62,10 @@ class ProtocolWriter:
                 f.write(self.fh.getMultiTransfer(vol, col))
 
     # Writes the header to the output protocol file
-    def writeProtocolData(self, f, data):
+    def writePlateData(self, f, data):
         f.write(self.fh.getTipRack(data.tip_rack_name, data.tip_rack_loc))
         f.write(self.fh.getSrcPlate(data.src_plate_name, data.src_plate_loc))
         f.write(self.fh.getDestPlate(data.dest_plate_name, data.dest_plate_loc))
+
+    def writePipetteData(self, f, data):
         f.write(self.fh.getPipette(data.pipette_name, data.pipette_loc))
