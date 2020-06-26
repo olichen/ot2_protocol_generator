@@ -55,10 +55,10 @@ class PlateInputPanel(InputPanel):
     # Creates a label, text box, and button for selecting the CSV file
     def addCSVMenu(self, csv_file_loc):
         self.csv_file_loc = csv_file_loc
-        label = ttk.Label(self.parent, text='CSV File')
+        label = ttk.Label(self.frame, text='CSV File')
         label.grid(row=4, column=1, sticky='nesw')
 
-        frame = ttk.Frame(self.parent)
+        frame = ttk.Frame(self.frame)
         frame.grid(row=4, column=2, columnspan=3, sticky='nesw')
 
         entry = ttk.Entry(frame, textvariable=csv_file_loc)
@@ -71,4 +71,4 @@ class PlateInputPanel(InputPanel):
         self.csv_file_loc.set(filedialog.askopenfilename(
             title='Select a file',
             filetypes=[('CSV Files', '*.csv')]))
-        self.parent.focus()
+        self.frame.focus()

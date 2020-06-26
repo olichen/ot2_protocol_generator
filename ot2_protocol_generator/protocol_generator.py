@@ -31,16 +31,14 @@ class ProtocolGenerator:
 
     # Adds a pipette selector panel
     def addPipettePanel(self):
-        frame = ttk.Frame(self.window)
-        frame.grid(row=len(self.input_panels), sticky='nesw')
-        ip = pipette_input_panel.PipetteInputPanel(frame)
+        ip = pipette_input_panel.PipetteInputPanel(self.window)
+        ip.frame.grid(row=len(self.input_panels), sticky='nesw')
         self.input_panels.append(ip)
 
     # Add a plate selector panel
     def addPlatePanel(self):
-        frame = ttk.Frame(self.window)
-        frame.grid(row=len(self.input_panels), sticky='nesw')
-        ip = plate_input_panel.PlateInputPanel(frame)
+        ip = plate_input_panel.PlateInputPanel(self.window)
+        ip.frame.grid(row=len(self.input_panels), sticky='nesw')
         self.input_panels.append(ip)
 
     # Add buttons to add or delete plate input panels
@@ -58,7 +56,7 @@ class ProtocolGenerator:
     def remPlatePanel(self):
         if len(self.input_panels) > 2:
             panel = self.input_panels.pop()
-            panel.parent.destroy()
+            panel.destroy()
 
     # Create the generate and cancel buttons
     def createSaveCancelButtons(self):
