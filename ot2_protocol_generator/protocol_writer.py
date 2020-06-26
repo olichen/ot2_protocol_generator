@@ -1,6 +1,6 @@
-from . import format_helper
-from . import eight_transfer
-from . import csv_reader
+from .helpers import format_helper
+from .helpers import multi_transfer_helper as mth
+from .helpers import csv_helper
 
 
 # Class that handles receiving/validating data and outputting the protocol
@@ -22,10 +22,10 @@ class ProtocolWriter:
                 self.pipette_type = 'single'
             self.csv_data.append('')
         elif data.data_type == 'plate':
-            csv_data = csv_reader.CSVReader(data.csv_file_loc)
+            csv_data = csv_helper.CSVReader(data.csv_file_loc)
 
             if self.pipette_type == 'multi':
-                csv_data = eight_transfer.EightTransfer(csv_data.volumes)
+                csv_data = mth.MultiTransferHelper(csv_data.volumes)
             self.csv_data.append(csv_data)
         else:
             raise Exception()

@@ -6,7 +6,7 @@ from . import protocol_writer
 from .gui import pipette_input_panel
 from .gui import plate_input_panel
 import logging
-from . import log_handler
+from .helpers import log_helper
 import traceback
 
 
@@ -25,7 +25,7 @@ class ProtocolGenerator:
 
         # Initialize log handler (outputs to self.log_text)
         self.log_text = ['']
-        lh = log_handler.LogHandler(self.log_text)
+        lh = log_helper.LogHandler(self.log_text)
         logger = logging.getLogger()
         logger.addHandler(lh)
 

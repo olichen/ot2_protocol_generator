@@ -1,6 +1,6 @@
-# Helper class used to determine validity of 8 well transfers. Returns an
+# Helper class used to determine validity of multi well transfers. Returns an
 # array col_values that gives the volume to be transfered for each column
-class EightTransfer:
+class MultiTransferHelper:
     def __init__(self, volumedict):
         self.col_volumes = [None] * 12
         self.well_volumes = [[None for y in range(8)] for x in range(12)]
