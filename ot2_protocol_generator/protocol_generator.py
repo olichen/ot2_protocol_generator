@@ -74,29 +74,20 @@ class ProtocolGenerator:
     def save(self):
         pw = protocol_writer.ProtocolWriter()
 
-        for ip in self.input_panels:
-            data = ip.getData()
-            try:
-                pw.addData(data)
-            except Exception as e:
-                self.handleException(e)
-
-        output_file = filedialog.asksaveasfilename(title='Save protocol')
         try:
+            for ip in self.input_panels:
+                pw.addData(ip.getData())
+
+            output_file = filedialog.asksaveasfilename(title='Save protocol')
             pw.saveOutput(output_file)
+
+            if self.log_text[0]:
+                messagebox.showwarning(title='Warning', message=self.log_text[0])
+            self.quit()
         except Exception as e:
-            self.handleException(e)
-
-        if self.log_text[0]:
-            messagebox.showwarning(title='Warning', message=self.log_text[0])
-        self.quit()
-
-    # Handles an exception; prints a traceback to console and pops up an
-    # error box for the user
-    def handleException(self, e):
-        traceback.print_exc()
-        messagebox.showerror(title='Error', message=e)
-        self.window.focus()
+            traceback.print_exc()
+            messagebox.showerror(title='Error', message=e)
+            self.window.focus()
 
     # Exit the application
     def quit(self, event=None):

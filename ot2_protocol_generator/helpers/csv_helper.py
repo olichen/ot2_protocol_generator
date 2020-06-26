@@ -8,7 +8,10 @@ class CSVReader:
     def __init__(self, csv_file):
         self.volumes = {}
         self.logger = logging.getLogger()
-        self.readCSV(csv_file)
+        try:
+            self.readCSV(csv_file)
+        except FileNotFoundError:
+            raise FileNotFoundError("Please select a valid CSV file")
 
     # Read in the CSV file
     def readCSV(self, csv_file):
