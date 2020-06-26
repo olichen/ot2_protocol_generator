@@ -35,6 +35,11 @@ class ProtocolWriter:
         with open(output_file, 'w') as f:
             f.write(self.fh.getHeader())
 
+            # First load up all the tip racks
+            for data in self.data:
+                if data.data_type == 'plate':
+                    self.writeTipRackData(f, data)
+
             # Iterate through all the received data
             for i, data in enumerate(self.data):
                 if data.data_type == 'pipette':
@@ -63,9 +68,11 @@ class ProtocolWriter:
 
     # Writes the header to the output protocol file
     def writePlateData(self, f, data):
-        f.write(self.fh.getTipRack(data.tip_rack_name, data.tip_rack_loc))
         f.write(self.fh.getSrcPlate(data.src_plate_name, data.src_plate_loc))
         f.write(self.fh.getDestPlate(data.dest_plate_name, data.dest_plate_loc))
+
+    def writeTipRackData(self, f, data):
+        f.write(self.fh.getTipRack(data.tip_rack_name, data.tip_rack_loc))
 
     def writePipetteData(self, f, data):
         f.write(self.fh.getPipette(data.pipette_name, data.pipette_loc))

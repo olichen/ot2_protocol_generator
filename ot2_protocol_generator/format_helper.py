@@ -9,13 +9,16 @@ class FormatHelper:
                 "    'protocolName': 'OT Transfer',\n"
                 "    'author': 'Oliver Chen <olichen@ucdavis.edu>',\n"
                 "    'apiLevel': '2.2'\n"
-                "}\n\n"
+                "}\n\n\n"
                 "def run(protocol: protocol_api.ProtocolContext):\n"
+                "    tip_racks = []\n"
                 )
 
     # Returns the code to load a tip rack
     def getTipRack(self, rack_name, rack_location):
-        return self.getLabware('tip_rack', rack_name, rack_location)
+        msg = self.getLabware('tip_rack', rack_name, rack_location)
+        msg += "    tip_racks.append(tip_rack)\n"
+        return msg
 
     # Returns the code to load a plate
     def getSrcPlate(self, plate_name, plate_location):
@@ -33,8 +36,8 @@ class FormatHelper:
     # Returns the code to load a pipette
     def getPipette(self, pipette_name, pipette_location):
         return "    pipette = protocol.load_instrument(" \
-                "'{0}', mount = '{1}', tip_racks = [{2}])\n\n" \
-                .format(pipette_name, pipette_location, 'tip_rack')
+                "'{0}', mount='{1}', tip_racks=tip_racks)\n\n" \
+                .format(pipette_name, pipette_location)
 
     # Returns the code to transfer volume from a single well of the source
     # plate to the destination plate.
