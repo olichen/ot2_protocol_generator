@@ -1,5 +1,6 @@
 import logging
 
+
 class LogHandler(logging.Handler):
     def __init__(self, text):
         logging.Handler.__init__(self)

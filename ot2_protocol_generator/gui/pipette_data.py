@@ -17,4 +17,3 @@ class PipetteData:
         else:
             err_str = "Invalid pipette: '{0}'".format(self.pipette_name)
             raise ValueError(err_str)
-

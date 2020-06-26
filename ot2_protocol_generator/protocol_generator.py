@@ -30,7 +30,7 @@ class ProtocolGenerator:
         logger.addHandler(lh)
 
     def addPipettePanel(self):
-        frame=ttk.Frame(self.window)
+        frame = ttk.Frame(self.window)
         frame.grid(row=len(self.input_panels), sticky='nesw')
         ip = pipette_input_panel.PipetteInputPanel(frame)
         self.input_panels.append(ip)
@@ -48,7 +48,7 @@ class ProtocolGenerator:
 
     # Add a set of input panels
     def addPlatePanel(self):
-        frame=ttk.Frame(self.window)
+        frame = ttk.Frame(self.window)
         frame.grid(row=len(self.input_panels), sticky='nesw')
         ip = plate_input_panel.PlateInputPanel(frame)
         self.input_panels.append(ip)

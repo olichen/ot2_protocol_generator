@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
 from . import config
 from .input_panel import InputPanel
 from . import plate_data
@@ -17,7 +19,7 @@ class PlateInputPanel(InputPanel):
         self.dest_plate_loc = tk.StringVar()
         self.csv_file_loc = tk.StringVar()
 
-        self.createInputPanels()
+        self.addInputPanels()
 
     def getData(self):
         return plate_data.PlateData(
@@ -29,23 +31,44 @@ class PlateInputPanel(InputPanel):
                 dest_plate_loc=self.dest_plate_loc.get(),
                 csv_file_loc=self.csv_file_loc.get())
 
-    def createInputPanels(self):
-        self.createTipRackSelectors(self.tip_rack_name, self.tip_rack_loc)
-        self.createSourcePlateSelectors(self.src_plate_name, self.src_plate_loc)
-        self.createDestPlateSelectors(self.dest_plate_name, self.dest_plate_loc)
-        self.createCSVSelector(self.csv_file_loc)
+    def addInputPanels(self):
+        self.addTipRackMenu(self.tip_rack_name, self.tip_rack_loc)
+        self.addSourcePlateMenu(self.src_plate_name, self.src_plate_loc)
+        self.addDestPlateMenu(self.dest_plate_name, self.dest_plate_loc)
+        self.addCSVMenu(self.csv_file_loc)
 
     # Creates the selectors for the tip rack
-    def createTipRackSelectors(self, trname, trloc):
-        self.createSelectors('Tip Rack Type', trname, config.TIP_RACK_NAMES, 1, 1)
-        self.createSelectors('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 1, 3)
+    def addTipRackMenu(self, trname, trloc):
+        self.addMenu('Tip Rack Type', trname, config.TIP_RACK_NAMES, 1, 1)
+        self.addMenu('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 1, 3)
 
     # Creates the selectors for the source plate
-    def createSourcePlateSelectors(self, spname, sploc):
-        self.createSelectors('Source Plate Type', spname, config.PLATE_NAMES, 2, 1)
-        self.createSelectors('Source Plate Location', sploc, config.PLATE_LOCS, 2, 3)
+    def addSourcePlateMenu(self, spname, sploc):
+        self.addMenu('Source Plate Type', spname, config.PLATE_NAMES, 2, 1)
+        self.addMenu('Source Plate Location', sploc, config.PLATE_LOCS, 2, 3)
 
     # Creates the selectors for the destination plate
-    def createDestPlateSelectors(self, dpname, dploc):
-        self.createSelectors('Dest Plate Type', dpname, config.PLATE_NAMES, 3, 1)
-        self.createSelectors('Dest Plate Location', dploc, config.PLATE_LOCS, 3, 3)
+    def addDestPlateMenu(self, dpname, dploc):
+        self.addMenu('Dest Plate Type', dpname, config.PLATE_NAMES, 3, 1)
+        self.addMenu('Dest Plate Location', dploc, config.PLATE_LOCS, 3, 3)
+
+    # Creates a label, text box, and button for selecting the CSV file
+    def addCSVMenu(self, csv_file_loc):
+        self.csv_file_loc = csv_file_loc
+        label = ttk.Label(self.parent, text='CSV File')
+        label.grid(row=4, column=1, sticky='nesw')
+
+        frame = ttk.Frame(self.parent)
+        frame.grid(row=4, column=2, columnspan=3, sticky='nesw')
+
+        entry = ttk.Entry(frame, textvariable=csv_file_loc)
+        entry.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
+        csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSV)
+        csvbutton.pack(side=tk.RIGHT)
+
+    # Pops out a file dialog for the user to select a CSV input file
+    def getCSV(self):
+        self.csv_file_loc.set(filedialog.askopenfilename(
+            title='Select a file',
+            filetypes=[('CSV Files', '*.csv')]))
+        self.parent.focus()
