@@ -32,8 +32,8 @@ class CSVReader:
             volume = row[1].strip()
         except IndexError:
             err_str = str.format(
-                "Warning: Invalid cells '{0}' in row {1}",
-                row, rownum)
+                "Row {0}: Invalid cells '{1}'",
+                rownum, row)
             self.logger.warning(err_str)
             return None, None
 
@@ -41,8 +41,8 @@ class CSVReader:
         if not self.isValidWell(well):
             if not rownum == 1:
                 err_str = str.format(
-                    "Warning: Invalid well '{0}' in row {1}",
-                    well, rownum)
+                    "Row {0}: Invalid well '{0}'",
+                    rownum, well)
                 self.logger.warning(err_str)
             return None, None
 
@@ -64,15 +64,14 @@ class CSVReader:
 
         if volume[::-1].find('.') > 1:
             err_str = str.format(
-                "Warning: Volume '{0}' in row {1}" +
-                "is longer than one decimal place",
-                volume, rownum)
+                "Row {0}: Volume '{0}' longer than one decimal place",
+                rownum, volume)
             self.logger.warning(err_str)
 
         if float(volume) > 10:
             err_str = str.format(
-                "Warning: Volume '{0}' in row {1} is greater than 10 μL",
-                volume, rownum)
+                "Row {0}: Volume '{1}' > 10 μL",
+                rownum, volume)
             self.logger.warning(err_str)
 
         return well, volume
