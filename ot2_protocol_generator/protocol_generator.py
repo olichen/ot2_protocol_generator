@@ -29,13 +29,21 @@ class ProtocolGenerator:
         logger = logging.getLogger()
         logger.addHandler(lh)
 
+    # Adds a pipette selector panel
     def addPipettePanel(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=len(self.input_panels), sticky='nesw')
         ip = pipette_input_panel.PipetteInputPanel(frame)
         self.input_panels.append(ip)
 
-    # Add buttons to add or delete input panels
+    # Add a plate selector panel
+    def addPlatePanel(self):
+        frame = ttk.Frame(self.window)
+        frame.grid(row=len(self.input_panels), sticky='nesw')
+        ip = plate_input_panel.PlateInputPanel(frame)
+        self.input_panels.append(ip)
+
+    # Add buttons to add or delete plate input panels
     def createAddRemoveButtons(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=100, sticky='nesw')
@@ -46,19 +54,13 @@ class ProtocolGenerator:
         addInput = ttk.Button(frame, text='-', command=self.remPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
-    # Add a set of input panels
-    def addPlatePanel(self):
-        frame = ttk.Frame(self.window)
-        frame.grid(row=len(self.input_panels), sticky='nesw')
-        ip = plate_input_panel.PlateInputPanel(frame)
-        self.input_panels.append(ip)
-
+    # Remove a plate input panel
     def remPlatePanel(self):
         if len(self.input_panels) > 2:
             panel = self.input_panels.pop()
             panel.parent.destroy()
 
-    # Create the save and cancel buttons
+    # Create the generate and cancel buttons
     def createSaveCancelButtons(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=101, sticky='nesw')
@@ -70,6 +72,7 @@ class ProtocolGenerator:
         save = ttk.Button(frame, text='Generate Protocol', command=self.save)
         save.pack(side=tk.RIGHT)
 
+    # Outputs the protocol to a file
     def save(self):
         pw = protocol_writer.ProtocolWriter()
 
@@ -90,10 +93,13 @@ class ProtocolGenerator:
             messagebox.showwarning(title='Warning', message=self.log_text[0])
         self.quit()
 
+    # Handles an exception; prints a traceback to console and pops up an
+    # error box for the user
     def handleException(self, e):
         traceback.print_exc()
         messagebox.showerror(title='Error', message=e)
         self.window.focus()
 
+    # Exit the application
     def quit(self, event=None):
         self.window.destroy()
