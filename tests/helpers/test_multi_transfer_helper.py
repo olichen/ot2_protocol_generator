@@ -1,10 +1,9 @@
-from context import ot2_protocol_generator
-from ot2_protocol_generator import eight_transfer
+from ot2_protocol_generator.helpers import multi_transfer_helper as mth
 
 import unittest
 
 
-class TestEightTransfer(unittest.TestCase):
+class TestMultiTransferHelper(unittest.TestCase):
     def setUp(self):
         self.volumedict = {
                 'A1': '1', 'B1': '1', 'C1': '1', 'D1': '1',
@@ -33,22 +32,22 @@ class TestEightTransfer(unittest.TestCase):
                 'E12': '12', 'F12': '12', 'G12': '12', 'H12': '12',
                 }
 
-    def testEightTransfer(self):
+    def testMultiTransferHelper(self):
         try:
-            eight_transfer.EightTransfer(self.volumedict)
+            mth.MultiTransferHelper(self.volumedict)
         except Exception:
             self.fail('Unexpected exception')
 
         self.volumedict['A1'] = '11'
         with self.assertRaises(ValueError):
-            eight_transfer.EightTransfer(self.volumedict)
+            mth.MultiTransferHelper(self.volumedict)
 
         del self.volumedict['A1']
         with self.assertRaises(IndexError):
-            eight_transfer.EightTransfer(self.volumedict)
+            mth.MultiTransferHelper(self.volumedict)
 
     def testCharToInt(self):
-        et = eight_transfer.EightTransfer(self.volumedict)
+        et = mth.MultiTransferHelper(self.volumedict)
         self.assertEqual(et.charToInt('A'), 0)
         self.assertEqual(et.charToInt('B'), 1)
         self.assertEqual(et.charToInt('C'), 2)

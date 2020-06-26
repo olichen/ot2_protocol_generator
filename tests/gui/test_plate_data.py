@@ -1,22 +1,18 @@
-from context import ot2_protocol_generator
-from ot2_protocol_generator import protocol_data
-from ot2_protocol_generator import config
+from ot2_protocol_generator.gui import plate_data
+from ot2_protocol_generator.gui import config
 
 import unittest
 
 
-class TestProtocolData(unittest.TestCase):
+class TestPlateData(unittest.TestCase):
     def setUp(self):
-        self.data = protocol_data.ProtocolData(
+        self.data = plate_data.PlateData(
                 tip_rack_name=config.TIP_RACK_NAMES[0],
                 tip_rack_loc=config.TIP_RACK_LOCS[0],
                 src_plate_name=config.PLATE_NAMES[0],
                 src_plate_loc=config.PLATE_LOCS[0],
                 dest_plate_name=config.PLATE_NAMES[0],
                 dest_plate_loc=config.PLATE_LOCS[0],
-                pipette_name=config.PIPETTE_NAMES[0],
-                pipette_loc=config.PIPETTE_LOCS[0],
-                pipette_type='',
                 csv_file_loc='')
 
     def test_isValid(self):
