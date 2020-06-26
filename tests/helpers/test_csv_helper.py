@@ -1,12 +1,11 @@
-from context import ot2_protocol_generator
-from ot2_protocol_generator import csv_reader
+from ot2_protocol_generator.helpers import csv_helper
 
 import unittest
 import os
 import csv
 
 
-class TestCSVReader(unittest.TestCase):
+class TestCSVHelper(unittest.TestCase):
     def setUp(self):
         self.temp_csv = os.path.join(os.path.dirname(__file__), 'temp.csv')
         with open(self.temp_csv, 'w') as file:
@@ -23,12 +22,12 @@ class TestCSVReader(unittest.TestCase):
 
     def test_init(self):
         with self.assertRaises(FileNotFoundError):
-            csv_reader.CSVReader('no_file.csv')
+            csv_helper.CSVReader('no_file.csv')
         with self.assertRaises(IsADirectoryError):
-            csv_reader.CSVReader('/')
+            csv_helper.CSVReader('/')
 
     def test_readRow(self):
-        csvr = csv_reader.CSVReader(self.temp_csv)
+        csvr = csv_helper.CSVReader(self.temp_csv)
         self.assertEqual(csvr.readRow(2, ['a', '1']), (None, None))
         self.assertEqual(csvr.readRow(2, ['garbage', '1']), (None, None))
         self.assertEqual(csvr.readRow(2, ['H2']), (None, None))
@@ -39,7 +38,7 @@ class TestCSVReader(unittest.TestCase):
         self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
     def test_isValidWell(self):
-        csvr = csv_reader.CSVReader(self.temp_csv)
+        csvr = csv_helper.CSVReader(self.temp_csv)
         for i in range(ord('A'), ord('H')):
             for j in range(1, 12):
                 self.assertTrue(csvr.isValidWell(chr(i)+str(j)))
@@ -52,7 +51,7 @@ class TestCSVReader(unittest.TestCase):
         self.assertFalse(csvr.isValidWell('a12'))
 
     def test_isValidVolume(self):
-        csvr = csv_reader.CSVReader(self.temp_csv)
+        csvr = csv_helper.CSVReader(self.temp_csv)
         self.assertFalse(csvr.isValidVolume(''))
         self.assertFalse(csvr.isValidVolume(' '))
         self.assertFalse(csvr.isValidVolume('text'))
