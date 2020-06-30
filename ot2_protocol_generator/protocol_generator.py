@@ -33,13 +33,13 @@ class ProtocolGenerator:
     # Adds a pipette selector panel
     def addPipettePanel(self):
         ip = pipette_input_panel.PipetteInputPanel(self.window)
-        ip.frame.grid(row=len(self.input_panels), sticky='nesw')
+        ip.grid(row=len(self.input_panels), sticky='nesw')
         self.input_panels.append(ip)
 
     # Add a plate selector panel
     def addPlatePanel(self):
         ip = plate_input_panel.PlateInputPanel(self.window)
-        ip.frame.grid(row=len(self.input_panels), sticky='nesw')
+        ip.grid(row=len(self.input_panels), sticky='nesw')
         self.input_panels.append(ip)
 
     # Add buttons to add or delete plate input panels
