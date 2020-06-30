@@ -10,3 +10,6 @@ build/
 
 # Vim swapfiles
 *.swp
+
+# Test file
+data/test.py
