@@ -15,6 +15,7 @@ class ProtocolGenerator:
         # Initialize window
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
+        self.window.resizable(False, False)
 
         # Initialize the first input panel
         self.input_panels = []
@@ -82,7 +83,7 @@ class ProtocolGenerator:
             pw.saveOutput(output_file)
 
             if self.log_text[0]:
-                messagebox.showwarning(title='Warning', message=self.log_text[0])
+                log_helper.WarningMessageBox(self.window, self.log_text[0])
             self.quit()
         except Exception as e:
             traceback.print_exc()
