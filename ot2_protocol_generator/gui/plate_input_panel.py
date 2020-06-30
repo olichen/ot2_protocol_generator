@@ -63,7 +63,7 @@ class PlateInputPanel(InputPanel):
 
         entry = ttk.Entry(frame, textvariable=csv_file_loc)
         entry.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
-        csvbutton = ttk.Button(frame, text='..', width=1, command=self.getCSV)
+        csvbutton = ttk.Button(frame, text='..', width=2, command=self.getCSV)
         csvbutton.pack(side=tk.RIGHT)
 
     # Pops out a file dialog for the user to select a CSV input file

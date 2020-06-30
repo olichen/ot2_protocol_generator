@@ -21,8 +21,7 @@ class ProtocolGenerator:
         self.input_panels = []
         self.addPipettePanel()
         self.addPlatePanel()
-        self.createAddRemoveButtons()
-        self.createSaveCancelButtons()
+        self.createBottomMenu()
 
         # Initialize log handler (outputs to self.log_text)
         self.log_text = ['']
@@ -43,15 +42,18 @@ class ProtocolGenerator:
             ip.grid(row=len(self.input_panels), sticky='nesw')
             self.input_panels.append(ip)
 
-    # Add buttons to add or delete plate input panels
-    def createAddRemoveButtons(self):
+    # Add bottom menu: add transfer, remove transfer, generate protocol
+    def createBottomMenu(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=100, sticky='nesw')
 
-        addInput = ttk.Button(frame, text='+', command=self.addPlatePanel)
+        save = ttk.Button(frame, text='Generate', width=8, command=self.save)
+        save.pack(side=tk.RIGHT)
+
+        addInput = ttk.Button(frame, text='Remove', width=8, command=self.remPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
-        addInput = ttk.Button(frame, text='-', command=self.remPlatePanel)
+        addInput = ttk.Button(frame, text='Add', width=8, command=self.addPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
     # Remove a plate input panel
@@ -59,18 +61,6 @@ class ProtocolGenerator:
         if len(self.input_panels) > 2:
             panel = self.input_panels.pop()
             panel.destroy()
-
-    # Create the generate and cancel buttons
-    def createSaveCancelButtons(self):
-        frame = ttk.Frame(self.window)
-        frame.grid(row=101, sticky='nesw')
-
-        cancel = ttk.Button(frame, text='Cancel', command=self.quit)
-        cancel.pack(side=tk.RIGHT)
-        self.window.bind('<Escape>', self.quit)
-
-        save = ttk.Button(frame, text='Generate Protocol', command=self.save)
-        save.pack(side=tk.RIGHT)
 
     # Outputs the protocol to a file
     def save(self):
