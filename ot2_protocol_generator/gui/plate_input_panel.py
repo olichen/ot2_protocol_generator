@@ -68,7 +68,9 @@ class PlateInputPanel(InputPanel):
 
     # Pops out a file dialog for the user to select a CSV input file
     def getCSV(self):
-        self.csv_file_loc.set(filedialog.askopenfilename(
+        csv_file = filedialog.askopenfilename(
             title='Select a file',
-            filetypes=[('CSV Files', '*.csv')]))
+            filetypes=[('CSV Files', '*.csv')])
+        if csv_file:
+            self.csv_file_loc.set(csv_file)
         self.focus()

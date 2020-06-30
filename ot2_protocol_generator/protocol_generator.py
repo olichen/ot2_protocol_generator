@@ -71,15 +71,19 @@ class ProtocolGenerator:
                 pw.addData(ip.getData())
 
             output_file = filedialog.asksaveasfilename(title='Save protocol')
-            pw.saveOutput(output_file)
+            if output_file:
+                pw.saveOutput(output_file)
 
-            if self.log_text[0]:
-                log_helper.WarningMessageBox(self.window, self.log_text[0])
-            self.quit()
+                if self.log_text[0]:
+                    log_helper.WarningMessageBox(self.window, self.log_text[0])
+                self.quit()
+            else:
+                self.log_text[0] = ''
+                self.window.focus()
         except Exception as e:
-            self.log_text[0] = ''
             traceback.print_exc()
             messagebox.showerror(title='Error', message=e)
+            self.log_text[0] = ''
             self.window.focus()
 
     # Exit the application
