@@ -38,9 +38,10 @@ class ProtocolGenerator:
 
     # Add a plate selector panel
     def addPlatePanel(self):
-        ip = plate_input_panel.PlateInputPanel(self.window)
-        ip.grid(row=len(self.input_panels), sticky='nesw')
-        self.input_panels.append(ip)
+        if len(self.input_panels) < 4:
+            ip = plate_input_panel.PlateInputPanel(self.window)
+            ip.grid(row=len(self.input_panels), sticky='nesw')
+            self.input_panels.append(ip)
 
     # Add buttons to add or delete plate input panels
     def createAddRemoveButtons(self):
@@ -86,6 +87,7 @@ class ProtocolGenerator:
                 log_helper.WarningMessageBox(self.window, self.log_text[0])
             self.quit()
         except Exception as e:
+            self.log_text[0] = ''
             traceback.print_exc()
             messagebox.showerror(title='Error', message=e)
             self.window.focus()
