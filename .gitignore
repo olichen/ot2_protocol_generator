@@ -13,3 +13,6 @@ build/
 
 # Test file
 data/test.py
+
+# OSX files
+.DS_Store

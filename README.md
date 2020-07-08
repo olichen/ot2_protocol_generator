@@ -10,6 +10,8 @@
 
 ## Usage
 
+<img src="/docs/app-window.jpg" title="application window" alt="application window">
+
 - Image goes here
 - step by step
 - etc etc
@@ -26,13 +28,24 @@
 
 ## Setup
 
+Running the the program from command line:
+
 ```shell
-$ git clone etc
-$ etc etc
+$ git clone https://github.com/olichen/ot2_protocol_generator.git
+$ cd /ot2_protocol_generator
+$ python cli.py
 ```
 
-- Compilation notes
-- pyinstaller
+### Distribution
+
+Compiling the program into an executable for distribution:
+
+```shell
+$ git clone https://github.com/olichen/ot2_protocol_generator.git
+$ cd /ot2_protocol_generator
+$ pip install pyinstaller
+$ pyinstaller --onefile -w --name ot2_protocol_generator cli.py
+```
 
 ---
 
@@ -42,5 +55,3 @@ $ etc etc
 etc
 etc
 ```
-
-### Custom Labware
