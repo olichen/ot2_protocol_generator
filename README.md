@@ -10,7 +10,7 @@
 
 ## Usage
 
-<img src="/docs/app-window.jpg" title="application window" alt="application window">
+<img src="/docs/app-window.png" title="application window" alt="application window">
 
 - Image goes here
 - step by step
