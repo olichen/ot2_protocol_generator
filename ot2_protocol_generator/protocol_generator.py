@@ -108,9 +108,8 @@ class ProtocolGenerator:
 
     def editLabware(self):
         #with open(output_file, 'w') as f:
+        webbrowser.open('./config.ini')
         cfg = config.Configuration()
-        ','.join(cfg.TIP_RACK_NAMES)
-        print(cfg.TIP_RACK_LOCS)
 
     # Exit the application
     def quit(self, event=None):
