@@ -8,6 +8,7 @@ from .gui import plate_input_panel
 import logging
 from .helpers import log_helper
 import traceback
+import webbrowser
 
 
 class ProtocolGenerator:
@@ -40,8 +41,8 @@ class ProtocolGenerator:
         menubar.add_cascade(label='File', menu=filemenu)
 
         helpmenu = tk.Menu(menubar, tearoff=0)
-        helpmenu.add_command(label='Help', command=self.quit)
-        helpmenu.add_command(label='About', command=self.quit)
+        helpmenu.add_command(label='Help', command=self.help)
+        helpmenu.add_command(label='About', command=self.about)
         menubar.add_cascade(label='Help', menu=helpmenu)
 
         self.window.config(menu=menubar)
@@ -106,3 +107,11 @@ class ProtocolGenerator:
     # Exit the application
     def quit(self, event=None):
         self.window.destroy()
+
+    def help(self):
+        url = 'https://github.com/olichen/ot2_protocol_generator#readme'
+        webbrowser.open(url)
+
+    def about(self):
+        msg = 'Version 1.0\nCopyright (c) 2020 Oliver Chen'
+        messagebox.showinfo(title='About', message=msg)
