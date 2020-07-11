@@ -1,10 +1,12 @@
 from tkinter import ttk
+from . import config
 
 
 # Creates an input panel for a transfer
 class InputPanel(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
+        self.cfg = config.Configuration()
 
     # Creates a label and a dropdown menu for the given label, variable, and
     # list of options

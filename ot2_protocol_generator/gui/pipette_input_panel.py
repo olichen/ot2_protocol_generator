@@ -1,5 +1,4 @@
 import tkinter as tk
-from . import config
 from .input_panel import InputPanel
 from . import pipette_data
 
@@ -21,5 +20,5 @@ class PipetteInputPanel(InputPanel):
 
     # Creates the selectors for the pipette
     def createPipetteMenu(self, pname, ploc):
-        self.addMenu('Pipette Type', pname, config.PIPETTE_NAMES, 1, 1)
-        self.addMenu('Pipette Location', ploc, config.PIPETTE_LOCS, 1, 3)
+        self.addMenu('Pipette Type', pname, self.cfg.PIPETTE_NAMES, 1, 1)
+        self.addMenu('Pipette Location', ploc, self.cfg.PIPETTE_LOCS, 1, 3)

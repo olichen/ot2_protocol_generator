@@ -36,7 +36,7 @@ class ProtocolGenerator:
 
         filemenu = tk.Menu(menubar, tearoff=0)
         filemenu.add_command(label='Generate Protocol', command=self.save)
-        filemenu.add_command(label='Edit Labware', command=self.quit)
+        filemenu.add_command(label='Edit Labware', command=self.editLabware)
         filemenu.add_command(label='Quit', command=self.quit)
         menubar.add_cascade(label='File', menu=filemenu)
 
@@ -103,6 +103,10 @@ class ProtocolGenerator:
             messagebox.showerror(title='Error', message=e)
             self.log_text[0] = ''
             self.window.focus()
+
+    def editLabware(self):
+        print(TIP_RACK_NAMES)
+        print(TIP_RACK_LOCS)
 
     # Exit the application
     def quit(self, event=None):

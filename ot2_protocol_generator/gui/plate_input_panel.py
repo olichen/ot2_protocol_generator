@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from . import config
 from .input_panel import InputPanel
 from . import plate_data
 
@@ -39,18 +38,18 @@ class PlateInputPanel(InputPanel):
 
     # Creates the selectors for the tip rack
     def addTipRackMenu(self, trname, trloc):
-        self.addMenu('Tip Rack Type', trname, config.TIP_RACK_NAMES, 1, 1)
-        self.addMenu('Tip Rack Location', trloc, config.TIP_RACK_LOCS, 1, 3)
+        self.addMenu('Tip Rack Type', trname, self.cfg.TIP_RACK_NAMES, 1, 1)
+        self.addMenu('Tip Rack Location', trloc, self.cfg.TIP_RACK_LOCS, 1, 3)
 
     # Creates the selectors for the source plate
     def addSourcePlateMenu(self, spname, sploc):
-        self.addMenu('Source Plate Type', spname, config.PLATE_NAMES, 2, 1)
-        self.addMenu('Source Plate Location', sploc, config.PLATE_LOCS, 2, 3)
+        self.addMenu('Source Plate Type', spname, self.cfg.PLATE_NAMES, 2, 1)
+        self.addMenu('Source Plate Location', sploc, self.cfg.PLATE_LOCS, 2, 3)
 
     # Creates the selectors for the destination plate
     def addDestPlateMenu(self, dpname, dploc):
-        self.addMenu('Dest Plate Type', dpname, config.PLATE_NAMES, 3, 1)
-        self.addMenu('Dest Plate Location', dploc, config.PLATE_LOCS, 3, 3)
+        self.addMenu('Dest Plate Type', dpname, self.cfg.PLATE_NAMES, 3, 1)
+        self.addMenu('Dest Plate Location', dploc, self.cfg.PLATE_LOCS, 3, 3)
 
     # Creates a label, text box, and button for selecting the CSV file
     def addCSVMenu(self, csv_file_loc):
