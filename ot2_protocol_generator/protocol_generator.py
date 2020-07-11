@@ -5,10 +5,12 @@ from tkinter import messagebox
 from . import protocol_writer
 from .gui import pipette_input_panel
 from .gui import plate_input_panel
+from .gui import config
 import logging
 from .helpers import log_helper
 import traceback
 import webbrowser
+import os
 
 
 class ProtocolGenerator:
@@ -105,8 +107,10 @@ class ProtocolGenerator:
             self.window.focus()
 
     def editLabware(self):
-        print(TIP_RACK_NAMES)
-        print(TIP_RACK_LOCS)
+        #with open(output_file, 'w') as f:
+        cfg = config.Configuration()
+        ','.join(cfg.TIP_RACK_NAMES)
+        print(cfg.TIP_RACK_LOCS)
 
     # Exit the application
     def quit(self, event=None):

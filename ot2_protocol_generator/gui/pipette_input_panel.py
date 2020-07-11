@@ -20,5 +20,5 @@ class PipetteInputPanel(InputPanel):
 
     # Creates the selectors for the pipette
     def createPipetteMenu(self, pname, ploc):
-        self.addMenu('Pipette Type', pname, self.cfg.PIPETTE_NAMES, 1, 1)
-        self.addMenu('Pipette Location', ploc, self.cfg.PIPETTE_LOCS, 1, 3)
+        self.addMenu('Pipette Type', pname, self.cfg['PIPETTE_NAMES'], 1, 1)
+        self.addMenu('Pipette Location', ploc, self.cfg['PIPETTE_LOCS'], 1, 3)
