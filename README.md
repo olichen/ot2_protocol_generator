@@ -10,12 +10,12 @@
 
 ![application window](/docs/app-window.png)
 
-- Select the pipette type and location.
-- Select the tip rack and plate types and locations for a transfer.
-- Select a CSV file by clicking the '..' button.
-- To add another transfer, up to the maximum of 3 that can fit on the machine, click the 'Add' button.
-- To remove a previously added transfer, click the 'Remove' button.
-- Click 'Generate' and select a folder to place the generated protocol
+1. Select the pipette type and location.
+2. Select the tip rack and plate types and locations for a transfer.
+3. Select a CSV file by clicking the '..' button.
+4. Click 'Generate' and select a folder to place the generated protocol
+    - To add another transfer, up to the maximum of 3 that can fit on the machine, click the 'Add' button.
+    - To remove a previously added transfer, click the 'Remove' button.
 
 ### CSV File Format
 
@@ -31,7 +31,8 @@ H12|4.2
 
 ### Custom Labware
 
-- placeholder
+- To add custom labware to the protocol generator, add it to a a 'labware.ini' file placed in the same folder as the protocol generator executable. A [sample 'labware.ini' file](/labware.ini) can be found in the github repository..
+- To find 
 
 ---
 
