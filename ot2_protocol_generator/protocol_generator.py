@@ -65,13 +65,13 @@ class ProtocolGenerator:
         frame = ttk.Frame(self.window)
         frame.grid(row=100, sticky='nesw')
 
-        save = ttk.Button(frame, text='Generate', width=8, command=self.save)
+        save = ttk.Button(frame, text='Generate', width=12, command=self.save)
         save.pack(side=tk.RIGHT)
 
-        addInput = ttk.Button(frame, text='Remove', width=8, command=self.remPlatePanel)
+        addInput = ttk.Button(frame, text='Remove', width=12, command=self.remPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
-        addInput = ttk.Button(frame, text='Add', width=8, command=self.addPlatePanel)
+        addInput = ttk.Button(frame, text='Add', width=12, command=self.addPlatePanel)
         addInput.pack(side=tk.RIGHT)
 
     # Remove a plate input panel
