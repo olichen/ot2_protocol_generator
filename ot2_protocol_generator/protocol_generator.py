@@ -19,6 +19,7 @@ class ProtocolGenerator:
 
         # Initialize the first input panel
         self.input_panels = []
+        self.addMenubar()
         self.addPipettePanel()
         self.addPlatePanel()
         self.createBottomMenu()
@@ -28,6 +29,22 @@ class ProtocolGenerator:
         lh = log_helper.LogHandler(self.log_text)
         logger = logging.getLogger()
         logger.addHandler(lh)
+
+    def addMenubar(self):
+        menubar = tk.Menu(self.window)
+
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(label='Generate Protocol', command=self.save)
+        filemenu.add_command(label='Edit Labware', command=self.quit)
+        filemenu.add_command(label='Quit', command=self.quit)
+        menubar.add_cascade(label='File', menu=filemenu)
+
+        helpmenu = tk.Menu(menubar, tearoff=0)
+        helpmenu.add_command(label='Help', command=self.quit)
+        helpmenu.add_command(label='About', command=self.quit)
+        menubar.add_cascade(label='Help', menu=helpmenu)
+
+        self.window.config(menu=menubar)
 
     # Adds a pipette selector panel
     def addPipettePanel(self):
