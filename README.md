@@ -19,9 +19,9 @@
 
 ### CSV File Format
 
-- The CSV file must follow the following format:
+- The CSV file must have the target well defined in the first cell of the column and the transfer volume in μL defined in the second cell of the column.
 
-Well location|Well volume (μL)
+Well location|Transfer volume (μL)
 ---|---
 A1|7.4
 A2|3.6
@@ -31,8 +31,10 @@ H12|4.2
 
 ### Custom Labware
 
-- To add custom labware to the protocol generator, add it to a a 'labware.ini' file placed in the same folder as the protocol generator executable. A [sample 'labware.ini' file](/labware.ini) can be found in the github repository..
-- To find 
+1. Identify the API Name of the new labware.
+    - To find new labware, check the [opentrons labware library](https://labware.opentrons.com/). Make note of the 'API Name'.
+    - To create custom labware, use the [opentrons labware create tool](https://labware.opentrons.com/create/). Make note of the 'API Load Name'.
+2. Add the API Name to a 'labware.ini' file placed in the same folder as the protocol generator executable. A [sample 'labware.ini' file](/labware.ini) can be found in the github repository.
 
 ---
 
