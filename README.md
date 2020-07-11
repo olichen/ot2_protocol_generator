@@ -19,7 +19,7 @@
 
 ### CSV File Format
 
-- The CSV file must have the target well defined in the first cell of the column and the transfer volume in μL defined in the second cell of the column.
+The CSV file must have the target well defined in the first cell of the column and the transfer volume in μL defined in the second cell of the column.
 
 Well location|Transfer volume (μL)
 ---|---
@@ -40,7 +40,7 @@ H12|4.2
 
 ## Setup
 
-Running the the program from command line:
+To run the program from command line, clone the repository and run 'cli.py'.
 
 ```shell
 $ git clone https://github.com/olichen/ot2_protocol_generator.git
@@ -50,20 +50,11 @@ $ python cli.py
 
 ### Distribution
 
-Compiling the program into an executable for distribution:
+The program can be compiled into an executable for distribution with pyinstaller.
 
 ```shell
 $ git clone https://github.com/olichen/ot2_protocol_generator.git
 $ cd /ot2_protocol_generator
 $ pip install pyinstaller
 $ pyinstaller --onefile -w --name ot2_protocol_generator cli.py
-```
-
----
-
-## Structure
-
-```
-etc
-etc
 ```
