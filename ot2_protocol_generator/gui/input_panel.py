@@ -6,7 +6,7 @@ from . import config
 class InputPanel(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        self.cfg = config.Configuration()
+        self.cfg = config.Configuration('./labware.ini')
 
     # Creates a label and a dropdown menu for the given label, variable, and
     # list of options

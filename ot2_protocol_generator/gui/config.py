@@ -4,9 +4,9 @@ from configparser import ConfigParser
 # Initializes the values for the dropdown menus. Attempts to read a
 # labware.ini file, and sets default values if they are not found
 class Configuration:
-    def __init__(self):
+    def __init__(self, configfile):
         self.config = ConfigParser()
-        self.config.read('./labware.ini')
+        self.config.read(configfile)
 
         # Set default values
         if not self.config.has_section('LABWARE'):

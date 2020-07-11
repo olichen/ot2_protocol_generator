@@ -10,6 +10,7 @@ import logging
 from .helpers import log_helper
 import traceback
 import webbrowser
+import subprocess
 import os
 
 
@@ -107,9 +108,10 @@ class ProtocolGenerator:
             self.window.focus()
 
     def editLabware(self):
-        #with open(output_file, 'w') as f:
-        webbrowser.open('./config.ini')
-        cfg = config.Configuration()
+        if not os.path.exists('./labware.ini'):
+            cfg = config.Configuration('./labware.ini')
+            cfg.writeFile('./labware.ini')
+        subprocess.run(['open','./labware.ini'], check=True)
 
     # Exit the application
     def quit(self, event=None):
