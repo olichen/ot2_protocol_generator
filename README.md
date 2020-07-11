@@ -50,7 +50,7 @@ $ python cli.py
 
 ### Distribution
 
-The program can be compiled into an executable for distribution with pyinstaller.
+The program can be compiled into an executable  with pyinstaller.
 
 ```shell
 $ git clone https://github.com/olichen/ot2_protocol_generator.git
