@@ -1,6 +1,4 @@
-<a href="https://opentrons.com/ot-2/">
-    <img src="/docs/ot2-robot.jpg" title="ot2 robot" alt="ot2 robot" height="300px">
-</a>
+[![ot2 robot](/docs/ot2-robot.jpg)](https://opentrons.com/ot-2/)
 
 # OT2 Protocol Generator
 
@@ -10,7 +8,7 @@
 
 ## Usage
 
-<img src="/docs/app-window.png" title="application window" alt="application window">
+![application window](/docs/app-window.png)
 
 - Image goes here
 - step by step
