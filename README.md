@@ -22,10 +22,12 @@
 - The CSV file must follow the following format:
 
 Well location|Well volume (μL)
---|---
+---|---
 A1|7.4
 A2|3.6
 A3|6.4
+...|...
+H12|4.2
 
 ### Custom Labware
 
