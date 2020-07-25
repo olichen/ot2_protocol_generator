@@ -72,11 +72,13 @@ class ProtocolGenerator:
         save = ttk.Button(frame, text='Generate', width=12, command=self.save)
         save.pack(side=tk.RIGHT)
 
-        addInput = ttk.Button(frame, text='Remove', width=12, command=self.remPlatePanel)
-        addInput.pack(side=tk.RIGHT)
+        rem_input = ttk.Button(frame, text='Remove', width=12,
+                               command=self.remPlatePanel)
+        rem_input.pack(side=tk.RIGHT)
 
-        addInput = ttk.Button(frame, text='Add', width=12, command=self.addPlatePanel)
-        addInput.pack(side=tk.RIGHT)
+        add_input = ttk.Button(frame, text='Add', width=12,
+                               command=self.addPlatePanel)
+        add_input.pack(side=tk.RIGHT)
 
     # Remove a plate input panel
     def remPlatePanel(self):
@@ -89,12 +91,13 @@ class ProtocolGenerator:
         pw = protocol_writer.ProtocolWriter()
 
         try:
+            # Read in data from each input panel. Throws an exception if
+            # invalid data is encountered
             for ip in self.input_panels:
                 pw.addData(ip.getData())
 
-            output_file = filedialog.asksaveasfilename(title='Save protocol')
-            if output_file:
-                pw.saveOutput(output_file)
+            if ofile := filedialog.asksavefilename(title='Save Protocol'):
+                pw.saveOutput(ofile)
 
                 if self.lh.text:
                     log_helper.WarningMessageBox(self.window, self.lh.text)
@@ -113,6 +116,7 @@ class ProtocolGenerator:
         if not os.path.exists('./labware.ini'):
             cfg = config.Configuration('./labware.ini')
             cfg.writeFile('./labware.ini')
+
         OS = system().lower()
         if 'windows' in OS:
             opener = 'start'
@@ -135,5 +139,7 @@ class ProtocolGenerator:
 
     # Pop open an about box
     def about(self):
-        msg = 'Version 1.0\nCopyright (c) 2020 Oliver Chen'
+        msg = ('Version 1.0\n'
+               'Copyright (c) 2020 Oliver Chen\n'
+               'https://github.com/olichen/ot2_protocol_generator')
         messagebox.showinfo(title='About', message=msg)
