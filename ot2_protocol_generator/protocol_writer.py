@@ -34,13 +34,16 @@ class ProtocolWriter:
 
     # Processes and appends the CSV data
     def addPlateData(self, data):
+        # Read in the csv data
         csv_data = csv_helper.CSVReader(data.csv_file_loc)
+
+        # Pre-process the multi-head transfer data
         if self.pipette_type == 'single':
             pass
         elif self.pipette_type == 'multi':
             csv_data = mth.MultiTransferHelper(csv_data.volumes)
         else:
-            err_str = "Invalid pipette type"
+            err_str = "Invalid pipette type. We shouldn't ever get here"
             raise Exception(err_str)
         self.csv_data.append(csv_data)
 

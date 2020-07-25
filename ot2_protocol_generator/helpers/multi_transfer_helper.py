@@ -1,5 +1,5 @@
-# Helper class used to determine validity of multi well transfers. Returns an
-# array col_values that gives the volume to be transfered for each column
+# Helper class that returns an array col_volumes that gives the volume to be
+# transferred for each column.
 class MultiTransferHelper:
     def __init__(self, volumedict):
         self.col_volumes = [None] * 12
@@ -7,38 +7,26 @@ class MultiTransferHelper:
         self.readVolumeDict(volumedict)
         self.checkWells()
 
-    # Read the values from volumedict into col_volumes
+    # Read the values from volumedict into col_volumes and well_volumes
     def readVolumeDict(self, volumedict):
         for well, vol in volumedict.items():
-            # Convert well values from 'A1' 'B2' etc to integer values
-            # 'A1' = (0, 0), 'A2' = (1, 0), ...,
-            # 'G12' = (11, 6), 'H12' = (11, 7)
-            x = int(well[1:])-1
-            y = self.charToInt(well[0])
+            (x, y) = self.wellToIndex(well)
 
-            # If the well is empty, fill it with a volume, otherwise raise
-            # an exception
-            if not self.col_volumes[x]:
-                self.col_volumes[x] = vol
-            else:
-                if not self.col_volumes[x] == vol:
-                    err_str = "Volume for well '{0}' does not match {1}" \
-                            .format(well, self.col_volumes[x])
-                    raise ValueError(err_str)
             self.well_volumes[x][y] = vol
+            if self.col_volumes[x] is None:
+                self.col_volumes[x] = vol
 
-    # Check to make sure there is a volume in each well for each column
-    # that has a volume in it
+    # Check every well of the plate against the recorded col_volumes
     def checkWells(self):
-        for i in range(12):
-            if self.col_volumes[i]:
-                for j in range(8):
-                    if not self.well_volumes[i][j]:
-                        err_str = "Missing volume for well '{0}'" \
-                                .format(chr(ord('A') + j) + str(i + 1))
-                        raise IndexError(err_str)
+        for i, column in enumerate(self.well_volumes):
+            for vol in column:
+                if vol != self.col_volumes[i]:
+                    err_str = (f"Volumes in column A{i+1} through H{i+1}"
+                               " do not match.")
+                    raise ValueError(err_str)
 
-    # Converts the alphabetic component of the well to an integer
-    # A = 0, B = 1, .., G = 6, H = 7
-    def charToInt(self, c):
-        return ord(c)-ord('A')
+    # Converts a well input to an index
+    def wellToIndex(self, well: str) -> (int, int):
+        x = int(well[1:]) - 1
+        y = ord(well[0]) - ord('A')
+        return (x, y)
