@@ -5,7 +5,7 @@ from tkinter import ttk
 from tkinter import scrolledtext
 
 
-# Log handler that reroutes emitted messages to a string
+# Log handler that reroutes emitted messages to self.text
 class LogHandler(logging.Handler):
     def __init__(self):
         logging.Handler.__init__(self)
