@@ -96,7 +96,7 @@ class ProtocolGenerator:
             for ip in self.input_panels:
                 pw.addData(ip.getData())
 
-            if ofile := filedialog.asksavefilename(title='Save Protocol'):
+            if ofile := filedialog.asksaveasfilename(title='Save Protocol'):
                 pw.saveOutput(ofile)
 
                 if self.lh.text:

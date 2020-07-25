@@ -2,8 +2,7 @@
 class FormatHelper:
     # Returns the code for the header
     def getHeader(self):
-        return (
-                "from opentrons import protocol_api\n"
+        return ("from opentrons import protocol_api\n"
                 "\n"
                 "metadata = {\n"
                 "    'protocolName': 'OT Transfer',\n"
@@ -29,27 +28,24 @@ class FormatHelper:
         return self.getLabware('dest_plate', plate_name, plate_location)
 
     # Returns the code to load a piece of labware (tip rack, plate, etc)
-    def getLabware(self, var_name, labware_name, labware_location):
-        return "    {0} = protocol.load_labware('{1}', {2})\n" \
-            .format(var_name, labware_name, labware_location)
+    def getLabware(self, var_name, lw_name, lw_loc):
+        return (f"    {var_name} = protocol.load_labware("
+                f"'{lw_name}', {lw_loc})\n")
 
     # Returns the code to load a pipette
-    def getPipette(self, pipette_name, pipette_location):
-        return "    pipette = protocol.load_instrument(" \
-                "'{0}', mount='{1}', tip_racks=tip_racks)\n\n" \
-                .format(pipette_name, pipette_location)
+    def getPipette(self, p_name, p_loc):
+        return ("    pipette = protocol.load_instrument("
+                f"'{p_name}', mount='{p_loc}', tip_racks=tip_racks)\n\n")
 
     # Returns the code to transfer volume from a single well of the source
     # plate to the destination plate.
-    def getSingleTransfer(self, volume, well):
-        return "    pipette.transfer(" \
-                "{0}, src_plate['{1}'], dest_plate['{1}'])\n" \
-                .format(volume, well)
+    def getSingleTransfer(self, vol, well):
+        return ("    pipette.transfer("
+                f"{vol}, src_plate['{well}'], dest_plate['{well}'])\n")
 
     # Returns the code to transfer volume from a column of wells from the
     # source plate to the destination plate using a multi-headed pipette.
-    def getMultiTransfer(self, volume, column):
-        return "    pipette.transfer({0}, " \
-                "src_plate.columns_by_name()['{1}'], " \
-                "dest_plate.columns_by_name()['{1}'])\n" \
-                .format(volume, column)
+    def getMultiTransfer(self, vol, col):
+        return (f"    pipette.transfer({vol}, "
+                f"src_plate.columns_by_name()['{col}'], "
+                f"dest_plate.columns_by_name()['{col}'])\n")
