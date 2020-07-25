@@ -5,9 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "*"
+opentrons = "*"
+pyinstaller = "*"
 
 [packages]
-opentrons = "*"
 
 [requires]
 python_version = "3.8"
