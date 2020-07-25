@@ -6,13 +6,14 @@ import unittest
 
 class TestPlateData(unittest.TestCase):
     def setUp(self):
+        self.cfg = config.Configuration('null')
         self.data = plate_data.PlateData(
-                tip_rack_name=config.TIP_RACK_NAMES[0],
-                tip_rack_loc=config.TIP_RACK_LOCS[0],
-                src_plate_name=config.PLATE_NAMES[0],
-                src_plate_loc=config.PLATE_LOCS[0],
-                dest_plate_name=config.PLATE_NAMES[0],
-                dest_plate_loc=config.PLATE_LOCS[0],
+                tip_rack_name=self.cfg['TIP_RACK_NAMES'][0],
+                tip_rack_loc=self.cfg['TIP_RACK_LOCS'][0],
+                src_plate_name=self.cfg['PLATE_NAMES'][0],
+                src_plate_loc=self.cfg['PLATE_LOCS'][0],
+                dest_plate_name=self.cfg['PLATE_NAMES'][0],
+                dest_plate_loc=self.cfg['PLATE_LOCS'][0],
                 csv_file_loc='')
 
     def test_isValid(self):
@@ -27,11 +28,11 @@ class TestPlateData(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.data.isValid()
 
-        self.data.src_plate_loc = config.PLATE_LOCS[1]
+        self.data.src_plate_loc = self.cfg['PLATE_LOCS'][1]
         with self.assertRaises(ValueError):
             self.data.isValid()
 
-        self.data.dest_plate_loc = config.PLATE_LOCS[2]
+        self.data.dest_plate_loc = self.cfg['PLATE_LOCS'][2]
         self.assertTrue(self.data.isValid())
 
     def test_checkMissingInput(self):
@@ -52,11 +53,11 @@ class TestPlateData(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.data.checkPlateLocations()
 
-        self.data.src_plate_loc = config.PLATE_LOCS[1]
+        self.data.src_plate_loc = self.cfg['PLATE_LOCS'][1]
         with self.assertRaises(ValueError):
             self.data.checkPlateLocations()
 
-        self.data.dest_plate_loc = config.PLATE_LOCS[2]
+        self.data.dest_plate_loc = self.cfg['PLATE_LOCS'][2]
         try:
             self.data.checkPlateLocations()
         except Exception:
