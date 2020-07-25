@@ -12,8 +12,9 @@ build/
 # Vim swapfiles
 *.swp
 
-# Test file
+# Test files
 data/test.py
+labware.ini
 
 # OSX files
 .DS_Store
