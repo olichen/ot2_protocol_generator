@@ -29,11 +29,10 @@ class ProtocolGenerator:
         self.addPlatePanel()
         self.createBottomMenu()
 
-        # Initialize log handler (outputs to self.log_text)
-        self.log_text = ['']
-        lh = log_helper.LogHandler(self.log_text)
+        # Initialize log handler
+        self.lh = log_helper.LogHandler()
         logger = logging.getLogger()
-        logger.addHandler(lh)
+        logger.addHandler(self.lh)
 
     # Adds the File and Help menus
     def addMenubar(self):
@@ -97,16 +96,16 @@ class ProtocolGenerator:
             if output_file:
                 pw.saveOutput(output_file)
 
-                if self.log_text[0]:
-                    log_helper.WarningMessageBox(self.window, self.log_text[0])
+                if self.lh.text:
+                    log_helper.WarningMessageBox(self.window, self.lh.text)
                 self.quit()
             else:
-                self.log_text[0] = ''
+                self.lh.clear()
                 self.window.focus()
         except Exception as e:
             traceback.print_exc()
             messagebox.showerror(title='Error', message=e)
-            self.log_text[0] = ''
+            self.lh.clear()
             self.window.focus()
 
     # Open the labware.ini file for editing

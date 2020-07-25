@@ -7,24 +7,26 @@ from tkinter import scrolledtext
 
 # Log handler that reroutes emitted messages to a string
 class LogHandler(logging.Handler):
-    def __init__(self, text):
+    def __init__(self):
         logging.Handler.__init__(self)
-
-        # Reference to the text that the handler will edit
-        self.text = text
+        self.text = ''
 
     def emit(self, record):
         msg = self.format(record)
-        self.text[0] += msg
-        self.text[0] += '\n'
+        self.text += msg
+        self.text += '\n'
+
+    def clear(self):
+        self.text = ''
 
 
 # Warning message box that displays all the warnings
 class WarningMessageBox(Toplevel):
     def __init__(self, parent, text):
+
         # Initialize an un-resizable Toplevel message box
         Toplevel.__init__(self, parent)
-        self.title = 'Warning'
+        self.title('Warning')
         self.resizable(False, False)
 
         # Add the scrolled-text object that displays all the warnings
