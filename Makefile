@@ -7,5 +7,9 @@ test:
 lint:
 	flake8
 
+install-dev:
+	pip install pipenv
+	pipenv install --dev
+
 run:
 	python cli.py
