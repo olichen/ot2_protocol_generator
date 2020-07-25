@@ -8,6 +8,7 @@ from .gui import plate_input_panel
 from .gui import config
 import logging
 from .helpers import log_helper
+from platform import system
 import traceback
 import webbrowser
 import subprocess
@@ -20,10 +21,10 @@ class ProtocolGenerator:
         self.window = tk.Tk()
         self.window.title('Protocol Generator')
         self.window.resizable(False, False)
+        self.addMenubar()
 
         # Initialize the first input panel
         self.input_panels = []
-        self.addMenubar()
         self.addPipettePanel()
         self.addPlatePanel()
         self.createBottomMenu()
@@ -34,6 +35,7 @@ class ProtocolGenerator:
         logger = logging.getLogger()
         logger.addHandler(lh)
 
+    # Adds the File and Help menus
     def addMenubar(self):
         menubar = tk.Menu(self.window)
 
@@ -107,20 +109,32 @@ class ProtocolGenerator:
             self.log_text[0] = ''
             self.window.focus()
 
+    # Open the labware.ini file for editing
     def editLabware(self):
         if not os.path.exists('./labware.ini'):
             cfg = config.Configuration('./labware.ini')
             cfg.writeFile('./labware.ini')
-        subprocess.run(['open','./labware.ini'], check=True)
+        OS = system().lower()
+        if 'windows' in OS:
+            opener = 'start'
+        elif 'osx' in OS or 'darwin' in OS:
+            opener = 'open'
+        else:
+            opener = 'xdg-open'
+        subprocess.run(opener + ' labware.ini', shell=True)
+        msg = 'Please restart the protocol generator after editing any labware'
+        messagebox.showinfo(title='Labware', message=msg)
 
     # Exit the application
     def quit(self, event=None):
         self.window.destroy()
 
+    # Open the home page on github
     def help(self):
         url = 'https://github.com/olichen/ot2_protocol_generator#readme'
         webbrowser.open(url)
 
+    # Pop open an about box
     def about(self):
         msg = 'Version 1.0\nCopyright (c) 2020 Oliver Chen'
         messagebox.showinfo(title='About', message=msg)

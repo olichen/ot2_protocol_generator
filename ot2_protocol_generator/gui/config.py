@@ -35,7 +35,7 @@ class Configuration:
         labware = self.config['LABWARE']
         return [s.strip() for s in labware.get(index).split(',')]
 
-    # Write the ini file
+    # Write the configuration file
     def writeFile(self, filename):
         with open(filename, 'w') as configfile:
             self.config.write(configfile)
