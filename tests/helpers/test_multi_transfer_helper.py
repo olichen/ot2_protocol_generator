@@ -43,19 +43,19 @@ class TestMultiTransferHelper(unittest.TestCase):
             mth.MultiTransferHelper(self.volumedict)
 
         del self.volumedict['A1']
-        with self.assertRaises(IndexError):
+        with self.assertRaises(ValueError):
             mth.MultiTransferHelper(self.volumedict)
 
-    def testCharToInt(self):
+    def testWellToIndex(self):
         et = mth.MultiTransferHelper(self.volumedict)
-        self.assertEqual(et.charToInt('A'), 0)
-        self.assertEqual(et.charToInt('B'), 1)
-        self.assertEqual(et.charToInt('C'), 2)
-        self.assertEqual(et.charToInt('D'), 3)
-        self.assertEqual(et.charToInt('E'), 4)
-        self.assertEqual(et.charToInt('F'), 5)
-        self.assertEqual(et.charToInt('G'), 6)
-        self.assertEqual(et.charToInt('H'), 7)
+        self.assertEqual(et.wellToIndex('A1'), (0, 0))
+        self.assertEqual(et.wellToIndex('B2'), (1, 1))
+        self.assertEqual(et.wellToIndex('C3'), (2, 2))
+        self.assertEqual(et.wellToIndex('D4'), (3, 3))
+        self.assertEqual(et.wellToIndex('E5'), (4, 4))
+        self.assertEqual(et.wellToIndex('F6'), (5, 5))
+        self.assertEqual(et.wellToIndex('G7'), (6, 6))
+        self.assertEqual(et.wellToIndex('H8'), (7, 7))
 
 
 if __name__ == '__main__':
