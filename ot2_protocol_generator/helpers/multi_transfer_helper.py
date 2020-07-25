@@ -20,7 +20,7 @@ class MultiTransferHelper:
     def checkWells(self):
         for i, column in enumerate(self.well_volumes, 1):
             for vol in column:
-                if vol != self.col_volumes[i]:
+                if vol != self.col_volumes[i-1]:
                     err_str = (f"Volumes in column A{i} through H{i}"
                                " do not match.")
                     raise ValueError(err_str)
