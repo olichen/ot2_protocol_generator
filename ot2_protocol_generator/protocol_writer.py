@@ -27,51 +27,32 @@ class ProtocolWriter:
     # Open the output file and write everything
     def saveOutput(self, output_file):
         with open(output_file, 'w') as f:
-            f.write(self.fh.getHeader())
+            f.write(self.fh.header())
             self.outputTipRacks(f)
             self.outputPipetteData(f)
             self.outputTransferData(f)
 
     # Iterate through all the input data and write the tip rack definitions
     def outputTipRacks(self, f):
-        for data in self.plate_data:
-            name = data.tip_rack_name
-            loc = data.tip_rack_loc
-            f.write(self.fh.getTipRack(name, loc))
+        for d in self.plate_data:
+            f.write(self.fh.tipRack(d.tip_rack_name, d.tip_rack_loc))
 
     # Write the pipette definition
     def outputPipetteData(self, f):
-        name = self.pipette_data.pipette_name
-        loc = self.pipette_data.pipette_loc
-        f.write(self.fh.getPipette(name, loc))
+        d = self.pipette_data
+        f.write(self.fh.pipette(d.pipette_name, d.pipette_loc))
 
     # Iterate through all the input data and write the plate definitions
     # followed by all the transfers
     def outputTransferData(self, f):
-        for data, csv in zip(self.plate_data, self.plate_csv):
-            # Write the plate definitions
-            name = data.src_plate_name
-            loc = data.src_plate_loc
-            f.write(self.fh.getSrcPlate(name, loc))
-            name = data.dest_plate_name
-            loc = data.dest_plate_loc
-            f.write(self.fh.getDestPlate(name, loc))
+        for d, csv in zip(self.plate_data, self.plate_csv):
+            f.write(self.fh.srcPlate(d.src_plate_name, d.src_plate_loc))
+            f.write(self.fh.destPlate(d.dest_plate_name, d.dest_plate_loc))
 
-            # Write transfers
             if self.pipette_data.isMulti():
-                self.outputMultiTransfers(f, csv)
+                for i, vol in enumerate(csv.col_volumes):
+                    if vol:
+                        f.write(self.fh.multiTransfer(vol, i+1))
             else:
-                self.outputSingleTransfers(f, csv)
-
-    # Writes all the transfers by well to the output protocol file
-    def outputSingleTransfers(self, f, csv_data):
-        for well, volume in csv_data.volumes.items():
-            f.write(self.fh.getSingleTransfer(volume, well))
-
-    # Writes all the transfer by column to the output protocol file
-    def outputMultiTransfers(self, f, csv_data):
-        # Iterates and writes the transfers by column to the output protocol
-        # file if it receives a non-empty column
-        for i in range(12):
-            if vol := csv_data.col_volumes[i]:
-                f.write(self.fh.getMultiTransfer(vol, i+1))
+                for well, vol in csv.volumes.items():
+                    f.write(self.fh.singleTransfer(vol, well))
