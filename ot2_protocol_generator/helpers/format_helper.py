@@ -2,16 +2,14 @@
 class FormatHelper:
     # Returns the code for the header
     def header(self):
-        return ("from opentrons import protocol_api\n"
-                "\n"
+        return ("from opentrons import protocol_api\n\n"
                 "metadata = {\n"
                 "    'protocolName': 'OT Transfer',\n"
                 "    'author': 'Oliver Chen <olichen@ucdavis.edu>',\n"
                 "    'apiLevel': '2.2'\n"
                 "}\n\n\n"
                 "def run(protocol: protocol_api.ProtocolContext):\n"
-                "    tip_racks = []\n"
-                )
+                "    tip_racks = []\n")
 
     # Returns the code to load a tip rack
     def tipRack(self, rack_name, rack_location):
