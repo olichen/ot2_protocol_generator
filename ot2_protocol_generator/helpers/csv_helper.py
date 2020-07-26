@@ -18,71 +18,59 @@ class CSVReader:
         with open(csv_file) as csvfile:
             reader = csv.reader(csvfile)
 
-            for i, row in enumerate(reader):
-                well, volume = self.readRow(i+1, row)
+            for i, row in enumerate(reader, 1):
+                well, volume = self.readRow(i, row)
                 if well and volume:
                     self.volumes[well] = volume
 
-    # Reads in a row; returns the tuple (well, volume) on a valid row.
-    # Returns (None, None) on an invalid row.
+    # Reads in a row; returns the tuple (well, volume) on a valid row
+    # Returns a warning and (None, None) or an exception on an invalid row
     def readRow(self, rownum, row):
-        # Try to access both cells. Fails on empty cell.
+        # Warning if there aren't at least 2 cells in the row
         try:
             well = row[0].strip()
-            volume = row[1].strip()
+            vol = row[1].strip()
         except IndexError:
-            err_str = str.format(
-                "Row {0}: Invalid cells '{1}'",
-                rownum, row)
+            err_str = f"Row {rownum}: Invalid cells '{row}'"
             self.logger.warning(err_str)
             return None, None
 
-        # Check to make sure we have a valid well position.
+        # Warning for invalid well
         if not self.isValidWell(well):
             if not rownum == 1:
-                err_str = str.format(
-                    "Row {0}: Invalid well '{0}'",
-                    rownum, well)
+                err_str = f"Row {rownum}: Invalid well '{well}'"
                 self.logger.warning(err_str)
             return None, None
 
-        # Check if the well is already defined
-        # Raises an exception if wells overlap
+        # Exception for volumes that are defined twice
         if well in self.volumes:
-            err_str = str.format(
-                "Error: Well '{0}' in row {1} is already defined elsewhere",
-                well, rownum)
+            err_str = "Error: Well '{well}' in row {rownum} is already defined"
             raise ValueError(err_str)
 
-        # Check to make sure we have a valid volume
-        # Raises an exception if we don't
-        if not self.isValidVolume(volume):
-            err_str = str.format(
-                "Error: Encountered invalid volume '{0}' in row {1}",
-                volume, rownum)
+        # Exception for invalid volumes
+        if not self.isValidVolume(vol):
+            err_str = f"Error: Invalid volume '{vol}' in row {rownum}"
             raise ValueError(err_str)
 
-        if volume[::-1].find('.') > 1:
-            err_str = str.format(
-                "Row {0}: Volume '{0}' longer than one decimal place",
-                rownum, volume)
+        # Warning if there are too many decimal places
+        if vol[::-1].find('.') > 1:
+            err_str = f"Row {rownum}: '{vol}' longer than one decimal place"
             self.logger.warning(err_str)
 
-        if float(volume) > 10:
-            err_str = str.format(
-                "Row {0}: Volume '{1}' > 10 μL",
-                rownum, volume)
+        # Warning if volume is too large
+        if float(vol) > 10:
+            err_str = f"Row {rownum}: Volume '{vol}' > 10 μL",
             self.logger.warning(err_str)
 
-        return well, volume
+        return well, vol
 
-    # Check to make sure each row is valid
-    def isValidWell(self, well_text):
+    # Check well name against regex (A-H followed by 1-12)
+    def isValidWell(self, well_text: str) -> bool:
         well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
         return well_format.fullmatch(well_text)
 
     # Check to make sure the volume is valid
-    def isValidVolume(self, volume_text):
+    def isValidVolume(self, volume_text: str) -> bool:
         try:
             float(volume_text)
             return True
