@@ -76,7 +76,7 @@ class ProtocolGenerator:
 
     # Outputs the protocol to a file
     def save(self):
-        data = [ip.getData() for ip in self.input_panels]
+        data = (ip.getData() for ip in self.input_panels)
         self.mh.save(self.window, *data)
 
     # Exit the application
