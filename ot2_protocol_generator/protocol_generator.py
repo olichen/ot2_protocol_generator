@@ -18,8 +18,8 @@ class ProtocolGenerator:
 
         # Initialize the first input panel
         self.input_panels = []
-        self.addPipettePanel()
-        self.addPlatePanel()
+        self.addPipette()
+        self.addPlate()
 
         # Initialize buttons along bottom of application
         self.createBottomMenu()
@@ -42,13 +42,13 @@ class ProtocolGenerator:
         self.window.config(menu=menubar)
 
     # Adds a pipette selector panel
-    def addPipettePanel(self):
+    def addPipette(self):
         ip = pipette_input_panel.PipetteInputPanel(self.window)
         ip.grid(row=len(self.input_panels), sticky='nesw')
         self.input_panels.append(ip)
 
     # Add a plate selector panel
-    def addPlatePanel(self):
+    def addPlate(self):
         if len(self.input_panels) < 4:
             ip = plate_input_panel.PlateInputPanel(self.window)
             ip.grid(row=len(self.input_panels), sticky='nesw')
@@ -62,16 +62,14 @@ class ProtocolGenerator:
         save = ttk.Button(frame, text='Generate', width=12, command=self.save)
         save.pack(side=tk.RIGHT)
 
-        rem_input = ttk.Button(frame, text='Remove', width=12,
-                               command=self.remPlatePanel)
-        rem_input.pack(side=tk.RIGHT)
+        rem = ttk.Button(frame, text='Remove', width=12, command=self.remPlate)
+        rem.pack(side=tk.RIGHT)
 
-        add_input = ttk.Button(frame, text='Add', width=12,
-                               command=self.addPlatePanel)
-        add_input.pack(side=tk.RIGHT)
+        add = ttk.Button(frame, text='Add', width=12, command=self.addPlate)
+        add.pack(side=tk.RIGHT)
 
     # Remove a plate input panel
-    def remPlatePanel(self):
+    def remPlate(self):
         if len(self.input_panels) > 2:
             panel = self.input_panels.pop()
             panel.destroy()
