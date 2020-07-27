@@ -25,7 +25,6 @@ class MenuHelper:
         try:
             # Read in data from each input panel. Throws an exception if
             # invalid data is encountered
-            print(data)
             for d in data:
                 pw.addData(d)
 
