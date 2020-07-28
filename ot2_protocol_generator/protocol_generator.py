@@ -14,18 +14,18 @@ class ProtocolGenerator:
 
         # Initialize menu bar
         self.mh = menu_helper.MenuHelper()
-        self.addMenubar()
+        self._add_menubar()
 
         # Initialize the first input panel
-        self.input_panels = []
-        self.addPipette()
-        self.addPlate()
+        self._input_panels = []
+        self._add_pipette()
+        self.add_plate()
 
         # Initialize buttons along bottom of application
-        self.createBottomMenu()
+        self._create_bottom_menu()
 
     # Adds the File and Help menus
-    def addMenubar(self):
+    def _add_menubar(self):
         menubar = tk.Menu(self.window)
 
         filemenu = tk.Menu(menubar, tearoff=0)
@@ -42,41 +42,42 @@ class ProtocolGenerator:
         self.window.config(menu=menubar)
 
     # Adds a pipette selector panel
-    def addPipette(self):
+    def _add_pipette(self):
         ip = pipette_input_panel.PipetteInputPanel(self.window)
-        ip.grid(row=len(self.input_panels), sticky='nesw')
-        self.input_panels.append(ip)
-
-    # Add a plate selector panel
-    def addPlate(self):
-        if len(self.input_panels) < 4:
-            ip = plate_input_panel.PlateInputPanel(self.window)
-            ip.grid(row=len(self.input_panels), sticky='nesw')
-            self.input_panels.append(ip)
+        ip.grid(row=len(self._input_panels), sticky='nesw')
+        self._input_panels.append(ip)
 
     # Add bottom menu: add transfer, remove transfer, generate protocol
-    def createBottomMenu(self):
+    def _create_bottom_menu(self):
         frame = ttk.Frame(self.window)
         frame.grid(row=100, sticky='nesw')
 
         save = ttk.Button(frame, text='Generate', width=12, command=self.save)
         save.pack(side=tk.RIGHT)
 
-        rem = ttk.Button(frame, text='Remove', width=12, command=self.remPlate)
+        rem = ttk.Button(frame, text='Remove', width=12, command=self.rem_plate)
         rem.pack(side=tk.RIGHT)
 
-        add = ttk.Button(frame, text='Add', width=12, command=self.addPlate)
+        add = ttk.Button(frame, text='Add', width=12, command=self.add_plate)
         add.pack(side=tk.RIGHT)
 
+
+    # Add a plate selector panel
+    def add_plate(self):
+        if len(self._input_panels) < 4:
+            ip = plate_input_panel.PlateInputPanel(self.window)
+            ip.grid(row=len(self._input_panels), sticky='nesw')
+            self._input_panels.append(ip)
+
     # Remove a plate input panel
-    def remPlate(self):
-        if len(self.input_panels) > 2:
-            panel = self.input_panels.pop()
+    def rem_plate(self):
+        if len(self._input_panels) > 2:
+            panel = self._input_panels.pop()
             panel.destroy()
 
     # Outputs the protocol to a file
     def save(self):
-        data = (ip.getData() for ip in self.input_panels)
+        data = (ip.getData() for ip in self._input_panels)
         self.mh.save(self.window, *data)
 
     # Exit the application
