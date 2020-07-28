@@ -8,7 +8,7 @@ from . import plate_data
 # Creates an input panel for a transfer
 class PlateInputPanel(InputPanel):
     def __init__(self, parent):
-        super(PlateInputPanel, self).__init__(parent)
+        super().__init__(parent)
 
         self.tip_rack_name = tk.StringVar()
         self.tip_rack_loc = tk.StringVar()

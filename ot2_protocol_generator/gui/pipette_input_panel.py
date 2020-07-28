@@ -6,7 +6,7 @@ from . import pipette_data
 # Creates an input panel for a transfer
 class PipetteInputPanel(InputPanel):
     def __init__(self, parent):
-        super(PipetteInputPanel, self).__init__(parent)
+        super().__init__(parent)
 
         self.pipette_name = tk.StringVar()
         self.pipette_loc = tk.StringVar()
