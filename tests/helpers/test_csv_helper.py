@@ -37,18 +37,20 @@ class TestCSVHelper(unittest.TestCase):
             csvr.readRow(2, ['C2', ''])
         self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
-    def test_isValidWell(self):
+    def test__is_valid_well(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
-        for i in range(ord('A'), ord('H')):
-            for j in range(1, 12):
-                self.assertTrue(csvr.isValidWell(chr(i)+str(j)))
-        self.assertFalse(csvr.isValidWell('AA1'))
-        self.assertFalse(csvr.isValidWell('A111'))
-        self.assertFalse(csvr.isValidWell('A0'))
-        self.assertFalse(csvr.isValidWell('A13'))
-        self.assertFalse(csvr.isValidWell('I1'))
-        self.assertFalse(csvr.isValidWell('a1'))
-        self.assertFalse(csvr.isValidWell('a12'))
+        well_x = [str(x) for x in range(1,13)]
+        well_y = [chr(x) for x in range(ord('A'), ord('A')+8)]
+        for well in (y + x for x in well_x
+                           for y in well_y):
+            self.assertTrue(csvr._is_valid_well(well))
+        self.assertFalse(csvr._is_valid_well('AA1'))
+        self.assertFalse(csvr._is_valid_well('A111'))
+        self.assertFalse(csvr._is_valid_well('A0'))
+        self.assertFalse(csvr._is_valid_well('A13'))
+        self.assertFalse(csvr._is_valid_well('I1'))
+        self.assertFalse(csvr._is_valid_well('a1'))
+        self.assertFalse(csvr._is_valid_well('a12'))
 
     def test_isValidVolume(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
@@ -64,8 +66,8 @@ class TestCSVHelper(unittest.TestCase):
         csvr = csv_helper.CSVReader(self.temp_csv)
         well_x = [str(x) for x in range(1,13)]
         well_y = [chr(x) for x in range(ord('A'), ord('A')+8)]
-        for i, well in enumerate(y+x for x in well_x
-                                     for y in well_y):
+        for i, well in enumerate(y + x for x in well_x
+                                       for y in well_y):
             self.assertEqual(csvr._well_to_int(well), i)
         self.assertEqual(csvr._well_to_int('A1'), 0)
         self.assertEqual(csvr._well_to_int('B1'), 1)

@@ -36,7 +36,7 @@ class CSVReader:
             return None, None
 
         # Warning for invalid well
-        if not self.isValidWell(well):
+        if not self._is_valid_well(well):
             if not rownum == 1:
                 err_str = f"Row {rownum}: Invalid well '{well}'"
                 self.logger.warning(err_str)
@@ -67,15 +67,14 @@ class CSVReader:
     # Converts a text well to an int
     # A1 => 0, B1 => 2, ..., H11 => 94, H12 => 95
     def _well_to_int(self, well):
-        well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
-        if not well_format.fullmatch(well):
+        if not self._is_valid_well(well):
             return None
         pos =  8 * (int(well[1:]) - 1)
         pos += ord(well[0]) - ord('A')
         return pos
 
     # Check well name against regex (A-H followed by 1-12)
-    def isValidWell(self, well_text: str) -> bool:
+    def _is_valid_well(self, well_text: str) -> bool:
         well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
         return well_format.fullmatch(well_text)
 
