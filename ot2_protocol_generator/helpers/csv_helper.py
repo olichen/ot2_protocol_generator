@@ -48,7 +48,7 @@ class CSVReader:
             raise ValueError(err_str)
 
         # Exception for invalid volumes
-        if not self.isValidVolume(vol):
+        if not self._is_valid_volume(vol):
             err_str = f"Error: Invalid volume '{vol}' in row {rownum}"
             raise ValueError(err_str)
 
@@ -79,7 +79,7 @@ class CSVReader:
         return well_format.fullmatch(well_text)
 
     # Check to make sure the volume is valid
-    def isValidVolume(self, volume_text: str) -> bool:
+    def _is_valid_volume(self, volume_text: str) -> bool:
         try:
             float(volume_text)
             return True

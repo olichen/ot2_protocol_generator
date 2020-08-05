@@ -37,15 +37,18 @@ class TestCSVHelper(unittest.TestCase):
             csvr.readRow(2, ['C2', ''])
         self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
-    def test_isValidVolume(self):
+    def test__is_valid_volume(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
-        self.assertFalse(csvr.isValidVolume(''))
-        self.assertFalse(csvr.isValidVolume(' '))
-        self.assertFalse(csvr.isValidVolume('text'))
-        self.assertFalse(csvr.isValidVolume('a2'))
-        self.assertTrue(csvr.isValidVolume(' 1'))
-        self.assertTrue(csvr.isValidVolume('1'))
-        self.assertTrue(csvr.isValidVolume('1 '))
+        self.assertFalse(csvr._is_valid_volume(''))
+        self.assertFalse(csvr._is_valid_volume(' '))
+        self.assertFalse(csvr._is_valid_volume('text'))
+        self.assertFalse(csvr._is_valid_volume('a2'))
+        self.assertFalse(csvr._is_valid_volume('1.2.3'))
+        self.assertFalse(csvr._is_valid_volume('1 .2'))
+        self.assertTrue(csvr._is_valid_volume(' 1'))
+        self.assertTrue(csvr._is_valid_volume('1'))
+        self.assertTrue(csvr._is_valid_volume('1 '))
+        self.assertTrue(csvr._is_valid_volume('1.23 '))
 
     def test__well_to_int(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
