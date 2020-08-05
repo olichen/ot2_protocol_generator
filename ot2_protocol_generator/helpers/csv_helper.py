@@ -64,6 +64,16 @@ class CSVReader:
 
         return well, vol
 
+    # Converts a text well to an int
+    # A1 => 0, B1 => 2, ..., H11 => 94, H12 => 95
+    def _well_to_int(self, well):
+        well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
+        if not well_format.fullmatch(well):
+            return None
+        pos =  8 * (int(well[1:]) - 1)
+        pos += ord(well[0]) - ord('A')
+        return pos
+
     # Check well name against regex (A-H followed by 1-12)
     def isValidWell(self, well_text: str) -> bool:
         well_format = re.compile('[A-H]([1-9]|(1[0-2]))')
