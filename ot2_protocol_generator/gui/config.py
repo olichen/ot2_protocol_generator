@@ -24,13 +24,13 @@ class Configuration:
             value = '1,2,3,4,5,6,7,8,9,10,11'
             self.config.set('LABWARE', 'PLATE_LOCS', value)
         if not self.config.has_option('LABWARE', 'PIPETTE_NAMES'):
-            value = 'p10_single,p10_multi'
+            value = 'p10_multi,p10_single'
             self.config.set('LABWARE', 'PIPETTE_NAMES', value)
         if not self.config.has_option('LABWARE', 'PIPETTE_LOCS'):
-            value = 'right,left'
+            value = 'left,right'
             self.config.set('LABWARE', 'PIPETTE_LOCS', value)
 
-    # Overload the ['getitem'] operator
+    # Overload the ['getitem'] operator. Returns options as a list
     def __getitem__(self, index):
         labware = self.config['LABWARE']
         return [s.strip() for s in labware.get(index).split(',')]
