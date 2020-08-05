@@ -37,21 +37,6 @@ class TestCSVHelper(unittest.TestCase):
             csvr.readRow(2, ['C2', ''])
         self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
-    def test__is_valid_well(self):
-        csvr = csv_helper.CSVReader(self.temp_csv)
-        well_x = [str(x) for x in range(1,13)]
-        well_y = [chr(x) for x in range(ord('A'), ord('A')+8)]
-        for well in (y + x for x in well_x
-                           for y in well_y):
-            self.assertTrue(csvr._is_valid_well(well))
-        self.assertFalse(csvr._is_valid_well('AA1'))
-        self.assertFalse(csvr._is_valid_well('A111'))
-        self.assertFalse(csvr._is_valid_well('A0'))
-        self.assertFalse(csvr._is_valid_well('A13'))
-        self.assertFalse(csvr._is_valid_well('I1'))
-        self.assertFalse(csvr._is_valid_well('a1'))
-        self.assertFalse(csvr._is_valid_well('a12'))
-
     def test_isValidVolume(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
         self.assertFalse(csvr.isValidVolume(''))
@@ -64,10 +49,9 @@ class TestCSVHelper(unittest.TestCase):
 
     def test__well_to_int(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
-        well_x = [str(x) for x in range(1,13)]
+        well_x = [str(x) for x in range(1, 13)]
         well_y = [chr(x) for x in range(ord('A'), ord('A')+8)]
-        for i, well in enumerate(y + x for x in well_x
-                                       for y in well_y):
+        for i, well in enumerate(y + x for x in well_x for y in well_y):
             self.assertEqual(csvr._well_to_int(well), i)
         self.assertEqual(csvr._well_to_int('A1'), 0)
         self.assertEqual(csvr._well_to_int('B1'), 1)
@@ -77,6 +61,21 @@ class TestCSVHelper(unittest.TestCase):
         self.assertEqual(csvr._well_to_int('H12'), 95)
         self.assertEqual(csvr._well_to_int('a1'), None)
         self.assertEqual(csvr._well_to_int('a5'), None)
+
+    def test__is_valid_well(self):
+        csvr = csv_helper.CSVReader(self.temp_csv)
+        well_x = [str(x) for x in range(1, 13)]
+        well_y = [chr(x) for x in range(ord('A'), ord('A')+8)]
+        for well in (y + x for x in well_x for y in well_y):
+            self.assertTrue(csvr._is_valid_well(well))
+        self.assertFalse(csvr._is_valid_well('AA1'))
+        self.assertFalse(csvr._is_valid_well('A111'))
+        self.assertFalse(csvr._is_valid_well('A0'))
+        self.assertFalse(csvr._is_valid_well('A13'))
+        self.assertFalse(csvr._is_valid_well('I1'))
+        self.assertFalse(csvr._is_valid_well('a1'))
+        self.assertFalse(csvr._is_valid_well('a12'))
+
 
 if __name__ == '__main__':
     unittest.main()
