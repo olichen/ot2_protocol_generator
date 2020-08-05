@@ -4,8 +4,6 @@ class FormatHelper:
     def header(self):
         return ("from opentrons import protocol_api\n\n"
                 "metadata = {\n"
-                "    'protocolName': 'OT Transfer',\n"
-                "    'author': 'Oliver Chen <olichen@ucdavis.edu>',\n"
                 "    'apiLevel': '2.2'\n"
                 "}\n\n\n"
                 "def run(protocol: protocol_api.ProtocolContext):\n"
