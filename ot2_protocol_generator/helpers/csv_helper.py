@@ -69,7 +69,7 @@ class CSVReader:
     def _well_to_int(self, well):
         if not self._is_valid_well(well):
             return None
-        pos =  8 * (int(well[1:]) - 1)
+        pos = 8 * (int(well[1:]) - 1)
         pos += ord(well[0]) - ord('A')
         return pos
 
