@@ -3,43 +3,43 @@ import re
 import logging
 
 
-# Reads a CSV file and returns a dict of 'well': 'volume'
+# Reads a CSV file and returns a list of all 96 volumes
 class CSVReader:
     def __init__(self, csv_file):
         self.volumes = {}
-        self.logger = logging.getLogger()
+        self._logger = logging.getLogger()
         try:
-            self.readCSV(csv_file)
+            self._readCSV(csv_file)
         except FileNotFoundError:
             raise FileNotFoundError("Please select a valid CSV file")
 
     # Read in the CSV file
-    def readCSV(self, csv_file):
+    def _readCSV(self, csv_file):
         with open(csv_file) as csvfile:
             reader = csv.reader(csvfile)
 
             for i, row in enumerate(reader, 1):
-                well, volume = self.readRow(i, row)
+                well, volume = self._readRow(i, row)
                 if well and volume:
                     self.volumes[well] = volume
 
-    # Reads in a row; returns the tuple (well, volume) on a valid row
+    # Reads in a row; returns the tuple (well, volume) as strings
     # Returns a warning and (None, None) or an exception on an invalid row
-    def readRow(self, rownum, row):
+    def _readRow(self, rownum, row):
         # Warning if there aren't at least 2 cells in the row
         try:
             well = row[0].strip()
             vol = row[1].strip()
         except IndexError:
             err_str = f"Row {rownum}: Invalid cells '{row}'"
-            self.logger.warning(err_str)
+            self._logger.warning(err_str)
             return None, None
 
         # Warning for invalid well
         if not self._is_valid_well(well):
             if not rownum == 1:
                 err_str = f"Row {rownum}: Invalid well '{well}'"
-                self.logger.warning(err_str)
+                self._logger.warning(err_str)
             return None, None
 
         # Exception for volumes that are defined twice
@@ -55,12 +55,12 @@ class CSVReader:
         # Warning if there are too many decimal places
         if vol[::-1].find('.') > 1:
             err_str = f"Row {rownum}: '{vol}' longer than one decimal place"
-            self.logger.warning(err_str)
+            self._logger.warning(err_str)
 
         # Warning if volume is too large
         if float(vol) > 10:
             err_str = f"Row {rownum}: Volume '{vol}' > 10 μL",
-            self.logger.warning(err_str)
+            self._logger.warning(err_str)
 
         return well, vol
 

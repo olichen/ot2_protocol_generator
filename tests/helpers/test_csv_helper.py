@@ -26,16 +26,16 @@ class TestCSVHelper(unittest.TestCase):
         with self.assertRaises(IsADirectoryError):
             csv_helper.CSVReader('/')
 
-    def test_readRow(self):
+    def test__readRow(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
-        self.assertEqual(csvr.readRow(2, ['a', '1']), (None, None))
-        self.assertEqual(csvr.readRow(2, ['garbage', '1']), (None, None))
-        self.assertEqual(csvr.readRow(2, ['H2']), (None, None))
+        self.assertEqual(csvr._readRow(2, ['a', '1']), (None, None))
+        self.assertEqual(csvr._readRow(2, ['garbage', '1']), (None, None))
+        self.assertEqual(csvr._readRow(2, ['H2']), (None, None))
         with self.assertRaises(ValueError):
-            csvr.readRow(2, ['A1', 'garbage'])
+            csvr._readRow(2, ['A1', 'garbage'])
         with self.assertRaises(ValueError):
-            csvr.readRow(2, ['C2', ''])
-        self.assertEqual(csvr.readRow(2, ['H1', ' 4 ']), ('H1', '4'))
+            csvr._readRow(2, ['C2', ''])
+        self.assertEqual(csvr._readRow(2, ['H1', ' 4 ']), ('H1', '4'))
 
     def test__is_valid_volume(self):
         csvr = csv_helper.CSVReader(self.temp_csv)
