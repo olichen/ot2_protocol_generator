@@ -13,6 +13,15 @@ class CSVReader:
         except FileNotFoundError:
             raise FileNotFoundError("Please select a valid CSV file")
 
+    # Validate multi-head transfers
+    def validate_multi_transfer(self):
+        for i, vol in enumerate(self.volumes):
+            if i%8 != 0 and vol != prev_vol:
+                err_str = f"Volumes in A{i//8+1} to H{i//8+1} do not match"
+                raise ValueError(err_str)
+            prev_vol = vol
+        return True
+
     # Read in the CSV file
     def _read_csv(self, csv_file):
         with open(csv_file) as csvfile:

@@ -1,5 +1,4 @@
 from .helpers import format_helper
-from .helpers import multi_transfer_helper as mth
 from .helpers import csv_helper
 
 
@@ -20,8 +19,8 @@ class ProtocolWriter:
 
             # Add csv data. Validate multi-head transfer data
             csv_data = csv_helper.CSVReader(data.csv_file_loc)
-            # if self.pipette_data.isMulti():
-            #     csv_data = mth.MultiTransferHelper(csv_data.volumes)
+            if self.pipette_data.isMulti():
+                csv_data.validate_multi_transfer()
             self.plate_csv.append(csv_data.volumes)
 
     # Open the output file and write everything
@@ -49,12 +48,9 @@ class ProtocolWriter:
             f.write(self.fh.srcPlate(d.src_plate_name, d.src_plate_loc))
             f.write(self.fh.destPlate(d.dest_plate_name, d.dest_plate_loc))
 
-            for i, vol in enumerate(csv):
-                f.write(self.fh.transfer(vol, i))
-            # if self.pipette_data.isMulti():
-            #     for i, vol in enumerate(csv.col_volumes):
-            #         if vol:
-            #             f.write(self.fh.multiTransfer(vol, i+1))
-            # else:
-            #     for i, vol in enumerate(csv):
-            #         f.write(self.fh.transfer(vol, i))
+            if self.pipette_data.isMulti():
+                for i in range(0,96,8):
+                    f.write(self.fh.transfer(csv[i], i))
+            else:
+                for i, vol in enumerate(csv):
+                    f.write(self.fh.transfer(vol, i))
