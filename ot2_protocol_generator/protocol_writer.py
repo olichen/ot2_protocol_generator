@@ -27,23 +27,23 @@ class ProtocolWriter:
     def saveOutput(self, output_file):
         with open(output_file, 'w') as f:
             f.write(self.fh.header())
-            self.outputTipRacks(f)
-            self.outputPipetteData(f)
-            self.outputTransferData(f)
+            self._output_tip_racks(f)
+            self._output_pipette_data(f)
+            self._output_transfer_data(f)
 
     # Iterate through all the input data and write the tip rack definitions
-    def outputTipRacks(self, f):
+    def _output_tip_racks(self, f):
         for d in self.plate_data:
             f.write(self.fh.tip_rack(d.tip_rack_name, d.tip_rack_loc))
 
     # Write the pipette definition
-    def outputPipetteData(self, f):
+    def _output_pipette_data(self, f):
         d = self.pipette_data
         f.write(self.fh.pipette(d.pipette_name, d.pipette_loc))
 
     # Iterate through all the input data and write the plate definitions
     # followed by all the transfers
-    def outputTransferData(self, f):
+    def _output_transfer_data(self, f):
         for d, csv in zip(self.plate_data, self.plate_csv):
             f.write(self.fh.src_plate(d.src_plate_name, d.src_plate_loc))
             f.write(self.fh.dest_plate(d.dest_plate_name, d.dest_plate_loc))
