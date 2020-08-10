@@ -9,23 +9,23 @@ class CSVReader:
         self.volumes = [None] * 96
         self._logger = logging.getLogger()
         try:
-            self._readCSV(csv_file)
+            self._read_csv(csv_file)
         except FileNotFoundError:
             raise FileNotFoundError("Please select a valid CSV file")
 
     # Read in the CSV file
-    def _readCSV(self, csv_file):
+    def _read_csv(self, csv_file):
         with open(csv_file) as csvfile:
             reader = csv.reader(csvfile)
 
             for i, row in enumerate(reader, 1):
-                well, volume = self._readRow(i, row)
+                well, volume = self._read_row(i, row)
                 if well and volume:
                     self.volumes[self._well_to_int(well)] = float(volume)
 
     # Reads in a row; returns the tuple (well, volume) as strings
     # Returns a warning and (None, None) or an exception on an invalid row
-    def _readRow(self, rownum, row):
+    def _read_row(self, rownum, row):
         # Warning if there aren't at least 2 cells in the row
         try:
             well = row[0].strip()
