@@ -6,7 +6,7 @@ import logging
 # Reads a CSV file and returns a list of all 96 volumes
 class CSVReader:
     def __init__(self, csv_file):
-        self.volumes = {}
+        self.volumes = [None] * 96
         self._logger = logging.getLogger()
         try:
             self._readCSV(csv_file)
@@ -21,7 +21,7 @@ class CSVReader:
             for i, row in enumerate(reader, 1):
                 well, volume = self._readRow(i, row)
                 if well and volume:
-                    self.volumes[well] = volume
+                    self.volumes[self._well_to_int(well)] = float(volume)
 
     # Reads in a row; returns the tuple (well, volume) as strings
     # Returns a warning and (None, None) or an exception on an invalid row

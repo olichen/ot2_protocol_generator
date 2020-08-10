@@ -45,3 +45,16 @@ class FormatHelper:
         return (f"    pipette.transfer({vol}, "
                 f"src_plate.columns_by_name()['{col}'], "
                 f"dest_plate.columns_by_name()['{col}'])\n")
+
+    # Returns the code to transfer volume from well to well, with blowout
+    def transfer(self, vol, well):
+        msg = "    pipette.pick_up_tip()\n"
+        while vol > 0:
+            xfer = min(10.0, vol)
+            msg += (f"    pipette.aspirate({xfer}, src_plate.wells()[{well}]"
+                    f".bottom())\n")
+            msg += (f"    pipette.dispense({xfer}, dest_plate.wells()[{well}])"
+                    f".blow_out(dest_plate.wells()[{well}])\n")
+            vol -= xfer
+        msg += f"    pipette.drop_tip()\n"
+        return msg

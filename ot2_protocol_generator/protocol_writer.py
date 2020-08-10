@@ -18,11 +18,11 @@ class ProtocolWriter:
         elif data.data_type == 'plate':
             self.plate_data.append(data)
 
-            # Add csv data. Pre-process multi-head transfer data
+            # Add csv data. Validate multi-head transfer data
             csv_data = csv_helper.CSVReader(data.csv_file_loc)
-            if self.pipette_data.isMulti():
-                csv_data = mth.MultiTransferHelper(csv_data.volumes)
-            self.plate_csv.append(csv_data)
+            # if self.pipette_data.isMulti():
+            #     csv_data = mth.MultiTransferHelper(csv_data.volumes)
+            self.plate_csv.append(csv_data.volumes)
 
     # Open the output file and write everything
     def saveOutput(self, output_file):
@@ -49,10 +49,12 @@ class ProtocolWriter:
             f.write(self.fh.srcPlate(d.src_plate_name, d.src_plate_loc))
             f.write(self.fh.destPlate(d.dest_plate_name, d.dest_plate_loc))
 
-            if self.pipette_data.isMulti():
-                for i, vol in enumerate(csv.col_volumes):
-                    if vol:
-                        f.write(self.fh.multiTransfer(vol, i+1))
-            else:
-                for well, vol in csv.volumes.items():
-                    f.write(self.fh.singleTransfer(vol, well))
+            for i, vol in enumerate(csv):
+                f.write(self.fh.transfer(vol, i))
+            # if self.pipette_data.isMulti():
+            #     for i, vol in enumerate(csv.col_volumes):
+            #         if vol:
+            #             f.write(self.fh.multiTransfer(vol, i+1))
+            # else:
+            #     for i, vol in enumerate(csv):
+            #         f.write(self.fh.transfer(vol, i))
