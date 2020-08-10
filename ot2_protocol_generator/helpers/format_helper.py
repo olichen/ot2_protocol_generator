@@ -11,20 +11,20 @@ class FormatHelper:
 
     # Returns the code to load a tip rack
     def tip_rack(self, rack_name, rack_location):
-        msg = self.labware('tip_rack', rack_name, rack_location)
+        msg = self._labware('tip_rack', rack_name, rack_location)
         msg += "    tip_racks.append(tip_rack)\n"
         return msg
 
     # Returns the code to load a plate
     def src_plate(self, plate_name, plate_location):
-        return self.labware('src_plate', plate_name, plate_location)
+        return self._labware('src_plate', plate_name, plate_location)
 
     # Returns the code to load a plate
     def dest_plate(self, plate_name, plate_location):
-        return self.labware('dest_plate', plate_name, plate_location)
+        return self._labware('dest_plate', plate_name, plate_location)
 
     # Returns the code to load a piece of labware (tip rack, plate, etc)
-    def labware(self, var_name, lw_name, lw_loc):
+    def _labware(self, var_name, lw_name, lw_loc):
         return (f"    {var_name} = protocol.load_labware("
                 f"'{lw_name}', {lw_loc})\n")
 
