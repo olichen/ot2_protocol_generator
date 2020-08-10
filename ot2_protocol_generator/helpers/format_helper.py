@@ -10,17 +10,17 @@ class FormatHelper:
                 "    tip_racks = []\n")
 
     # Returns the code to load a tip rack
-    def tipRack(self, rack_name, rack_location):
+    def tip_rack(self, rack_name, rack_location):
         msg = self.labware('tip_rack', rack_name, rack_location)
         msg += "    tip_racks.append(tip_rack)\n"
         return msg
 
     # Returns the code to load a plate
-    def srcPlate(self, plate_name, plate_location):
+    def src_plate(self, plate_name, plate_location):
         return self.labware('src_plate', plate_name, plate_location)
 
     # Returns the code to load a plate
-    def destPlate(self, plate_name, plate_location):
+    def dest_plate(self, plate_name, plate_location):
         return self.labware('dest_plate', plate_name, plate_location)
 
     # Returns the code to load a piece of labware (tip rack, plate, etc)
@@ -32,19 +32,6 @@ class FormatHelper:
     def pipette(self, p_name, p_loc):
         return ("    pipette = protocol.load_instrument("
                 f"'{p_name}', mount='{p_loc}', tip_racks=tip_racks)\n\n")
-
-    # Returns the code to transfer volume from a single well of the source
-    # plate to the destination plate.
-    def singleTransfer(self, vol, well):
-        return ("    pipette.transfer("
-                f"{vol}, src_plate['{well}'], dest_plate['{well}'])\n")
-
-    # Returns the code to transfer volume from a column of wells from the
-    # source plate to the destination plate using a multi-headed pipette.
-    def multiTransfer(self, vol, col):
-        return (f"    pipette.transfer({vol}, "
-                f"src_plate.columns_by_name()['{col}'], "
-                f"dest_plate.columns_by_name()['{col}'])\n")
 
     # Returns the code to transfer volume from well to well, with blowout
     def transfer(self, vol, well):

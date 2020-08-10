@@ -34,7 +34,7 @@ class ProtocolWriter:
     # Iterate through all the input data and write the tip rack definitions
     def outputTipRacks(self, f):
         for d in self.plate_data:
-            f.write(self.fh.tipRack(d.tip_rack_name, d.tip_rack_loc))
+            f.write(self.fh.tip_rack(d.tip_rack_name, d.tip_rack_loc))
 
     # Write the pipette definition
     def outputPipetteData(self, f):
@@ -45,8 +45,8 @@ class ProtocolWriter:
     # followed by all the transfers
     def outputTransferData(self, f):
         for d, csv in zip(self.plate_data, self.plate_csv):
-            f.write(self.fh.srcPlate(d.src_plate_name, d.src_plate_loc))
-            f.write(self.fh.destPlate(d.dest_plate_name, d.dest_plate_loc))
+            f.write(self.fh.src_plate(d.src_plate_name, d.src_plate_loc))
+            f.write(self.fh.dest_plate(d.dest_plate_name, d.dest_plate_loc))
 
             if self.pipette_data.isMulti():
                 for i in range(0,96,8):
