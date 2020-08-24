@@ -34,14 +34,18 @@ class FormatHelper:
                 f"'{p_name}', mount='{p_loc}', tip_racks=tip_racks)\n\n")
 
     # Returns the code to transfer volume from well to well, with blowout
+    # Note that 0.2ul is added to offset the pipette inaccuracy. Perhaps this
+    # should get moved to the config file.
     def transfer(self, vol, well):
         msg = "    pipette.pick_up_tip()\n"
         while vol > 0:
-            xfer = min(10.0, vol)
+            xfer = min(10.0, vol + 0.2)
+            airgap = 1
             msg += (f"    pipette.aspirate({xfer}, src_plate.wells()[{well}]"
-                    f".bottom())\n")
-            msg += (f"    pipette.dispense({xfer}, dest_plate.wells()[{well}])"
+                    f".bottom(), rate = 0.5).air_gap({airgap})\n")
+            msg += (f"    pipette.dispense({xfer + airgap}, "
+                    f"dest_plate.wells()[{well}])"
                     f".blow_out(dest_plate.wells()[{well}])\n")
             vol -= xfer
-        msg += f"    pipette.drop_tip()\n"
+        msg += "    pipette.drop_tip(home_after=False)\n"
         return msg
