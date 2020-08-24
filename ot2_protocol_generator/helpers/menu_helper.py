@@ -6,8 +6,8 @@ import os
 from platform import system
 import subprocess
 import logging
-from . import log_helper
-from ot2_protocol_generator.gui import config
+from ot2_protocol_generator.helpers import log_helper
+from ot2_protocol_generator.helpers import config
 import traceback
 
 

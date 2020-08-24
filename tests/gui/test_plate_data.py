@@ -1,5 +1,5 @@
 from ot2_protocol_generator.gui import plate_data
-from ot2_protocol_generator.gui import config
+from ot2_protocol_generator.helpers import config
 
 import unittest
 

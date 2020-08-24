@@ -1,5 +1,5 @@
 from tkinter import ttk
-from . import config
+from ot2_protocol_generator.helpers import config
 
 
 # Creates an input panel for a transfer
