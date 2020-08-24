@@ -29,11 +29,31 @@ class Configuration:
         if not self.config.has_option('LABWARE', 'PIPETTE_LOCS'):
             value = 'left,right'
             self.config.set('LABWARE', 'PIPETTE_LOCS', value)
+        if not self.config.has_section('TRANSFER'):
+            self.config.add_section('TRANSFER')
+        if not self.config.has_option('TRANSFER', 'ASPIRATE_OFFSET'):
+            value = '0.2'
+            self.config.set('TRANSFER', 'ASPIRATE_OFFSET', value)
+        if not self.config.has_option('TRANSFER', 'ASPIRATE_RATE'):
+            value = '0.5'
+            self.config.set('TRANSFER', 'ASPIRATE_RATE', value)
+        if not self.config.has_option('TRANSFER', 'AIR_GAP'):
+            value = '1.0'
+            self.config.set('TRANSFER', 'AIR_GAP', value)
+        if not self.config.has_option('TRANSFER', 'BLOW_OUT_RATE'):
+            value = '1000.0'
+            self.config.set('TRANSFER', 'BLOW_OUT_RATE', value)
 
     # Overload the ['getitem'] operator. Returns options as a list
     def __getitem__(self, index):
+        return self.get_labware(index)
+
+    def get_labware(self, index):
         labware = self.config['LABWARE']
         return [s.strip() for s in labware.get(index).split(',')]
+
+    def get_transfer(self, index):
+        return self.config['TRANSFER'].getfloat(index)
 
     # Write the configuration file
     def writeFile(self, filename):
