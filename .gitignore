@@ -14,7 +14,7 @@ build/
 
 # Test files
 data/test.py
-labware.ini
+*.ini
 
 # OSX files
 .DS_Store

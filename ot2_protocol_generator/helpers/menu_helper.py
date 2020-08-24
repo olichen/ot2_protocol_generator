@@ -43,11 +43,11 @@ class MenuHelper:
             self.lh.clear()
             parent.focus()
 
-    # Open the labware.ini file for editing
+    # Open the ot2_protocol_generator.ini file for editing
     def editLabware(self):
-        if not os.path.exists('./labware.ini'):
-            cfg = config.Configuration('./labware.ini')
-            cfg.writeFile('./labware.ini')
+        if not os.path.exists('./ot2_protocol_generator.ini'):
+            cfg = config.Configuration('./ot2_protocol_generator.ini')
+            cfg.writeFile('./ot2_protocol_generator.ini')
 
         OS = system().lower()
         if 'windows' in OS:
@@ -56,8 +56,8 @@ class MenuHelper:
             opener = 'open'
         else:
             opener = 'xdg-open'
-        subprocess.run(opener + ' labware.ini', shell=True)
-        msg = 'Please restart the protocol generator after editing any labware'
+        subprocess.run(opener + ' ot2_protocol_generator.ini', shell=True)
+        msg = 'Please restart the protocol generator after editing any settings'
         messagebox.showinfo(title='Labware', message=msg)
 
     # Open the home page on github
