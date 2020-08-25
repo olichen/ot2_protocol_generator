@@ -28,7 +28,8 @@ class MenuHelper:
             for d in data:
                 pw.addData(d)
 
-            if ofile := filedialog.asksaveasfilename(title='Save Protocol'):
+            if ofile := filedialog.asksaveasfilename(title='Save Protocol',
+                filetypes=[('Python Files', '*.py')]):
                 pw.saveOutput(ofile)
 
                 if self.lh.text:

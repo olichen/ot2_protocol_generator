@@ -18,7 +18,8 @@ class Configuration:
             value = '1,2,3,4,5,6,7,8,9,10,11'
             self.config.set('LABWARE', 'TIP_RACK_LOCS', value)
         if not self.config.has_option('LABWARE', 'PLATE_NAMES'):
-            value = 'appliedbiosystems_96_wellplate_100ul'
+            value = ('appliedbiosystems_96_wellplate_100ul,'
+                    'thermoscientific_96_wellplate_300ul')
             self.config.set('LABWARE', 'PLATE_NAMES', value)
         if not self.config.has_option('LABWARE', 'PLATE_LOCS'):
             value = '1,2,3,4,5,6,7,8,9,10,11'
