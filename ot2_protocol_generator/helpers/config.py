@@ -4,7 +4,7 @@ from configparser import ConfigParser
 # Initializes the values for the dropdown menus. Attempts to read a
 # labware.ini file, and sets default values if they are not found
 class Configuration:
-    def __init__(self, configfile):
+    def __init__(self, configfile = './ot2_protocol_generator.ini'):
         self.config = ConfigParser()
         self.config.read(configfile)
 
@@ -44,6 +44,9 @@ class Configuration:
         if not self.config.has_option('TRANSFER', 'BLOW_OUT_RATE'):
             value = '1000.0'
             self.config.set('TRANSFER', 'BLOW_OUT_RATE', value)
+        if not self.config.has_option('TRANSFER', 'DISPENSE_OFFSET'):
+            value = '0.5'
+            self.config.set('TRANSFER', 'DISPENSE_OFFSET', value)
 
     # Overload the ['getitem'] operator. Returns options as a list
     def __getitem__(self, index):

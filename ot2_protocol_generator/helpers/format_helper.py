@@ -3,7 +3,7 @@ from ot2_protocol_generator.helpers import config
 # Formats the output code for the protocol
 class FormatHelper:
     def __init__(self):
-        self.cfg = config.Configuration('./labware.ini')
+        self.cfg = config.Configuration()
 
     # Returns the code for the header
     def header(self):
@@ -48,12 +48,12 @@ class FormatHelper:
         a_off = self.cfg.get_transfer('ASPIRATE_OFFSET')
         a_rate = self.cfg.get_transfer('ASPIRATE_RATE')
         airgap = self.cfg.get_transfer('AIR_GAP')
+        d_off = self.cfg.get_transfer('DISPENSE_OFFSET')
         while vol > 0:
             xfer = min(10.0 - airgap, vol + a_off)
-            xout = min(10.0, xfer + a_off + 0.5)
             msg += (f"    pipette.aspirate({xfer}, src_plate.wells()[{well}]"
                     f".bottom(), rate = {a_rate}).air_gap({airgap})\n")
-            msg += (f"    pipette.dispense({xout}, "
+            msg += (f"    pipette.dispense({xfer + airgap + d_off}, "
                     f"dest_plate.wells()[{well}])"
                     f".blow_out(dest_plate.wells()[{well}])\n")
             vol -= xfer
