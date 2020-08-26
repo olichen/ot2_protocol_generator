@@ -50,9 +50,10 @@ class FormatHelper:
         airgap = self.cfg.get_transfer('AIR_GAP')
         while vol > 0:
             xfer = min(10.0 - airgap, vol + a_off)
+            xout = min(10.0, xfer + a_off + 0.5)
             msg += (f"    pipette.aspirate({xfer}, src_plate.wells()[{well}]"
                     f".bottom(), rate = {a_rate}).air_gap({airgap})\n")
-            msg += (f"    pipette.dispense({xfer + airgap}, "
+            msg += (f"    pipette.dispense({xout}, "
                     f"dest_plate.wells()[{well}])"
                     f".blow_out(dest_plate.wells()[{well}])\n")
             vol -= xfer
