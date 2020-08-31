@@ -33,7 +33,7 @@ class Configuration:
         if not self.config.has_section('TRANSFER'):
             self.config.add_section('TRANSFER')
         if not self.config.has_option('TRANSFER', 'ASPIRATE_OFFSET'):
-            value = '0.2'
+            value = '0.3'
             self.config.set('TRANSFER', 'ASPIRATE_OFFSET', value)
         if not self.config.has_option('TRANSFER', 'ASPIRATE_RATE'):
             value = '0.5'
